@@ -10,12 +10,39 @@ const caseSchema = new Schema({
   weight: String,
 });
 
+const switchSchema = newSchema({
+  name: String,
+  stock: Boolean,
+  films: String,
+  lube: String,
+  springs: String,
+  top: String,
+  bottom: String,
+  amount: Number
+});
+
+const keycapSchema = newSchema({
+  name: String,
+  manufacturer: String,
+  material: String,
+  kits: [{name: String, amount: Number}],
+});
+
+const stabSchema = newSchema({
+  name: String,
+  manufacturer: String,
+  wires: {twoU: Number, six25U: Number, sevenU: Number},
+  housings: Number,
+  stem: Number,
+});
+
 const inventorySchema = new Schema({
   username: { type: String, required: true},
-  cases: [caseSchema], // will have a case Schema
-  switches: {}, // will have a switchSchema
-  stabs: [], // will have a stab schema
-  keycaps: {}, // will have a keycaps schema
+  cases: [caseSchema],
+  stockSwitches: [switchSchema],
+  modSwitches: [switchSchema],
+  stabs: [stabSchema],
+  keycaps: [keycapSchema],
 });
 
 module.exports = model('Inventory', inventorySchema);
