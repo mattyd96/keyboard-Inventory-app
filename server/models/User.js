@@ -5,9 +5,18 @@ const userSchema = new Schema({
   password: { type: String, required: true},
   email: { type: String, required: true},
   permissions: [],
-  builds: [],
-  posts: [],
-  stock: {},
+  builds: [{
+    type: Schema.Types.ObjectId,
+    ref: 'build'
+  }],
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'post'
+  }],
+  inventory: {
+    type: Schema.Types.ObjectId,
+    ref: 'inventory',
+  },
   createdAt: Date
 });
 

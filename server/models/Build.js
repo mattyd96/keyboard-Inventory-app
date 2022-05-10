@@ -8,4 +8,4 @@ const buildSchema = new Schema({
   keycaps: {}, // will have a keycaps schema
 });
 
-module.exports = model('Build', buildSchema);
+module.exports = model('build', buildSchema);

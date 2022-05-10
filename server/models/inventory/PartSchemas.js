@@ -1,4 +1,4 @@
-const { model, Schema } = require('mongoose');
+const { Schema } = require('mongoose');
 
 const caseSchema = new Schema({
   name: { type: String, required: true},
@@ -10,23 +10,33 @@ const caseSchema = new Schema({
   weight: String,
 });
 
-const switchSchema = newSchema({
-  name: String,
-  stock: Boolean,
-  films: String,
-  lube: String,
-  springs: String,
-  top: String,
-  bottom: String,
-  amount: Number
-});
-
 const keycapSchema = newSchema({
   name: String,
   manufacturer: String,
   material: String,
   kits: [{name: String, amount: Number}],
 });
+
+const springSchema = newSchema({
+  name: String,
+  type: String,
+  weight: String,
+  length: String,
+  lube: String,
+  amount: Number
+});
+
+const switchSchema = newSchema({
+  name: String,
+  stock: Boolean,
+  films: String,
+  lube: String,
+  springs: springSchema,
+  top: String,
+  bottom: String,
+  amount: Number
+});
+
 
 const stabSchema = newSchema({
   name: String,
@@ -36,13 +46,5 @@ const stabSchema = newSchema({
   stem: Number,
 });
 
-const inventorySchema = new Schema({
-  username: { type: String, required: true},
-  cases: [caseSchema],
-  stockSwitches: [switchSchema],
-  modSwitches: [switchSchema],
-  stabs: [stabSchema],
-  keycaps: [keycapSchema],
-});
 
-module.exports = model('Inventory', inventorySchema);
+module.exports = { caseSchema, keycapSchema, switchSchema, springSchema, stabSchema };
