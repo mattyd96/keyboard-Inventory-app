@@ -1,4 +1,5 @@
 import { Burger, Header, MediaQuery, Text, useMantineTheme } from "@mantine/core";
+import ThemeToggle from "../../theme/ThemeToggle";
 
 type Props = {
   opened: boolean;
@@ -10,7 +11,7 @@ function TopNavigation({ opened, setOpened }: Props) {
 
   return (
     <Header height={70} p="md">
-      <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+      <div style={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'space-between' }}>
         <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
           <Burger
             opened={opened}
@@ -22,6 +23,7 @@ function TopNavigation({ opened, setOpened }: Props) {
         </MediaQuery>
 
         <Text>Application header</Text>
+        <ThemeToggle />
       </div>
     </Header>
   );
