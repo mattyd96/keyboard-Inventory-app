@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { AppShell, useMantineTheme } from '@mantine/core';
 
+import TopNavigation from './navigation/TopNavigation';
+import SideNavigation from './navigation/SideNavigation';
+
 type Props = {
   children?: React.ReactNode;
 };
@@ -18,8 +21,10 @@ function Layout({ children }: Props) {
       }}
       navbarOffsetBreakpoint="sm"
       fixed
+      navbar={<SideNavigation opened={opened} />}
+      header={<TopNavigation opened={opened} setOpened={setOpened} />}
     >
-      
+      {children}
     </AppShell>
   );
 }
