@@ -4,18 +4,19 @@ const userSchema = new Schema({
   username: { type: String, required: true},
   password: { type: String, required: true},
   email: { type: String, required: true},
-  permissions: [],
+  profilePic: String,
+  permissions: [String],
   builds: [{
     type: Schema.Types.ObjectId,
-    ref: 'build'
+    ref: 'Build'
   }],
   posts: [{
     type: Schema.Types.ObjectId,
-    ref: 'post'
+    ref: 'Post'
   }],
   inventory: {
     type: Schema.Types.ObjectId,
-    ref: 'inventory',
+    ref: 'Inventory',
   },
   createdAt: Date
 });

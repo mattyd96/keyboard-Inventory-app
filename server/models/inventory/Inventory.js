@@ -11,4 +11,4 @@ const inventorySchema = new Schema({
   keycaps: [keycapSchema],
 });
 
-module.exports = model('inventory', inventorySchema);
+module.exports = model('Inventory', inventorySchema);
