@@ -8,6 +8,7 @@ const buildSchema = new Schema({
   switches: switchSchema, //will have a switchSchema
   stabs: stabSchema, // will have a stab schema
   keycaps: keycapSchema, // will have a keycaps schema
+  images: [String]
 });
 
 module.exports = model('Build', buildSchema);
