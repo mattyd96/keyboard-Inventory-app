@@ -1,4 +1,4 @@
-import { Burger, Header, MediaQuery, Text, useMantineTheme } from "@mantine/core";
+import { Burger, Button, Group, Header, MediaQuery, Text, useMantineTheme } from "@mantine/core";
 import ThemeToggle from "../../theme/ThemeToggle";
 
 type Props = {
@@ -23,7 +23,11 @@ function TopNavigation({ opened, setOpened }: Props) {
         </MediaQuery>
 
         <Text>Application header</Text>
-        <ThemeToggle />
+        <Group>
+          <Button>Login</Button>
+          <Button>Sign up</Button>
+          <ThemeToggle />
+        </Group>
       </div>
     </Header>
   );
