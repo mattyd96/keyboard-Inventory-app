@@ -66,9 +66,12 @@ export function PasswordStrength({ inputs }: Props) {
           label="Your password"
           placeholder="Your password"
           description="Strong password should include letters in lower and uppercase, at least 1 number, at least 1 special symbol"
-          //value={value}
-          //onChange={(event) => setValue(event.currentTarget.value)}
-          {...inputs}
+          value={value}
+          onChange={(event) => {
+            setValue(event.currentTarget.value)
+            inputs.onChange(event.currentTarget.value)
+          }}
+          error={inputs.error}
         />
       }
     >

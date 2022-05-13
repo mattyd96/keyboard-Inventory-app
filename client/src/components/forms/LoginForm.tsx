@@ -8,7 +8,7 @@ import { PasswordStrength } from './inputs/PasswordStrength';
 
 const schema = z.object({
   email: z.string().email({ message: 'Invalid email' }),
-  password: z.string().min(8, { message: 'Password should at least be 8 characters' }) //TODO need to use a regex
+  password: z.string() //TODO need to use a regex
 });
 
 type Props = {

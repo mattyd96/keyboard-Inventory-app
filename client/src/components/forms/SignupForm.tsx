@@ -1,14 +1,17 @@
-import { Dispatch, SetStateAction } from "react";
-import { z } from 'zod';
+import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { object, z } from 'zod';
 import { useForm, zodResolver } from '@mantine/form';
 import { TextInput, Text, Button, Box, Group, UnstyledButton } from '@mantine/core';
+import { useMutation, gql } from '@apollo/client';
 
 import { PasswordStrength } from './inputs/PasswordStrength';
+import { AuthContext } from '../../context/auth';
 
 const schema = z.object({
   username: z.string().min(2, { message: 'username should have at least 2 letters' }),
   email: z.string().email({ message: 'Invalid email' }),
-  password: z.string().min(8, { message: 'Password should at least be 8 characters' }) //TODO need to use a regex
+  password: z.string().regex(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?=.{6,})/, { message: 'Password not strong enough'}) //TODO need to use a regex
 });
 
 type Props = {
@@ -16,6 +19,10 @@ type Props = {
 }
 
 function SignupForm({ changeForm }: Props) {
+  const context = useContext(AuthContext);
+  const [errors, setErrors] = useState<any>([]); // TODO create a type for this later
+
+  // Form hook
   const form = useForm({
     schema: zodResolver(schema),
     initialValues: {
@@ -25,9 +32,24 @@ function SignupForm({ changeForm }: Props) {
     },
   });
 
+  // navigation hook
+  const navigate = useNavigate();
+
+  const [addUser] = useMutation(SIGNUP_USER, {
+    update(_, { data: { register: userData}}) {
+      context.login(userData);
+      navigate('/');
+    },
+    onError({ graphQLErrors }) {
+      console.log(graphQLErrors[0].extensions.errors);
+      setErrors(graphQLErrors[0].extensions.errors);
+    },
+    variables: form.values,
+  });
+
   return (
     <Box sx={{ maxWidth: 340 }} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit(() => addUser())}>
         <TextInput
           required
           label="Name"
@@ -53,5 +75,23 @@ function SignupForm({ changeForm }: Props) {
     </Box>
   );
 }
+
+const SIGNUP_USER = gql`
+  mutation register(
+    $username: String!
+    $email: String!
+    $password: String!
+  ) {
+    register(
+      registerInput: {
+        username: $username
+        email: $email
+        password: $password
+      }
+    ) {
+      id email username createdAt token
+    }
+  }
+`
 
 export default SignupForm;
