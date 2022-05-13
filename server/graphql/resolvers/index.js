@@ -4,14 +4,14 @@ const usersResolvers = require('./users');
 const { parseConstValue } = require('graphql');
 
 module.exports = {
-  Post: {
+  //Post: {
     //likeCount: (parent) => parent.likes.length,
     //commentCount: (parent) => parent.comments.length
-  },
+  //},
 
-  Query: {
+  //Query: {
     //...postsResolvers.Query
-  },
+  //},
   Mutation: {
     ...usersResolvers.Mutation,
     //...postsResolvers.Mutation,

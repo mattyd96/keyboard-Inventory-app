@@ -5,5 +5,23 @@ const typeDefs = gql`
     id: ID!
     email: String!
     token: String!
+    username: String!
+    createdAt: String!
+  }
+
+  input SignupInput {
+    username: String!
+    password: String!
+    email: String!
+  }
+
+  type Query {
+    getUser: [User]
+  }
+
+  type Mutation{
+    signup(signupinput: SignupInput): User
   }
 `
+
+module.exports = typeDefs;

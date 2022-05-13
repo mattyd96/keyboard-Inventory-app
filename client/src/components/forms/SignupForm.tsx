@@ -36,13 +36,14 @@ function SignupForm({ changeForm }: Props) {
   const navigate = useNavigate();
 
   const [addUser] = useMutation(SIGNUP_USER, {
-    update(_, { data: { register: userData}}) {
+    update(_, { data: { signup: userData}}) {
+      console.log(userData);
       context.login(userData);
       navigate('/');
     },
     onError({ graphQLErrors }) {
-      console.log(graphQLErrors[0].extensions.errors);
-      setErrors(graphQLErrors[0].extensions.errors);
+      console.log(graphQLErrors);
+      setErrors(graphQLErrors);
     },
     variables: form.values,
   });
@@ -52,7 +53,7 @@ function SignupForm({ changeForm }: Props) {
       <form onSubmit={form.onSubmit(() => addUser())}>
         <TextInput
           required
-          label="Name"
+          label="Username"
           placeholder="John Doe"
           mt="sm"
           {...form.getInputProps('username')}
@@ -77,13 +78,13 @@ function SignupForm({ changeForm }: Props) {
 }
 
 const SIGNUP_USER = gql`
-  mutation register(
+  mutation signup(
     $username: String!
     $email: String!
     $password: String!
   ) {
-    register(
-      registerInput: {
+    signup(
+      signupinput: {
         username: $username
         email: $email
         password: $password
