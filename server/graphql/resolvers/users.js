@@ -16,6 +16,35 @@ const generateToken = user => {
 module.exports = {
   //Query: {},
   Mutation: {
+    login: async (_, {username, password}) => {
+      const {errors, valid} = validateLoginInput(username, password);
+
+      if (!valid) {
+        throw new UserInputError('Errors', { errors })
+      }
+      const user = await User.findOne({ username });
+
+      if(!user) {
+        errors.general = 'User not found';
+        throw new UserInputError('User not found', { errors });
+      }
+
+      const match = await user.comparePassword(password);
+
+      if (!match) {
+        errors.general = 'Wrong Credentials';
+        throw new UserInputError('Wrong Credentials', { errors });
+      }
+
+      const token = generateToken(user);
+
+      return {
+        ...user._doc,
+        id: user._id,
+        token
+      }
+    },
+
     signup: async (_, {signupinput: { username, email, password}}) => {
       console.log("running");
       // Validate user data
