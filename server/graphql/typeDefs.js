@@ -21,6 +21,7 @@ const typeDefs = gql`
 
   type Mutation{
     signup(signupinput: SignupInput): User
+    login(username: String!, password: String!): User!
   }
 `
 

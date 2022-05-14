@@ -27,6 +27,7 @@ module.exports.validateRegisterInput = (
 
 module.exports.validateLoginInput = (username, password) => {
   const errors = {};
+  let type = 'username';
 
   if (username.trim() === ''){
     errors.username = 'Username must not be empty';
@@ -36,8 +37,14 @@ module.exports.validateLoginInput = (username, password) => {
     errors.password = 'Password must not be empty';
   }
 
+  const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
+  if (username.match(regEx)) {
+    type = 'email'
+  }
+
   return {
     errors,
-    valid: Object.keys(errors).length < 1
+    valid: Object.keys(errors).length < 1,
+    type
   }
 }

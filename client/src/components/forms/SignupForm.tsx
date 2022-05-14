@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { object, z } from 'zod';
+import { z } from 'zod';
 import { useForm, zodResolver } from '@mantine/form';
 import { TextInput, Text, Button, Box, Group, UnstyledButton } from '@mantine/core';
 import { useMutation, gql } from '@apollo/client';

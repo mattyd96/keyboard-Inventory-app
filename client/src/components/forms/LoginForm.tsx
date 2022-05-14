@@ -1,13 +1,15 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { z } from 'zod';
 import { useForm, zodResolver } from '@mantine/form';
 import { TextInput, PasswordInput, Text, Button, Box, Group, UnstyledButton } from '@mantine/core';
 import { EyeCheck, EyeOff } from 'tabler-icons-react';
+import { useMutation, gql } from '@apollo/client';
 
-import { PasswordStrength } from './inputs/PasswordStrength';
+import { AuthContext } from '../../context/auth';
 
 const schema = z.object({
-  email: z.string().email({ message: 'Invalid email' }),
+  username: z.string(),
   password: z.string() //TODO need to use a regex
 });
 
@@ -16,22 +18,41 @@ type Props = {
 }
 
 function LoginForm({ changeForm }: Props) {
+  const context = useContext(AuthContext);
+  const [errors, setErrors] = useState<any>([]); // TODO create a type for this later
+  const navigate = useNavigate();
+
+  // Form hook
   const form = useForm({
     schema: zodResolver(schema),
     initialValues: {
-      email: '',
+      username: '',
       password: '',
     },
   });
 
+  // Login Mutation
+  const [loginUser] = useMutation(LOGIN_USER, {
+    update(_, { data: { login: userData }}) {
+      console.log(userData);
+      context.login(userData);
+      navigate('/');
+    },
+    onError(err) {
+      console.log(err.graphQLErrors[0].extensions.errors);
+      setErrors(err.graphQLErrors[0].extensions.errors);
+    },
+    variables: form.values,
+  });
+
   return (
     <Box sx={{ maxWidth: 340 }} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit(() => loginUser())}>
         <TextInput
           required
-          label="Email"
+          label="Username or Email"
           placeholder="example@mail.com"
-          {...form.getInputProps('email')}
+          {...form.getInputProps('username')}
         />
         <PasswordInput
           required
@@ -40,6 +61,7 @@ function LoginForm({ changeForm }: Props) {
           visibilityToggleIcon={({ reveal, size }) =>
             reveal ? <EyeOff size={size} /> : <EyeCheck size={size} />
           }
+          {...form.getInputProps('password')}
         />
 
         <Group position="apart" mt="xl">
@@ -52,5 +74,19 @@ function LoginForm({ changeForm }: Props) {
     </Box>
   );
 }
+
+const LOGIN_USER = gql`
+  mutation login(
+    $username: String!
+    $password: String!
+  ) {
+    login(
+      username: $username
+      password: $password
+    ) {
+      id email username createdAt token
+    }
+  }
+`
 
 export default LoginForm;

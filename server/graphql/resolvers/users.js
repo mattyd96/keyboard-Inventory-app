@@ -16,20 +16,28 @@ const generateToken = user => {
 module.exports = {
   //Query: {},
   Mutation: {
-    login: async (_, {username, password}) => {
-      const {errors, valid} = validateLoginInput(username, password);
+    login: async (_,{ username, password }) => {
+      const {errors, valid, type} = validateLoginInput(username, password);
 
       if (!valid) {
         throw new UserInputError('Errors', { errors })
       }
-      const user = await User.findOne({ username });
+
+      // find user with email or username
+      let user;
+
+      if(type === 'email') {
+        user = await User.findOne({ email: username });
+      } else {
+        user = await User.findOne({ username });
+      }
 
       if(!user) {
         errors.general = 'User not found';
         throw new UserInputError('User not found', { errors });
       }
 
-      const match = await user.comparePassword(password);
+      const match = await user.validatePassword(password);
 
       if (!match) {
         errors.general = 'Wrong Credentials';
