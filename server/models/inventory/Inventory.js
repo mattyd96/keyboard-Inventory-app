@@ -1,5 +1,5 @@
 const { model, Schema } = require('mongoose');
-const { caseSchema, keycapSchema, switchSchema, springSchema, stabSchema } = require('./PartSchemas');
+const { caseSchema, keycapSchema, switchSchema, springSchema, stabSchema, artisanSchema } = require('./PartSchemas');
 
 const inventorySchema = new Schema({
   username: { type: String, required: true},
@@ -9,6 +9,7 @@ const inventorySchema = new Schema({
   springs: [springSchema],
   stabs: [stabSchema],
   keycaps: [keycapSchema],
+  artisans: [artisanSchema]
 });
 
 module.exports = model('Inventory', inventorySchema);

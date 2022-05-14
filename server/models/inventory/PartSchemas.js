@@ -46,5 +46,14 @@ const stabSchema = newSchema({
   stem: Number,
 });
 
+const artisanSchema = newSchema({
+  name: String,
+  maker: String,
+  sculpt: String,
+  colorway: String,
+  totalMade: Number,
+  owned: Number,
+});
 
-module.exports = { caseSchema, keycapSchema, switchSchema, springSchema, stabSchema };
+
+module.exports = { caseSchema, keycapSchema, switchSchema, springSchema, stabSchema, artisanSchema };
