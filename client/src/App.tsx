@@ -1,6 +1,7 @@
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import './App.css';
+import { AuthProvider } from './context/auth';
 
 import Pages from './pages/Pages';
 
@@ -18,7 +19,9 @@ function App() {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }} withCSSVariables withGlobalStyles withNormalizeCSS>
-        <Pages />
+        <AuthProvider>
+          <Pages />
+        </AuthProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );
