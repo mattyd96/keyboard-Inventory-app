@@ -1,5 +1,5 @@
-import React, { createContext, Reducer, useReducer } from 'react';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { createContext, useReducer } from 'react';
+import jwtDecode from 'jwt-decode';
 
 type User = {
   id: string;
