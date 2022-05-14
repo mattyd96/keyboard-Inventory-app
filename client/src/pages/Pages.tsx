@@ -14,7 +14,6 @@ import Signup from "./Signup";
 
 function Pages() {
   const { user } = useContext(AuthContext);
-  console.log(user);
 
   return (
     <BrowserRouter>
