@@ -18,11 +18,19 @@ function TopNavigation({ opened, setOpened }: Props) {
 
 
   return (
-    <Header height={70} p="md">
-      <div style={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'space-between' }}>
+    <Header height={60} p="sm" sx={{borderBottom: 'none'}}>
+      <div style={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'space-between'}}>
         <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
           <Burger
             opened={opened}
+            onClick={() => setOpened((o : boolean) => !o)}
+            size="sm"
+            mr="xl"
+          />
+        </MediaQuery>
+        <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+          <Burger
+            opened={false}
             onClick={() => setOpened((o : boolean) => !o)}
             size="sm"
             mr="xl"

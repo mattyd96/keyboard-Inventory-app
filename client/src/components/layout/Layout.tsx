@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AppShell, useMantineTheme } from '@mantine/core';
 
 import TopNavigation from './navigation/TopNavigation';
-import SideNavigation from './navigation/SideNavigation';
+import SideNavigation from './navigation/sideNavigation/SideNavigation';
 
 type Props = {
   children?: React.ReactNode;
