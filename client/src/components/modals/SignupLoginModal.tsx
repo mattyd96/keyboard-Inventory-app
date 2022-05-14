@@ -1,3 +1,6 @@
+// NOT CURRENTLY IN USE -> BEING KEPT FOR POTENTIAL USE
+
+
 import { Modal } from '@mantine/core';
 import { useState } from 'react';
 
@@ -19,7 +22,7 @@ function SignupLoginModal({ opened, setOpened }: Props) {
       onClose={() => setOpened(false)}
       title={loginForm ? "Welcome Back!" : "One of us ..."}
     >
-      {loginForm ? <LoginForm changeForm={setLoginOrSignup} /> : <SignupForm changeForm={setLoginOrSignup} />}
+      {loginForm ? <LoginForm /> : <SignupForm />}
     </Modal>
   );
 }

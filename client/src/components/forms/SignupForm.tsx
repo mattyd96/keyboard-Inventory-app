@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from 'zod';
 import { useForm, zodResolver } from '@mantine/form';
 import { TextInput, Text, Button, Box, Group, UnstyledButton } from '@mantine/core';
@@ -14,11 +14,7 @@ const schema = z.object({
   password: z.string().regex(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?=.{6,})/, { message: 'Password not strong enough'}) //TODO need to use a regex
 });
 
-type Props = {
-  changeForm: Dispatch<SetStateAction<string>>
-}
-
-function SignupForm({ changeForm }: Props) {
+function SignupForm() {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState<any>([]); // TODO create a type for this later
 
@@ -67,9 +63,9 @@ function SignupForm({ changeForm }: Props) {
         <PasswordStrength inputs={form.getInputProps('password')} />
 
         <Group position="apart" mt="xl">
-          <UnstyledButton onClick={()=>{changeForm('login')}}>
+          <Link to={'/login'}>
             <Text>Already have account?</Text>
-          </UnstyledButton>
+          </Link>
           <Button type="submit">Sign Up</Button>
         </Group>
       </form>
