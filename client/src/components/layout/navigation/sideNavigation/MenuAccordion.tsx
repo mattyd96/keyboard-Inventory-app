@@ -1,23 +1,29 @@
-import { Accordion, ThemeIcon } from "@mantine/core";
-import { Checklist, Home } from "tabler-icons-react";
+import { Accordion, Group, Text } from "@mantine/core";
+import { Checklist, Home, Plus } from "tabler-icons-react";
 import StyledAccordion from "./StyledAccordion";
 
 function MenuAccordian() {
   return (
-    <StyledAccordion initialItem={0}>
+    <Accordion initialItem={0} iconPosition="right" disableIconRotation multiple>
       <Accordion.Item
-        label="Customization"
-        icon={<Home />}
+        label={<Group>
+          <Home />
+          <Text>Home</Text>
+        </Group>}
+        icon={<Plus size={16}/>}
       >
-        HI
+        Ok so here is some stuff yeah
       </Accordion.Item>
       <Accordion.Item
-        label="Customization"
-        icon={<Checklist />}
+        label={<Group>
+          <Checklist />
+          <Text>Inventory</Text>
+        </Group>}
+        icon={<Plus size={16}/>}
       >
-        HI
+        Ok so here is some stuff yeah
       </Accordion.Item>
-    </StyledAccordion>
+    </Accordion>
   );
 }
 

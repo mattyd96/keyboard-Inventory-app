@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { AuthContext } from '../../../../context/auth';
 import MenuAccordion from './MenuAccordion';
+import SideMenuExpanded from './SideMenuExpanded';
 
 type Props = {
   opened: Boolean;
@@ -15,8 +16,8 @@ function SideMenu({ opened }: Props) {
   return (
     <Fragment>
       {!user && <Button component={Link} to='/login'>Sign In</Button>}
-      {user && 
-        <MenuAccordion />
+      {user && opened &&
+        <SideMenuExpanded />
       }
     </Fragment>
   );
