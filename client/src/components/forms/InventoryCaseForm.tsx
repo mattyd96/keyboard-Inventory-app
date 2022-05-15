@@ -62,7 +62,7 @@ function InventoryCaseForm() {
 
   return (
     <Box>
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit(() => addCase())}>
         <TextInput
           required
           label="Creator"
