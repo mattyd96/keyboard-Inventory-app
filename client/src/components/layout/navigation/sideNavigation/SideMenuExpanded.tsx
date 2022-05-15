@@ -16,7 +16,7 @@ function SideMenuExpanded() {
         <List listStyleType={'none'}>
           {LINKS.map(link => 
             <List.Item>
-              <NavLink to={`inventory/${link.toLowerCase()}`}>{link}</NavLink>
+              <NavLink to={`/inventory/${link.toLowerCase()}`}>{link}</NavLink>
             </List.Item>
           )}
         </List>
