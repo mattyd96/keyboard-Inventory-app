@@ -8,6 +8,7 @@ const caseSchema = new Schema({
   caseMaterial: String,
   weightMaterial: String,
   weight: String,
+  built: Boolean
 });
 
 const keycapSchema = newSchema({
