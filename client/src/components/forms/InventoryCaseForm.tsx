@@ -4,6 +4,7 @@ import { gql, useMutation } from '@apollo/client';
 
 const ADD_CASE = gql`
   mutation addCase(
+    $name: String
     $creator: String
     $color: String
     $layout: String
@@ -15,6 +16,7 @@ const ADD_CASE = gql`
   ) {
     addCase(
       caseinput: {
+        name: $name
         creator: $creator
         color: $color
         layout: $layout
@@ -25,14 +27,17 @@ const ADD_CASE = gql`
         built: $built
       }
     ) {
-      creator 
-      color 
-      layout 
-      caseMaterial 
-      weightMaterial 
-      weight 
-      weightUnits 
-      built
+      cases {
+        name
+        creator 
+        color 
+        layout 
+        caseMaterial 
+        weightMaterial 
+        weight 
+        weightUnits 
+        built
+      }
     }
   }
 `
@@ -40,6 +45,7 @@ const ADD_CASE = gql`
 function InventoryCaseForm() {
   const form = useForm({
     initialValues: {
+      name: '',
       creator: '',
       color: '',
       layout: '',
@@ -52,19 +58,25 @@ function InventoryCaseForm() {
   });
 
   const [addCase] = useMutation(ADD_CASE, {
-    update(_, { data: { addCase: cases }}) {
+    update(_, { data: { addCase }}) {
       //get data and add to page
-      console.log(cases);
+      console.log(addCase);
     },
     onError(err) {
-      console.log(err.graphQLErrors[0].extensions.errors);
+      console.log(err.graphQLErrors);
     },
     variables: form.values,
   });
 
   return (
     <Box>
-      <form onSubmit={form.onSubmit(() => addCase())}>
+      <form onSubmit={form.onSubmit((values) => {console.log(values); addCase();})}>
+        <TextInput
+          required
+          label="Name"
+          placeholder="Jane CE V2"
+          {...form.getInputProps('name')}
+        />
         <TextInput
           required
           label="Creator"

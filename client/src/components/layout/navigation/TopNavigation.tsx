@@ -1,7 +1,6 @@
-import { useContext } from "react";
+import { useContext, MouseEvent, MouseEventHandler } from "react";
 import { Burger, Button, Group, Header, MediaQuery, Text, useMantineTheme } from "@mantine/core";
 import ThemeToggle from "../../theme/ThemeToggle";
-import SignupLoginModal from "../../modals/SignupLoginModal";
 import { Link } from "react-router-dom";
 
 import { AuthContext } from '../../../context/auth';
@@ -13,7 +12,7 @@ type Props = {
 
 function TopNavigation({ opened, setOpened }: Props) {
   const theme = useMantineTheme();
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   let form: "login" | "signup" = "login";
 
 
@@ -40,6 +39,7 @@ function TopNavigation({ opened, setOpened }: Props) {
         <Text>Application header</Text>
         <Group>
           {!user && <Button component={Link} to="/login">Sign In</Button>}
+          {user && <Button onClick={() =>{logout()}}>Sign Out</Button>}
           <ThemeToggle />
         </Group>
       </div>

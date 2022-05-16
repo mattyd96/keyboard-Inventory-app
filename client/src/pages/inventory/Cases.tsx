@@ -7,10 +7,15 @@ import { AuthContext } from "../../context/auth";
 import { FETCH_CASES } from "../../util/graphql";
 import InventoryCaseForm from "../../components/forms/InventoryCaseForm";
 
+type Data = {
+  cases: {
+    name: string;
+  }[]
+}
 
 function Cases() {
   const { user } = useContext(AuthContext);
-  const { loading, data } = useQuery(FETCH_CASES,
+  const { loading, data } = useQuery<Data>(FETCH_CASES,
     {variables : {username: user?.username}}
   );
   const [formOpen, setFormOpen] = useState<boolean>(false);
@@ -23,7 +28,7 @@ function Cases() {
       </Group>
       <InventoryCaseForm />
       {loading && <Loader />}
-      {data && <Text>Ok {data.cases}</Text>}
+      {data && data.cases.map(cas => (<Text>{cas.name}</Text>) )}
       <Text>Cases Page</Text>
     </Layout>
   );

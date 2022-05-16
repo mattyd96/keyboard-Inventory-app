@@ -24,7 +24,7 @@ function Pages() {
         <Route path="/login" element={user ? <Navigate replace to='/' /> : <Login />} />
         <Route path="/signup" element={user ? <Navigate replace to='/' /> : <Signup />} />
         <Route path="/inventory">
-          <Route path="cases" element={!user ? <Navigate replace to='/login' /> : <Cases />}/>
+          <Route path="cases" element={!user ? <Navigate replace to='/' /> : <Cases />}/>
         </Route>
       </Routes>
     </BrowserRouter>
