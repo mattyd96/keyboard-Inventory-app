@@ -14,14 +14,16 @@ const ADD_CASE = gql`
     $built: Boolean
   ) {
     addCase(
-      creator: $creator
-      color: $color
-      layout: $layout
-      caseMaterial: $caseMaterial
-      weightMaterial: $weightMaterial
-      weight: $weight
-      weightUnits: $weightUnits
-      built: $built:
+      caseinput: {
+        creator: $creator
+        color: $color
+        layout: $layout
+        caseMaterial: $caseMaterial
+        weightMaterial: $weightMaterial
+        weight: $weight
+        weightUnits: $weightUnits
+        built: $built
+      }
     ) {
       creator 
       color 

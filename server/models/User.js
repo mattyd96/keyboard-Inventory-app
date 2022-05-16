@@ -2,6 +2,8 @@ const { model, Schema } = require('mongoose');
 bcrypt = require('bcrypt'),
 SALT_WORK_FACTOR = 10;
 
+const Inventory = require('./inventory/Inventory');
+
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true},
   password: { type: String, required: true},
@@ -23,7 +25,7 @@ const userSchema = new Schema({
   createdAt: Date
 });
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', async function(next) {
   var user = this;
 
   // only hash the password if it has been modified (or is new)
@@ -41,6 +43,10 @@ userSchema.pre('save', function(next) {
           next();
       });
   });
+
+  //create Inventory for user
+  const inventory = new Inventory({username: this.username});
+  await inventory.save();
 });
 
 userSchema.methods.validatePassword = async function validatePassword(data) {

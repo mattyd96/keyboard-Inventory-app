@@ -8,17 +8,18 @@ const caseSchema = new Schema({
   caseMaterial: String,
   weightMaterial: String,
   weight: String,
+  weightUnits: String,
   built: Boolean
 });
 
-const keycapSchema = newSchema({
+const keycapSchema = new Schema({
   name: String,
   manufacturer: String,
   material: String,
   kits: [{name: String, amount: Number}],
 });
 
-const springSchema = newSchema({
+const springSchema = new Schema({
   name: String,
   type: String,
   weight: String,
@@ -27,7 +28,7 @@ const springSchema = newSchema({
   amount: Number
 });
 
-const switchSchema = newSchema({
+const switchSchema = new Schema({
   name: String,
   stock: Boolean,
   films: String,
@@ -39,7 +40,7 @@ const switchSchema = newSchema({
 });
 
 
-const stabSchema = newSchema({
+const stabSchema = new Schema({
   name: String,
   manufacturer: String,
   wires: {twoU: Number, six25U: Number, sevenU: Number},
@@ -47,7 +48,7 @@ const stabSchema = newSchema({
   stem: Number,
 });
 
-const artisanSchema = newSchema({
+const artisanSchema = new Schema({
   name: String,
   maker: String,
   sculpt: String,

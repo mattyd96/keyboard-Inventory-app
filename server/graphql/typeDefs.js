@@ -16,12 +16,21 @@ const typeDefs = gql`
     caseMaterial: String,
     weightMaterial: String,
     weight: String,
+    weightUnits: String,
     built: Boolean
   }
 
-  type Cases {
-    cases: [Case]
+  input CaseInput {
+    creator: String,
+    color: String,
+    layout: String,
+    caseMaterial: String,
+    weightMaterial: String,
+    weight: String,
+    weightUnits: String,
+    built: Boolean
   }
+
 
   input SignupInput {
     username: String!
@@ -37,6 +46,7 @@ const typeDefs = gql`
   type Mutation{
     signup(signupinput: SignupInput): User
     login(username: String!, password: String!): User!
+    addCase(caseinput: CaseInput): [Case]!
   }
 `
 

@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { Loader, Text, Group, Title, Button } from "@mantine/core";
-import { useForm } from "@mantine/form";
 
 import Layout from "../../components/layout/Layout";
 import { AuthContext } from "../../context/auth";

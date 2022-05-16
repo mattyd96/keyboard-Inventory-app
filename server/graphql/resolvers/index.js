@@ -14,7 +14,7 @@ module.exports = {
   },
   Mutation: {
     ...usersResolvers.Mutation,
-    //...postsResolvers.Mutation,
+    ...inventoryResolvers.Mutation,
     //...commentsResolvers.Mutation
   }
 }
