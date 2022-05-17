@@ -33,6 +33,7 @@ const ADD_CASE = gql`
       }
     ) {
       cases {
+        _id
         name
         creator 
         color 
@@ -51,11 +52,13 @@ type Props = {
   closeForm: Dispatch<SetStateAction<boolean>>;
 }
 
+type Case = {
+  name: string;
+  creator: string;
+}
+
 type CaseData = {
-  getCases: {
-    name: string;
-    creator: string;
-  }[]
+  getCases: Case[];
 }
 
 function InventoryCaseForm( { closeForm }: Props) {
@@ -77,22 +80,12 @@ function InventoryCaseForm( { closeForm }: Props) {
 
   const [addCase] = useMutation(ADD_CASE, {
     update(proxy, { data: { addCase }}) {
-      // const newData: CaseData | null = proxy.readQuery({
-      //   query: FETCH_CASES,
-      //   variables: {username: user?.username}
-      // });
-
-      //if(newData) {
-        //console.log(newData)
         proxy.writeQuery({ query: FETCH_CASES, data : {
           getCases: [...addCase.cases]
         }, variables: {username: user?.username} });
-      //}
-      //get data and add to page
-      //console.log(addCase);
     },
     onError(err) {
-      console.log(err.graphQLErrors);
+      console.log(err);
     },
     variables: form.values,
   });

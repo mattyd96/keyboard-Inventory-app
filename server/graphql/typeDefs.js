@@ -3,6 +3,7 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
 
   type Case {
+    _id: ID
     name: String
     creator: String
     color: String

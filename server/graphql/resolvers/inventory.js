@@ -7,24 +7,19 @@ const checkAuth = require('../../util/checkAuth');
 module.exports = {
   Query: {
     getCases: async (_, {username}) => {
-      console.log(username);
       const inv = await Inventory.findOne({username})
-      console.log(inv);
       return inv.cases;
     }
   },
 
   Mutation: {
     addCase: async (_, { caseinput }, context) => {
-      console.log('hi');
       const { username } = checkAuth(context);
-      console.log(username);
       
       const inv = await Inventory.findOne({username});
 
       if(inv) {
         inv.cases.push(caseinput);
-        console.log(inv.cases);
         await inv.save();
         return inv;
       } else throw new UserInputError('Something went wrong updating');

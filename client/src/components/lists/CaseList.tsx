@@ -8,6 +8,7 @@ import { Check, X } from "tabler-icons-react";
 
 type Data = {
   getCases: {
+    _id: string;
     name: string;
     creator: string;
     color: string;
@@ -45,12 +46,16 @@ function CaseList() {
     {variables : {username: user?.username}}
   );
 
+  if(data) {
+    console.log(data);
+  }
+
   return (
     <Fragment>
       {loading && <Loader />}
       <Accordion>
         {data?.getCases.map((item, index) => (
-          <Accordion.Item label={<CaseLabel creator={item.creator} name={item.name} built={item.built} />} key={index}>
+          <Accordion.Item label={<CaseLabel {...item} />} key={index}>
             <Text>{item.layout}</Text>
           </Accordion.Item>
         ))}
