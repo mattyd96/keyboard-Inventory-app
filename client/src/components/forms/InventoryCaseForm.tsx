@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { Box, TextInput, Button, Group, Checkbox } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { gql, useMutation } from '@apollo/client';
@@ -46,14 +47,18 @@ const ADD_CASE = gql`
   }
 `
 
+type Props = {
+  closeForm: Dispatch<SetStateAction<boolean>>;
+}
+
 type CaseData = {
   getCases: {
-    name: string
-    creator: string
+    name: string;
+    creator: string;
   }[]
 }
 
-function InventoryCaseForm() {
+function InventoryCaseForm( { closeForm }: Props) {
   const { user } = useContext(AuthContext);
 
   const form = useForm({
@@ -72,19 +77,17 @@ function InventoryCaseForm() {
 
   const [addCase] = useMutation(ADD_CASE, {
     update(proxy, { data: { addCase }}) {
-      const newData: CaseData | null = proxy.readQuery({
-        query: FETCH_CASES,
-        variables: {username: user?.username}
-      });
+      // const newData: CaseData | null = proxy.readQuery({
+      //   query: FETCH_CASES,
+      //   variables: {username: user?.username}
+      // });
 
-      console.log(newData);
-
-      if(newData) {
-        console.log(newData)
+      //if(newData) {
+        //console.log(newData)
         proxy.writeQuery({ query: FETCH_CASES, data : {
           getCases: [...addCase.cases]
         }, variables: {username: user?.username} });
-      }
+      //}
       //get data and add to page
       //console.log(addCase);
     },
@@ -153,6 +156,7 @@ function InventoryCaseForm() {
         />
 
         <Group position="right" mt="md">
+          <Button type="button" onClick={() => {closeForm(false)}}>Cancel</Button>
           <Button type="submit">Submit</Button>
         </Group>
       </form>

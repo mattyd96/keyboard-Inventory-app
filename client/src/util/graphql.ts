@@ -5,12 +5,14 @@ import { gql } from "@apollo/client";
 export const FETCH_CASES = gql`
   query getCases( $username: String! ){
     getCases( username: $username ) {
-        creator
-        color
-        layout
-        caseMaterial
-        weightMaterial
-        weight
+      name
+      creator
+      color
+      layout
+      caseMaterial
+      weightMaterial
+      weight
+      built
     }
   }
 `;
