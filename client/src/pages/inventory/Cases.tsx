@@ -8,8 +8,10 @@ import { FETCH_CASES } from "../../util/graphql";
 import InventoryCaseForm from "../../components/forms/InventoryCaseForm";
 
 type Data = {
-  cases: {
+  getCases: {
+    id: string;
     name: string;
+    creator: string;
   }[]
 }
 
@@ -20,6 +22,10 @@ function Cases() {
   );
   const [formOpen, setFormOpen] = useState<boolean>(false);
 
+  if(!loading) {
+    console.log(data);
+  }
+
   return (
     <Layout>
       <Group position="apart">
@@ -28,7 +34,7 @@ function Cases() {
       </Group>
       <InventoryCaseForm />
       {loading && <Loader />}
-      {data && data.cases.map(cas => (<Text>{cas.name}</Text>) )}
+      {data && data.getCases.map(cas => (<Text key={cas.id}>{cas.creator}</Text>) )}
       <Text>Cases Page</Text>
     </Layout>
   );

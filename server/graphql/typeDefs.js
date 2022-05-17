@@ -1,14 +1,6 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
-  type User {
-    id: ID!
-    email: String!
-    token: String!
-    username: String!
-    createdAt: String!
-  }
-
 
   type Case {
     name: String
@@ -78,6 +70,7 @@ const typeDefs = gql`
   }
 
   type Inventory {
+    id: ID!
     username: String
     cases: [Case]
     stockSwitches: [Switch]
@@ -86,6 +79,15 @@ const typeDefs = gql`
     stabs: [Stab]
     keycaps: [Keycap]
     artisans: [Artisan]
+  }
+
+  type User {
+    id: ID!
+    email: String!
+    token: String!
+    username: String!
+    createdAt: String!
+    inventory: Inventory!
   }
 
   input CaseInput {

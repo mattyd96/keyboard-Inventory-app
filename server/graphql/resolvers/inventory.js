@@ -7,8 +7,10 @@ const checkAuth = require('../../util/checkAuth');
 module.exports = {
   Query: {
     getCases: async (_, {username}) => {
-      const user = await User.findOne({username}).populate('inventory');
-      return user.inventory.cases;
+      console.log(username);
+      const inv = await Inventory.findOne({username})
+      console.log(inv);
+      return inv.cases;
     }
   },
 

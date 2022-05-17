@@ -2,6 +2,10 @@ import { Box, TextInput, Button, Group, Checkbox } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { gql, useMutation } from '@apollo/client';
 
+import { FETCH_CASES } from "../../util/graphql";
+import { useContext } from 'react';
+import { AuthContext } from '../../context/auth';
+
 const ADD_CASE = gql`
   mutation addCase(
     $name: String
@@ -42,7 +46,16 @@ const ADD_CASE = gql`
   }
 `
 
+type CaseData = {
+  getCases: {
+    name: string
+    creator: string
+  }[]
+}
+
 function InventoryCaseForm() {
+  const { user } = useContext(AuthContext);
+
   const form = useForm({
     initialValues: {
       name: '',
@@ -58,9 +71,22 @@ function InventoryCaseForm() {
   });
 
   const [addCase] = useMutation(ADD_CASE, {
-    update(_, { data: { addCase }}) {
+    update(proxy, { data: { addCase }}) {
+      const newData: CaseData | null = proxy.readQuery({
+        query: FETCH_CASES,
+        variables: {username: user?.username}
+      });
+
+      console.log(newData);
+
+      if(newData) {
+        console.log(newData)
+        proxy.writeQuery({ query: FETCH_CASES, data : {
+          getCases: [...addCase.cases]
+        }, variables: {username: user?.username} });
+      }
       //get data and add to page
-      console.log(addCase);
+      //console.log(addCase);
     },
     onError(err) {
       console.log(err.graphQLErrors);
