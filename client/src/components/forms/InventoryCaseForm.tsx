@@ -3,7 +3,7 @@ import { Box, TextInput, Button, Group, Checkbox } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { gql, useMutation } from '@apollo/client';
 
-import { FETCH_CASES } from "../../util/graphql";
+import { FETCH_CASES_QUERY } from "../../util/graphql";
 import { useContext } from 'react';
 import { AuthContext } from '../../context/auth';
 
@@ -53,12 +53,22 @@ type Props = {
 }
 
 type Case = {
+  _id: string;
   name: string;
   creator: string;
+  color: string;
+  layout: string;
+  caseMaterial: string;
+  weightMaterial: string;
+  weight: string;
+  weightUnits: string;
+  built: boolean;
 }
 
-type CaseData = {
-  getCases: Case[];
+type Data = {
+  getInventory: {
+    cases: Case[]
+  }
 }
 
 function InventoryCaseForm( { closeForm }: Props) {
@@ -80,9 +90,15 @@ function InventoryCaseForm( { closeForm }: Props) {
 
   const [addCase] = useMutation(ADD_CASE, {
     update(proxy, { data: { addCase }}) {
-        proxy.writeQuery({ query: FETCH_CASES, data : {
-          getCases: [...addCase.cases]
-        }, variables: {username: user?.username} });
+
+      const newData: Data | null = proxy.readQuery({
+        query: FETCH_CASES_QUERY
+      });
+      //console.log(newData);
+
+      proxy.writeQuery({ query: FETCH_CASES_QUERY, data : {
+        getInventory: { cases: [...addCase.cases]}
+      }});
     },
     onError(err) {
       console.log(err);
