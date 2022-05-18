@@ -6,6 +6,12 @@ const checkAuth = require('../../util/checkAuth');
 
 module.exports = {
   Query: {
+    getInventory: async (_, args, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username})
+      return inv;
+    },
+
     getCases: async (_, {username}) => {
       const inv = await Inventory.findOne({username})
       return inv.cases;

@@ -3,22 +3,25 @@ import { useQuery } from "@apollo/client";
 import { Accordion, Group, Loader, Text, useMantineTheme } from "@mantine/core";
 
 import { AuthContext } from "../../context/auth";
-import { FETCH_CASES } from "../../util/graphql";
-import { Check, X } from "tabler-icons-react";
+import { FETCH_CASES_QUERY } from "../../util/graphql";
+
+type Case = {
+  _id: string;
+  name: string;
+  creator: string;
+  color: string;
+  layout: string;
+  caseMaterial: string;
+  weightMaterial: string;
+  weight: string;
+  weightUnits: string;
+  built: boolean;
+}
 
 type Data = {
-  getCases: {
-    _id: string;
-    name: string;
-    creator: string;
-    color: string;
-    layout: string;
-    caseMaterial: string;
-    weightMaterial: string;
-    weight: string;
-    weightUnits: string;
-    built: boolean;
-  }[]
+  getInventory: {
+    cases: Case[]
+  }
 }
 
 type LabelProps = {
@@ -42,9 +45,7 @@ function CaseLabel({ creator, name, built }: LabelProps) {
 
 function CaseList() {
   const { user } = useContext(AuthContext);
-  const { loading, data } = useQuery<Data>(FETCH_CASES,
-    {variables : {username: user?.username}}
-  );
+  const { loading, data } = useQuery<Data>(FETCH_CASES_QUERY);
 
   if(data) {
     console.log(data);
@@ -54,11 +55,11 @@ function CaseList() {
     <Fragment>
       {loading && <Loader />}
       <Accordion>
-        {data?.getCases.map((item, index) => (
-          <Accordion.Item label={<CaseLabel {...item} />} key={index}>
-            <Text>{item.layout}</Text>
-          </Accordion.Item>
-        ))}
+            {data?.getInventory.cases.map((item, index) => (
+              <Accordion.Item label={<CaseLabel {...item} />} key={index}>
+                <Text>{item.layout}</Text>
+              </Accordion.Item>
+            ))}
       </Accordion>
 
     </Fragment>

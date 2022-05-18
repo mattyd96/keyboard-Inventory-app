@@ -113,6 +113,7 @@ const typeDefs = gql`
   type Query {
     getUser: [User]
     getCases(username: String!): [Case]!
+    getInventory: Inventory
   }
 
   type Mutation{
