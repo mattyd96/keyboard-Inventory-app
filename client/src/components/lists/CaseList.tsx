@@ -1,9 +1,9 @@
 import { Fragment, useContext } from "react";
-import { useQuery } from "@apollo/client";
-import { Accordion, Group, Loader, Text, useMantineTheme } from "@mantine/core";
+import { useMutation, useQuery } from "@apollo/client";
+import { Accordion, Group, Loader, Text, Button, useMantineTheme } from "@mantine/core";
 
 import { AuthContext } from "../../context/auth";
-import { FETCH_CASES_QUERY } from "../../util/graphql";
+import { FETCH_CASES_QUERY, DELETE_CASE_MUTATION } from "../../util/graphql";
 
 type Case = {
   _id: string;
@@ -46,9 +46,22 @@ function CaseLabel({ creator, name, built }: LabelProps) {
 function CaseList() {
   const { user } = useContext(AuthContext);
   const { loading, data } = useQuery<Data>(FETCH_CASES_QUERY);
+  const [deleteCaseMutation] = useMutation(DELETE_CASE_MUTATION, {
+    update(proxy, { data: { deleteCase }}) {
+
+      proxy.writeQuery({ query: FETCH_CASES_QUERY, data : {
+        getInventory: { cases: [...deleteCase.cases]}
+      }});
+    },
+  });
 
   if(data) {
     console.log(data);
+  }
+
+  const deleteCase = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const id = event.currentTarget.value;
+    deleteCaseMutation({variables: {id}});
   }
 
   return (
@@ -58,6 +71,7 @@ function CaseList() {
             {data?.getInventory.cases.map((item, index) => (
               <Accordion.Item label={<CaseLabel {...item} />} key={index}>
                 <Text>{item.layout}</Text>
+                <Button onClick={deleteCase} value={item._id}>Delete</Button>
               </Accordion.Item>
             ))}
       </Accordion>

@@ -25,6 +25,17 @@ module.exports = {
         return inv;
       } else throw new UserInputError('Something went wrong updating');
 
+    },
+
+    deleteCase: async (_, { id }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+
+      if(inv) {
+        inv.cases = inv.cases.filter((item) => item._id != id);
+        await inv.save();
+        return inv;
+      } else throw new UserInputError('Something went wrong deleting');
     }
   }
 }

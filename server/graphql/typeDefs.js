@@ -103,7 +103,6 @@ const typeDefs = gql`
     built: Boolean
   }
 
-
   input SignupInput {
     username: String!
     password: String!
@@ -119,6 +118,7 @@ const typeDefs = gql`
     signup(signupinput: SignupInput): User
     login(username: String!, password: String!): User!
     addCase(caseinput: CaseInput): Inventory
+    deleteCase(id: ID): Inventory
   }
 `
 
