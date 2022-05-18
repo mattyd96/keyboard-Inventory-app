@@ -11,11 +11,6 @@ module.exports = {
       const inv = await Inventory.findOne({username})
       return inv;
     },
-
-    getCases: async (_, {username}) => {
-      const inv = await Inventory.findOne({username})
-      return inv.cases;
-    }
   },
 
   Mutation: {
