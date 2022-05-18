@@ -32,6 +32,7 @@ const ADD_CASE = gql`
         built: $built
       }
     ) {
+      id
       cases {
         _id
         name
@@ -97,7 +98,7 @@ function InventoryCaseForm( { closeForm }: Props) {
       //console.log(newData);
 
       proxy.writeQuery({ query: FETCH_CASES_QUERY, data : {
-        getInventory: { cases: [...addCase.cases]}
+        getInventory: {id: addCase.id, cases: [...addCase.cases]}
       }});
     },
     onError(err) {

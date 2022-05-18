@@ -1,9 +1,11 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { Accordion, Group, Loader, Text, Button, useMantineTheme } from "@mantine/core";
+import { Accordion, Group, Loader, Text, Button, useMantineTheme, TextInput } from "@mantine/core";
 
 import { AuthContext } from "../../context/auth";
 import { FETCH_CASES_QUERY, DELETE_CASE_MUTATION } from "../../util/graphql";
+import CaseItem from "./CaseItem";
+import CaseLabel from "./CaseLabel";
 
 type Case = {
   _id: string;
@@ -24,33 +26,13 @@ type Data = {
   }
 }
 
-type LabelProps = {
-  creator: string;
-  name: string;
-  built: boolean;
-}
-
-function CaseLabel({ creator, name, built }: LabelProps) {
-  const { colors } = useMantineTheme();
-  return (
-    <Group position="apart">
-      <Group>
-        <Text>{creator}</Text>
-        <Text>{name}</Text>
-      </Group>
-      {built && <Text color={colors.green[3]}>Built</Text>}
-    </Group>
-  );
-}
-
 function CaseList() {
   const { user } = useContext(AuthContext);
   const { loading, data } = useQuery<Data>(FETCH_CASES_QUERY);
   const [deleteCaseMutation] = useMutation(DELETE_CASE_MUTATION, {
     update(proxy, { data: { deleteCase }}) {
-
       proxy.writeQuery({ query: FETCH_CASES_QUERY, data : {
-        getInventory: { cases: [...deleteCase.cases]}
+        getInventory: {id: deleteCase.id, cases: [...deleteCase.cases]}
       }});
     },
   });
@@ -67,11 +49,10 @@ function CaseList() {
   return (
     <Fragment>
       {loading && <Loader />}
-      <Accordion>
+      <Accordion multiple>
             {data?.getInventory.cases.map((item, index) => (
               <Accordion.Item label={<CaseLabel {...item} />} key={index}>
-                <Text>{item.layout}</Text>
-                <Button onClick={deleteCase} value={item._id}>Delete</Button>
+                <CaseItem {...item} delete={deleteCase}/>
               </Accordion.Item>
             ))}
       </Accordion>

@@ -119,6 +119,7 @@ const typeDefs = gql`
     login(username: String!, password: String!): User!
     addCase(caseinput: CaseInput): Inventory
     deleteCase(id: ID): Inventory
+    updateCase(id: ID, caseinput: CaseInput): Inventory
   }
 `
 

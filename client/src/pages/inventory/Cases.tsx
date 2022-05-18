@@ -4,7 +4,7 @@ import { Loader, Text, Group, Title, Button, Collapse } from "@mantine/core";
 
 import Layout from "../../components/layout/Layout";
 import InventoryCaseForm from "../../components/forms/InventoryCaseForm";
-import CaseList from "../../components/lists/CaseList";
+import CaseList from "../../components/cases/CaseList";
 
 type Data = {
   getCases: {
