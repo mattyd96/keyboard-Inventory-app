@@ -16,9 +16,9 @@ module.exports = {
   Mutation: {
     addCase: async (_, { caseinput }, context) => {
       const { username } = checkAuth(context);
-      
       const inv = await Inventory.findOne({username});
-
+      caseinput.plates = caseinput.plates.map(plate => {return {type: plate, used: false}});
+      
       if(inv) {
         inv.cases.push(caseinput);
         await inv.save();
@@ -42,6 +42,7 @@ module.exports = {
       const { username } = checkAuth(context);
       const inv = await Inventory.findOne({username});
       const item = inv.cases.id(id);
+      caseinput.plates = caseinput.plates.map(plate => {return {type: plate, used: false}});
       item.set(caseinput);
       await inv.save();
       return inv;

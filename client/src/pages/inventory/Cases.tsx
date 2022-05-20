@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { Loader, Text, Group, Title, Button, Collapse } from "@mantine/core";
 
 import Layout from "../../components/layout/Layout";
-import InventoryCaseForm from "../../components/forms/InventoryCaseForm";
+import CaseAddForm from "../../components/cases/CaseAddForm";
 import CaseList from "../../components/cases/CaseList";
 
 type Data = {
@@ -21,10 +21,10 @@ function Cases() {
     <Layout>
       <Group position="apart">
         <Title order={2}>Cases</Title>
-        <Button onClick={() => {setFormOpen(true)}}>Add Case</Button>
+        {!formOpen && <Button onClick={() => {setFormOpen(true)}}>Add Case</Button>}
       </Group>
       <Collapse in={formOpen} transitionDuration={500}>
-        <InventoryCaseForm closeForm={setFormOpen} />
+        <CaseAddForm closeForm={setFormOpen} />
       </Collapse>
       <CaseList />
     </Layout>

@@ -3,6 +3,11 @@ import { Text, Button, Group, TextInput } from "@mantine/core";
 
 import CaseEditForm from "./CaseEditForm";
 
+type Plate = {
+  type: string;
+  used: boolean;
+}
+
 type CaseProp = {
   _id: string;
   name: string;
@@ -10,7 +15,9 @@ type CaseProp = {
   color: string;
   layout: string;
   caseMaterial: string;
+  hasWeight: boolean;
   weightMaterial: string;
+  plates: Plate[];
   weight: string;
   weightUnits: string;
   built: boolean;

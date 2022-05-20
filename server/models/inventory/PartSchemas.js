@@ -1,12 +1,19 @@
 const { Schema } = require('mongoose');
 
+const plateSchema = new Schema({
+  type: String,
+  used: Boolean
+});
+
 const caseSchema = new Schema({
   name: { type: String, required: true},
   creator: String,
   color: String,
   layout: String,
   caseMaterial: String,
+  hasWeight: Boolean,
   weightMaterial: String,
+  plates: [plateSchema],
   weight: String,
   weightUnits: String,
   built: Boolean

@@ -2,6 +2,12 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql`
 
+  type Plate {
+    _id: ID
+    type: String
+    used: Boolean
+  }
+
   type Case {
     _id: ID
     name: String
@@ -9,7 +15,9 @@ const typeDefs = gql`
     color: String
     layout: String
     caseMaterial: String
+    hasWeight: Boolean
     weightMaterial: String
+    plates: [Plate]
     weight: String
     weightUnits: String
     built: Boolean
@@ -97,7 +105,9 @@ const typeDefs = gql`
     color: String
     layout: String
     caseMaterial: String
+    hasWeight: Boolean
     weightMaterial: String
+    plates: [String]
     weight: String
     weightUnits: String
     built: Boolean

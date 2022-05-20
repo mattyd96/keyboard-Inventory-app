@@ -7,6 +7,11 @@ import { FETCH_CASES_QUERY, DELETE_CASE_MUTATION } from "../../util/graphql";
 import CaseItem from "./CaseItem";
 import CaseLabel from "./CaseLabel";
 
+type Plate = {
+  type: string;
+  used: boolean;
+}
+
 type Case = {
   _id: string;
   name: string;
@@ -14,7 +19,9 @@ type Case = {
   color: string;
   layout: string;
   caseMaterial: string;
+  hasWeight: boolean;
   weightMaterial: string;
+  plates: Plate[];
   weight: string;
   weightUnits: string;
   built: boolean;

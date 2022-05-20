@@ -12,7 +12,13 @@ export const FETCH_CASES_QUERY = gql`
         color
         layout
         caseMaterial
+        hasWeight
         weightMaterial
+        plates {
+          _id
+          type
+          used
+        }
         weight
         built
       }

@@ -4,6 +4,12 @@ import { useForm } from "@mantine/form";
 import { gql, useMutation } from "@apollo/client";
 
 import { FETCH_CASES_QUERY } from "../../util/graphql";
+import InventoryCaseForm from "../forms/InventoryCaseForm";
+
+type Plate = {
+  type: string;
+  used: boolean;
+}
 
 type CaseProp = {
   _id: string;
@@ -12,7 +18,9 @@ type CaseProp = {
   color: string;
   layout: string;
   caseMaterial: string;
+  hasWeight: boolean;
   weightMaterial: string;
+  plates: Plate[];
   weight: string;
   weightUnits: string;
   built: boolean;
@@ -21,6 +29,8 @@ type CaseProp = {
 }
 
 function CaseEditForm(item: CaseProp) {
+
+  const plateValues = item.plates.map(plate => plate.type);
   const form = useForm({
     initialValues: {
       name: item.name,
@@ -29,6 +39,8 @@ function CaseEditForm(item: CaseProp) {
       layout: item.layout,
       caseMaterial: item.caseMaterial,
       weightMaterial: item.weightMaterial,
+      hasWeight: item.hasWeight,
+      plates: plateValues,
       weight: item.weight,
       weightUnits: item.weightUnits,
       built: item.built
@@ -43,7 +55,9 @@ function CaseEditForm(item: CaseProp) {
       $color: String
       $layout: String
       $caseMaterial: String
+      $hasWeight: Boolean
       $weightMaterial: String
+      $plates: [String]
       $weight: String
       $weightUnits: String
       $built: Boolean
@@ -56,7 +70,9 @@ function CaseEditForm(item: CaseProp) {
           color: $color
           layout: $layout
           caseMaterial: $caseMaterial
+          hasWeight: $hasWeight
           weightMaterial: $weightMaterial
+          plates: $plates
           weight: $weight
           weightUnits: $weightUnits
           built: $built
@@ -70,7 +86,13 @@ function CaseEditForm(item: CaseProp) {
           color
           layout
           caseMaterial
+          hasWeight
           weightMaterial
+          plates {
+          _id
+          type
+          used
+        }
           weight
           built
         }
@@ -86,77 +108,75 @@ function CaseEditForm(item: CaseProp) {
     },
   });
 
-  const hideForm = () => {
+  const updateCase = () => {
+    updateCaseMutation({variables: {id: item._id, ...form.values}});
+    form.reset();
     item.setFormVisibility(false);
   }
 
-  const updateCase = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    updateCaseMutation({variables: {id: item._id, ...form.values}})
-  }
-
   return (
-    <form>
-      <TextInput
-        required
-        label="Name"
-        placeholder="Jane CE V2"
-        {...form.getInputProps('name')}
-      />
-      <TextInput
-        required
-        label="Creator"
-        placeholder="TGR"
-        {...form.getInputProps('creator')}
-      />
-      <TextInput
-        required
-        label="Color"
-        placeholder="Silver"
-        {...form.getInputProps('color')}
-      />
-      <TextInput
-        required
-        label="Layout"
-        placeholder="TKL"
-        {...form.getInputProps('layout')}
-      />
-      <TextInput
-        required
-        label="Case Material"
-        placeholder="Aluminium"
-        {...form.getInputProps('caseMaterial')}
-      />
-      <TextInput
-        required
-        label="Weight Material"
-        placeholder="Brass"
-        {...form.getInputProps('weightMaterial')}
-      />
-      <Group>
-        <TextInput
-          required
-          label="Weight"
-          {...form.getInputProps('weight')}
-        />
-        <TextInput
-          required
-          label="Units"
-          {...form.getInputProps('weightUnits')}
-        />
-      </Group>
+    <InventoryCaseForm form={form} setFormVisible={item.setFormVisibility} handleSubmit={updateCase} />
+    // <form>
+    //   <TextInput
+    //     required
+    //     label="Name"
+    //     placeholder="Jane CE V2"
+    //     {...form.getInputProps('name')}
+    //   />
+    //   <TextInput
+    //     required
+    //     label="Creator"
+    //     placeholder="TGR"
+    //     {...form.getInputProps('creator')}
+    //   />
+    //   <TextInput
+    //     required
+    //     label="Color"
+    //     placeholder="Silver"
+    //     {...form.getInputProps('color')}
+    //   />
+    //   <TextInput
+    //     required
+    //     label="Layout"
+    //     placeholder="TKL"
+    //     {...form.getInputProps('layout')}
+    //   />
+    //   <TextInput
+    //     required
+    //     label="Case Material"
+    //     placeholder="Aluminium"
+    //     {...form.getInputProps('caseMaterial')}
+    //   />
+    //   <TextInput
+    //     required
+    //     label="Weight Material"
+    //     placeholder="Brass"
+    //     {...form.getInputProps('weightMaterial')}
+    //   />
+    //   <Group>
+    //     <TextInput
+    //       required
+    //       label="Weight"
+    //       {...form.getInputProps('weight')}
+    //     />
+    //     <TextInput
+    //       required
+    //       label="Units"
+    //       {...form.getInputProps('weightUnits')}
+    //     />
+    //   </Group>
 
-      <Checkbox
-        mt="md"
-        label="Has this case been built?"
-        {...form.getInputProps('built', { type: 'checkbox' })}
-      />
+    //   <Checkbox
+    //     mt="md"
+    //     label="Has this case been built?"
+    //     {...form.getInputProps('built', { type: 'checkbox' })}
+    //   />
 
-      <Group position="right" mt="md">
-        <Button onClick={hideForm}>Cancel</Button>
-        <Button type="submit" onClick={updateCase}>Submit</Button>
-      </Group>
-    </form>
+    //   <Group position="right" mt="md">
+    //     <Button onClick={hideForm}>Cancel</Button>
+    //     <Button type="submit" onClick={updateCase}>Submit</Button>
+    //   </Group>
+    // </form>
   );
 }
 

@@ -1,118 +1,79 @@
-import { Dispatch, SetStateAction } from 'react';
-import { Box, TextInput, Button, Group, Checkbox } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { gql, useMutation } from '@apollo/client';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { Box, TextInput, Button, Group, Checkbox, Select, MultiSelect } from '@mantine/core';
 
-import { FETCH_CASES_QUERY } from "../../util/graphql";
-import { useContext } from 'react';
-import { AuthContext } from '../../context/auth';
+const PLATE_DATA = [
+  "Alu Full",
+  "Alu Half",
+  "Brass Full",
+  "Brass Half",
+  "SS Full",
+  "SS Half",
+  "CF Full",
+  "CF Half",
+  "FR4 Full",
+  "FR4 Half",
+  "PC Full",
+  "PC Half",
+  "PP Full",
+  "PP Half",
+  "POM Full",
+  "POM Half",
+];
 
-const ADD_CASE = gql`
-  mutation addCase(
-    $name: String
-    $creator: String
-    $color: String
-    $layout: String
-    $caseMaterial: String
-    $weightMaterial: String
-    $weight: String
-    $weightUnits: String
-    $built: Boolean
-  ) {
-    addCase(
-      caseinput: {
-        name: $name
-        creator: $creator
-        color: $color
-        layout: $layout
-        caseMaterial: $caseMaterial
-        weightMaterial: $weightMaterial
-        weight: $weight
-        weightUnits: $weightUnits
-        built: $built
-      }
-    ) {
-      id
-      cases {
-        _id
-        name
-        creator 
-        color 
-        layout 
-        caseMaterial 
-        weightMaterial 
-        weight 
-        weightUnits 
-        built
-      }
-    }
-  }
-`
+const LAYOUT_DATA = [
+  "TKL",
+  "TKL WKL",
+  "60",
+  "60 WKL",
+  "60 HHKB",
+  "65",
+  "65 WKL",
+  "65 HHKB",
+  "75",
+  "75 WKL",
+  "Fullsize"
+];
+
+const CASE_MATERIAL_DATA = [
+  "Aluminium",
+  "Brass",
+  "Polycarbonate",
+  "Acrylic"
+]; 
+
+const WEIGHT_MATERIAL_DATA = [
+  "Aluminium",
+  "Brass",
+  "Stainless Steel",
+  "Polycarbonate",
+  "Acrylic"
+]; 
+
+const WEIGHT_UNITS = [
+  "kg",
+  "grams",
+  "lbs",
+  "ounces"
+];
 
 type Props = {
-  closeForm: Dispatch<SetStateAction<boolean>>;
+  setFormVisible: Dispatch<SetStateAction<boolean>>;
+  handleSubmit: Function
+  form: any // TODO create a type for the form object
 }
 
-type Case = {
-  _id: string;
-  name: string;
-  creator: string;
-  color: string;
-  layout: string;
-  caseMaterial: string;
-  weightMaterial: string;
-  weight: string;
-  weightUnits: string;
-  built: boolean;
-}
-
-type Data = {
-  getInventory: {
-    cases: Case[]
-  }
-}
-
-function InventoryCaseForm( { closeForm }: Props) {
-  const { user } = useContext(AuthContext);
-
-  const form = useForm({
-    initialValues: {
-      name: '',
-      creator: '',
-      color: '',
-      layout: '',
-      caseMaterial: '',
-      weightMaterial: '',
-      weight: '',
-      weightUnits: '',
-      built: false
-    }
-  });
-
-  const [addCase] = useMutation(ADD_CASE, {
-    update(proxy, { data: { addCase }}) {
-
-      const newData: Data | null = proxy.readQuery({
-        query: FETCH_CASES_QUERY
-      });
-      //console.log(newData);
-
-      proxy.writeQuery({ query: FETCH_CASES_QUERY, data : {
-        getInventory: {id: addCase.id, cases: [...addCase.cases]}
-      }});
-    },
-    onError(err) {
-      console.log(err);
-    },
-    variables: form.values,
-  });
+function InventoryCaseForm( { setFormVisible, handleSubmit, form }: Props) {
+  const [plateData, setPlateData] = useState(PLATE_DATA);
+  const [layoutData, setLayoutData] = useState(LAYOUT_DATA);
+  const [caseData, setCaseData] = useState(CASE_MATERIAL_DATA);
+  const [weightData, setWeightData] = useState(WEIGHT_MATERIAL_DATA);
 
   return (
     <Box>
-      <form onSubmit={form.onSubmit((values) => {console.log(values); addCase();})}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           required
-          label="Name"
+          label="Name"  
           placeholder="Jane CE V2"
           {...form.getInputProps('name')}
         />
@@ -128,34 +89,77 @@ function InventoryCaseForm( { closeForm }: Props) {
           placeholder="Silver"
           {...form.getInputProps('color')}
         />
-        <TextInput
+        <Select
           required
           label="Layout"
-          placeholder="TKL"
+          data={layoutData}
+          maxDropdownHeight={165}
+          placeholder="Select Layout"
+          nothingFound="Nothing found"
+          searchable
+          creatable
+          getCreateLabel={(query) => `+ Create ${query}`}
+          onCreate={(query) => setLayoutData((current) => [...current, query])}
           {...form.getInputProps('layout')}
         />
-        <TextInput
-          required
-          label="Case Material"
-          placeholder="Aluminium"
-          {...form.getInputProps('caseMaterial')}
+        <Select
+            label="Case Material"
+            placeholder="Select or enter your Case Material"
+            data={caseData}
+            maxDropdownHeight={165}
+            searchable
+            clearable
+            creatable
+            getCreateLabel={(query) => `+ Create ${query}`}
+            onCreate={(query) => setWeightData((current) => [...current, query])}
+            {...form.getInputProps('caseMaterial')}
+          />
+        <Checkbox
+          mt="md"
+          label="Has a weight?"
+          {...form.getInputProps('hasWeight', { type: 'checkbox' })}
         />
-        <TextInput
-          required
-          label="Weight Material"
-          placeholder="Brass"
-          {...form.getInputProps('weightMaterial')}
+        {form.values.hasWeight && 
+          <Select
+            label="Weight Material"
+            placeholder="Select or enter your Weight Material"
+            data={weightData}
+            maxDropdownHeight={165}
+            searchable
+            clearable
+            creatable
+            getCreateLabel={(query) => `+ Create ${query}`}
+            onCreate={(query) => setWeightData((current) => [...current, query])}
+            {...form.getInputProps('weightMaterial')} 
+          />
+        }
+        <MultiSelect
+          label="Plates"
+          placeholder="Pick your Plates"
+          data={plateData}
+          maxDropdownHeight={165}
+          searchable
+          clearable
+          creatable
+          getCreateLabel={(query) => `+ Create ${query}`}
+          onCreate={(query) => setPlateData((current) => [...current, query])}
+          {...form.getInputProps('plates')} 
         />
+        
         <Group>
           <TextInput
-            required
             label="Weight"
             {...form.getInputProps('weight')}
           />
-          <TextInput
-            required
-            label="Units"
-            {...form.getInputProps('weightUnits')}
+          <Select
+            label="Weight Material"
+            placeholder="Select a weight unit"
+            data={WEIGHT_UNITS}
+            maxDropdownHeight={165}
+            searchable
+            clearable
+            nothingFound="Nothing found"
+            {...form.getInputProps('weightUnits')} 
           />
         </Group>
 
@@ -166,7 +170,7 @@ function InventoryCaseForm( { closeForm }: Props) {
         />
 
         <Group position="right" mt="md">
-          <Button type="button" onClick={() => {closeForm(false)}}>Cancel</Button>
+          <Button type="button" onClick={() => {setFormVisible(false)}}>Cancel</Button>
           <Button type="submit">Submit</Button>
         </Group>
       </form>
