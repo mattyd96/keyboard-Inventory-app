@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Box, TextInput, Button, Group, Checkbox, Select, MultiSelect } from '@mantine/core';
+import { FileX } from 'tabler-icons-react';
 
 const PLATE_DATA = [
   "Alu Full",
@@ -69,111 +70,118 @@ function InventoryCaseForm( { setFormVisible, handleSubmit, form }: Props) {
   const [weightData, setWeightData] = useState(WEIGHT_MATERIAL_DATA);
 
   return (
-    <Box>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <TextInput
-          required
-          label="Name"  
-          placeholder="Jane CE V2"
-          {...form.getInputProps('name')}
-        />
-        <TextInput
-          required
-          label="Creator"
-          placeholder="TGR"
-          {...form.getInputProps('creator')}
-        />
-        <TextInput
-          required
-          label="Color"
-          placeholder="Silver"
-          {...form.getInputProps('color')}
-        />
+    <Box
+      component="form"
+      onSubmit={form.onSubmit(handleSubmit)}
+      sx={{ display: "flex", flexDirection: "column", gap: ".5rem" }}
+    >
+      <TextInput
+        required
+        label="Name"
+        placeholder="Jane CE V2"
+        {...form.getInputProps("name")}
+      />
+      <TextInput
+        required
+        label="Creator"
+        placeholder="TGR"
+        {...form.getInputProps("creator")}
+      />
+      <TextInput
+        required
+        label="Color"
+        placeholder="Silver"
+        {...form.getInputProps("color")}
+      />
+      <Select
+        required
+        label="Layout"
+        data={layoutData}
+        maxDropdownHeight={165}
+        placeholder="Select Layout"
+        nothingFound="Nothing found"
+        searchable
+        creatable
+        getCreateLabel={(query) => `+ Create ${query}`}
+        onCreate={(query) => setLayoutData((current) => [...current, query])}
+        {...form.getInputProps("layout")}
+      />
+      <Select
+        label="Case Material"
+        placeholder="Select or enter your Case Material"
+        data={caseData}
+        maxDropdownHeight={165}
+        searchable
+        clearable
+        creatable
+        getCreateLabel={(query) => `+ Create ${query}`}
+        onCreate={(query) => setCaseData((current) => [...current, query])}
+        {...form.getInputProps("caseMaterial")}
+      />
+      <Checkbox
+        mt="md"
+        mb="sm"
+        label="Has a weight?"
+        {...form.getInputProps("hasWeight", { type: "checkbox" })}
+      />
+      {form.values.hasWeight && (
         <Select
-          required
-          label="Layout"
-          data={layoutData}
-          maxDropdownHeight={165}
-          placeholder="Select Layout"
-          nothingFound="Nothing found"
-          searchable
-          creatable
-          getCreateLabel={(query) => `+ Create ${query}`}
-          onCreate={(query) => setLayoutData((current) => [...current, query])}
-          {...form.getInputProps('layout')}
-        />
-        <Select
-            label="Case Material"
-            placeholder="Select or enter your Case Material"
-            data={caseData}
-            maxDropdownHeight={165}
-            searchable
-            clearable
-            creatable
-            getCreateLabel={(query) => `+ Create ${query}`}
-            onCreate={(query) => setCaseData((current) => [...current, query])}
-            {...form.getInputProps('caseMaterial')}
-          />
-        <Checkbox
-          mt="md"
-          label="Has a weight?"
-          {...form.getInputProps('hasWeight', { type: 'checkbox' })}
-        />
-        {form.values.hasWeight && 
-          <Select
-            label="Weight Material"
-            placeholder="Select or enter your Weight Material"
-            data={weightData}
-            maxDropdownHeight={165}
-            searchable
-            clearable
-            creatable
-            getCreateLabel={(query) => `+ Create ${query}`}
-            onCreate={(query) => setWeightData((current) => [...current, query])}
-            {...form.getInputProps('weightMaterial')} 
-          />
-        }
-        <MultiSelect
-          label="Plates"
-          placeholder="Pick your Plates"
-          data={plateData}
+          label="Weight Material"
+          placeholder="Select or enter your Weight Material"
+          data={weightData}
           maxDropdownHeight={165}
           searchable
           clearable
           creatable
           getCreateLabel={(query) => `+ Create ${query}`}
-          onCreate={(query) => setPlateData((current) => [...current, query])}
-          {...form.getInputProps('plates')} 
+          onCreate={(query) => setWeightData((current) => [...current, query])}
+          {...form.getInputProps("weightMaterial")}
         />
-        
-        <Group>
-          <TextInput
-            label="Weight"
-            {...form.getInputProps('weight')}
-          />
-          <Select
-            label="Weight Material"
-            placeholder="Select a weight unit"
-            data={WEIGHT_UNITS}
-            maxDropdownHeight={165}
-            searchable
-            clearable
-            nothingFound="Nothing found"
-            {...form.getInputProps('weightUnits')} 
-          />
-        </Group>
+      )}
+      <MultiSelect
+        label="Plates"
+        placeholder="Pick your Plates"
+        data={plateData}
+        maxDropdownHeight={165}
+        searchable
+        clearable
+        creatable
+        getCreateLabel={(query) => `+ Create ${query}`}
+        onCreate={(query) => setPlateData((current) => [...current, query])}
+        {...form.getInputProps("plates")}
+      />
 
-        <Checkbox
-          mt="md"
-          label="Has this case been built?"
-          {...form.getInputProps('built', { type: 'checkbox' })}
+      <Group noWrap>
+        <TextInput label="Weight" {...form.getInputProps("weight")} />
+        <Select
+          label="Unit"
+          placeholder="Select a weight unit"
+          data={WEIGHT_UNITS}
+          maxDropdownHeight={165}
+          searchable
+          clearable
+          nothingFound="Nothing found"
+          {...form.getInputProps("weightUnits")}
         />
+      </Group>
 
-        <Group position="right" mt="md">
-          <Button type="button" onClick={() => {setFormVisible(false)}}>Cancel</Button>
-          <Button type="submit">Submit</Button>
-        </Group>
-      </form>
+      <Checkbox
+        mt="md"
+        label="Has this case been built?"
+        {...form.getInputProps("built", { type: "checkbox" })}
+      />
+
+      <Group position="right" mt="md">
+        <Button
+          type="button"
+          onClick={() => {
+            setFormVisible(false);
+          }}
+        >
+          Cancel
+        </Button>
+        <Button type="submit">Submit</Button>
+      </Group>
     </Box>
   );
 }

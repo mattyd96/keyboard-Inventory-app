@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Group, Title, Button, Collapse } from "@mantine/core";
+import { Group, Title, Button, Collapse, Modal } from "@mantine/core";
 
 import Layout from "../../components/layout/Layout";
 import CaseAddForm from "../../components/cases/CaseAddForm";
@@ -15,9 +15,9 @@ function Cases() {
         <Title order={2}>Cases</Title>
         {!formOpen && <Button onClick={() => {setFormOpen(true)}}>Add Case</Button>}
       </Group>
-      <Collapse in={formOpen} transitionDuration={500}>
+      <Modal opened={formOpen} onClose={() => setFormOpen(false)} title="Add a Case">
         <CaseAddForm closeForm={setFormOpen} />
-      </Collapse>
+      </Modal>
       <CaseList />
     </Layout>
   );

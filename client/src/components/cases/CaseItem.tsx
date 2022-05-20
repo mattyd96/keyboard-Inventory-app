@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Text, Button, Group } from "@mantine/core";
+import { Text, Button, Group, Modal } from "@mantine/core";
 
 import CaseEditForm from "./CaseEditForm";
 import { Plate } from "../../util/caseTypes";
@@ -35,7 +35,13 @@ function CaseItem(item: CaseProp) {
     </Group>
   );
 
-  return edit ? <CaseEditForm {...item} setFormVisibility={setEdit} /> : display;
+  const editDisplay = (
+    <Modal opened={edit} onClose={() => setEdit(false)} title="Add a Case">
+      <CaseEditForm {...item} setFormVisibility={setEdit} />
+    </Modal>
+  );
+
+  return edit ? editDisplay : display;
 }
 
 export default CaseItem;
