@@ -1,18 +1,10 @@
-import { useContext, useState } from "react";
-import { useQuery } from "@apollo/client";
-import { Loader, Text, Group, Title, Button, Collapse } from "@mantine/core";
+import { useState } from "react";
+import { Group, Title, Button, Collapse } from "@mantine/core";
 
 import Layout from "../../components/layout/Layout";
 import CaseAddForm from "../../components/cases/CaseAddForm";
 import CaseList from "../../components/cases/CaseList";
 
-type Data = {
-  getCases: {
-    id: string;
-    name: string;
-    creator: string;
-  }[]
-}
 
 function Cases() {
   const [formOpen, setFormOpen] = useState<boolean>(false);

@@ -111,7 +111,7 @@ function InventoryCaseForm( { setFormVisible, handleSubmit, form }: Props) {
             clearable
             creatable
             getCreateLabel={(query) => `+ Create ${query}`}
-            onCreate={(query) => setWeightData((current) => [...current, query])}
+            onCreate={(query) => setCaseData((current) => [...current, query])}
             {...form.getInputProps('caseMaterial')}
           />
         <Checkbox

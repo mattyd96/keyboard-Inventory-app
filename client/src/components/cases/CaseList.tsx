@@ -1,40 +1,14 @@
-import { Fragment, useContext, useState } from "react";
+import { Fragment } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { Accordion, Group, Loader, Text, Button, useMantineTheme, TextInput } from "@mantine/core";
+import { Accordion, Loader } from "@mantine/core";
 
-import { AuthContext } from "../../context/auth";
-import { FETCH_CASES_QUERY, DELETE_CASE_MUTATION } from "../../util/graphql";
+import { FETCH_CASES_QUERY, DELETE_CASE_MUTATION } from "../../util/caseGraphql";
+import { Data } from "../../util/caseTypes";
 import CaseItem from "./CaseItem";
 import CaseLabel from "./CaseLabel";
 
-type Plate = {
-  type: string;
-  used: boolean;
-}
-
-type Case = {
-  _id: string;
-  name: string;
-  creator: string;
-  color: string;
-  layout: string;
-  caseMaterial: string;
-  hasWeight: boolean;
-  weightMaterial: string;
-  plates: Plate[];
-  weight: string;
-  weightUnits: string;
-  built: boolean;
-}
-
-type Data = {
-  getInventory: {
-    cases: Case[]
-  }
-}
 
 function CaseList() {
-  const { user } = useContext(AuthContext);
   const { loading, data } = useQuery<Data>(FETCH_CASES_QUERY);
   const [deleteCaseMutation] = useMutation(DELETE_CASE_MUTATION, {
     update(proxy, { data: { deleteCase }}) {

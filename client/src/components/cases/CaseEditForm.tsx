@@ -1,15 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
-import { TextInput, Button, Group, Checkbox } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
-import { FETCH_CASES_QUERY } from "../../util/graphql";
+import { FETCH_CASES_QUERY, UPDATE_CASE_MUTATION } from "../../util/caseGraphql";
+import { Plate } from "../../util/caseTypes";
 import InventoryCaseForm from "../forms/InventoryCaseForm";
-
-type Plate = {
-  type: string;
-  used: boolean;
-}
 
 type CaseProp = {
   _id: string;
@@ -31,6 +26,7 @@ type CaseProp = {
 function CaseEditForm(item: CaseProp) {
 
   const plateValues = item.plates.map(plate => plate.type);
+
   const form = useForm({
     initialValues: {
       name: item.name,
@@ -47,59 +43,6 @@ function CaseEditForm(item: CaseProp) {
     }
   });
 
-  const UPDATE_CASE_MUTATION = gql`
-    mutation updateCase(
-      $id: ID!
-      $name: String
-      $creator: String
-      $color: String
-      $layout: String
-      $caseMaterial: String
-      $hasWeight: Boolean
-      $weightMaterial: String
-      $plates: [String]
-      $weight: String
-      $weightUnits: String
-      $built: Boolean
-    ) {
-      updateCase(
-        id: $id
-        caseinput: {
-          name: $name
-          creator: $creator
-          color: $color
-          layout: $layout
-          caseMaterial: $caseMaterial
-          hasWeight: $hasWeight
-          weightMaterial: $weightMaterial
-          plates: $plates
-          weight: $weight
-          weightUnits: $weightUnits
-          built: $built
-        } 
-      ) {
-        id
-        cases {
-          _id
-          name
-          creator
-          color
-          layout
-          caseMaterial
-          hasWeight
-          weightMaterial
-          plates {
-          _id
-          type
-          used
-        }
-          weight
-          built
-        }
-      }
-    }
-  `;
-
   const [updateCaseMutation] = useMutation(UPDATE_CASE_MUTATION, {
     update(proxy, { data: { updateCase }}) {
       proxy.writeQuery({ query: FETCH_CASES_QUERY, data : {
@@ -115,68 +58,11 @@ function CaseEditForm(item: CaseProp) {
   }
 
   return (
-    <InventoryCaseForm form={form} setFormVisible={item.setFormVisibility} handleSubmit={updateCase} />
-    // <form>
-    //   <TextInput
-    //     required
-    //     label="Name"
-    //     placeholder="Jane CE V2"
-    //     {...form.getInputProps('name')}
-    //   />
-    //   <TextInput
-    //     required
-    //     label="Creator"
-    //     placeholder="TGR"
-    //     {...form.getInputProps('creator')}
-    //   />
-    //   <TextInput
-    //     required
-    //     label="Color"
-    //     placeholder="Silver"
-    //     {...form.getInputProps('color')}
-    //   />
-    //   <TextInput
-    //     required
-    //     label="Layout"
-    //     placeholder="TKL"
-    //     {...form.getInputProps('layout')}
-    //   />
-    //   <TextInput
-    //     required
-    //     label="Case Material"
-    //     placeholder="Aluminium"
-    //     {...form.getInputProps('caseMaterial')}
-    //   />
-    //   <TextInput
-    //     required
-    //     label="Weight Material"
-    //     placeholder="Brass"
-    //     {...form.getInputProps('weightMaterial')}
-    //   />
-    //   <Group>
-    //     <TextInput
-    //       required
-    //       label="Weight"
-    //       {...form.getInputProps('weight')}
-    //     />
-    //     <TextInput
-    //       required
-    //       label="Units"
-    //       {...form.getInputProps('weightUnits')}
-    //     />
-    //   </Group>
-
-    //   <Checkbox
-    //     mt="md"
-    //     label="Has this case been built?"
-    //     {...form.getInputProps('built', { type: 'checkbox' })}
-    //   />
-
-    //   <Group position="right" mt="md">
-    //     <Button onClick={hideForm}>Cancel</Button>
-    //     <Button type="submit" onClick={updateCase}>Submit</Button>
-    //   </Group>
-    // </form>
+    <InventoryCaseForm
+      form={form}
+      setFormVisible={item.setFormVisibility}
+      handleSubmit={updateCase}
+    />
   );
 }
 

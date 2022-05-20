@@ -1,90 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from '@mantine/form';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
-import { FETCH_CASES_QUERY } from "../../util/graphql";
+import { FETCH_CASES_QUERY, ADD_CASE_MUTATION } from "../../util/caseGraphql";
 import InventoryCaseForm from '../forms/InventoryCaseForm';
-
-const ADD_CASE = gql`
-  mutation addCase(
-    $name: String
-    $creator: String
-    $color: String
-    $layout: String
-    $caseMaterial: String
-    $hasWeight: Boolean
-    $weightMaterial: String
-    $plates: [String]
-    $weight: String
-    $weightUnits: String
-    $built: Boolean
-  ) {
-    addCase(
-      caseinput: {
-        name: $name
-        creator: $creator
-        color: $color
-        layout: $layout
-        caseMaterial: $caseMaterial
-        hasWeight: $hasWeight
-        weightMaterial: $weightMaterial
-        plates: $plates
-        weight: $weight
-        weightUnits: $weightUnits
-        built: $built
-      }
-    ) {
-      id
-      cases {
-        _id
-        name
-        creator 
-        color 
-        layout 
-        caseMaterial
-        hasWeight 
-        weightMaterial
-        plates {
-          _id
-          type
-          used
-        }
-        weight 
-        weightUnits 
-        built
-      }
-    }
-  }
-`
 
 type Props = {
   closeForm: Dispatch<SetStateAction<boolean>>;
-}
-
-type Plate = {
-  type: string;
-  used: boolean;
-}
-
-type Case = {
-  _id: string;
-  name: string;
-  creator: string;
-  color: string;
-  layout: string;
-  caseMaterial: string;
-  hasWeight: boolean;
-  weightMaterial: string;
-  plates: Plate[];
-  weight: string;
-  weightUnits: string;
-  built: boolean;
-}
-
-type Data = {
-  getInventory: {
-    cases: Case[]
-  }
 }
 
 function CaseAddForm( { closeForm }: Props) {
@@ -105,12 +27,8 @@ function CaseAddForm( { closeForm }: Props) {
     }
   });
 
-  const [addCase] = useMutation(ADD_CASE, {
+  const [addCase] = useMutation(ADD_CASE_MUTATION, {
     update(proxy, { data: { addCase }}) {
-      const newData: Data | null = proxy.readQuery({
-        query: FETCH_CASES_QUERY
-      });
-
       proxy.writeQuery({ query: FETCH_CASES_QUERY, data : {
         getInventory: {id: addCase.id, cases: [...addCase.cases]}
       }});

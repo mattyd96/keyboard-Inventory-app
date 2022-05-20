@@ -1,12 +1,8 @@
 import { useState } from "react";
-import { Text, Button, Group, TextInput } from "@mantine/core";
+import { Text, Button, Group } from "@mantine/core";
 
 import CaseEditForm from "./CaseEditForm";
-
-type Plate = {
-  type: string;
-  used: boolean;
-}
+import { Plate } from "../../util/caseTypes";
 
 type CaseProp = {
   _id: string;
@@ -31,24 +27,12 @@ function CaseItem(item: CaseProp) {
     setEdit(true);
   };
 
-  const hideEdit = () => {
-    setEdit(false);
-  };
-
   const display = (
     <Group>
       <Text>{item.color}</Text>
       <Button onClick={showEdit}>Edit</Button>
       <Button onClick={item.delete} value={item._id}>Delete</Button>
     </Group>
-  );
-
-  const editForm = (
-    <form>
-      <TextInput label="hi"/>
-      <Button onClick={hideEdit}>Cancel</Button>
-      <Button>Submit</Button>
-    </form>
   );
 
   return edit ? <CaseEditForm {...item} setFormVisibility={setEdit} /> : display;
