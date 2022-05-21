@@ -31,13 +31,12 @@ function CaseList() {
     <Fragment>
       {loading && <Loader />}
       <Accordion multiple mt={'2rem'}>
-            {data?.getInventory.cases.map((item, index) => (
-              <Accordion.Item label={<CaseLabel {...item} />} key={index}>
-                <CaseItem {...item} delete={deleteCase}/>
-              </Accordion.Item>
-            ))}
+        {data?.getInventory.cases.map((item, index) => (
+          <Accordion.Item label={<CaseLabel {...item} />} key={index}>
+            <CaseItem {...item} delete={deleteCase}/>
+          </Accordion.Item>
+        ))}
       </Accordion>
-
     </Fragment>
   );
 }

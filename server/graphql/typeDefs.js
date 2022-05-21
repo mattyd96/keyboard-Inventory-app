@@ -36,6 +36,7 @@ const typeDefs = gql`
   }
 
   type Spring {
+    _id: ID!
     name: String
     type: String
     weight: String
@@ -113,6 +114,15 @@ const typeDefs = gql`
     built: Boolean
   }
 
+  input SpringInput {
+    name: String
+    type: String
+    weight: String
+    length: String
+    lube: String
+    amount: Int
+  }
+
   input SignupInput {
     username: String!
     password: String!
@@ -130,6 +140,7 @@ const typeDefs = gql`
     addCase(caseinput: CaseInput): Inventory
     deleteCase(id: ID): Inventory
     updateCase(id: ID, caseinput: CaseInput): Inventory
+    addSpring(springinput: SpringInput): Inventory
   }
 `
 

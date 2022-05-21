@@ -1,4 +1,4 @@
-import LoginForm from "../components/forms/LoginForm";
+import LoginForm from "../components/auth/LoginForm";
 import Layout from "../components/layout/Layout";
 
 function Login() {

@@ -5,12 +5,12 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
-import Layout from '../components/layout/Layout';
 
 import { AuthContext } from '../context/auth';
 
 import Home from "./Home";
 import Cases from './inventory/Cases';
+import Springs from './inventory/Springs';
 import Login from "./Login";
 import Signup from "./Signup";
 
@@ -25,6 +25,7 @@ function Pages() {
         <Route path="/signup" element={user ? <Navigate replace to='/' /> : <Signup />} />
         <Route path="/inventory">
           <Route path="cases" element={!user ? <Navigate replace to='/' /> : <Cases />}/>
+          <Route path="springs" element={!user ? <Navigate replace to='/' /> : <Springs />}/>
         </Route>
       </Routes>
     </BrowserRouter>

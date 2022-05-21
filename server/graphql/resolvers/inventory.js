@@ -46,6 +46,17 @@ module.exports = {
       item.set(caseinput);
       await inv.save();
       return inv;
+    },
+
+    addSpring: async (_, { springinput }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+      
+      if(inv) {
+        inv.springs.push(springinput);
+        await inv.save();
+        return inv;
+      } else throw new UserInputError('Something went wrong updating');
     }
   }
 }

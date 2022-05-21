@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Box, TextInput, Button, Group, Checkbox, Select, MultiSelect } from '@mantine/core';
-import { FileX } from 'tabler-icons-react';
 
 const PLATE_DATA = [
   "Alu Full",
@@ -63,7 +62,7 @@ type Props = {
   form: any // TODO create a type for the form object
 }
 
-function InventoryCaseForm( { setFormVisible, handleSubmit, form }: Props) {
+function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
   const [plateData, setPlateData] = useState(PLATE_DATA);
   const [layoutData, setLayoutData] = useState(LAYOUT_DATA);
   const [caseData, setCaseData] = useState(CASE_MATERIAL_DATA);
@@ -186,4 +185,4 @@ function InventoryCaseForm( { setFormVisible, handleSubmit, form }: Props) {
   );
 }
 
-export default InventoryCaseForm;
+export default CaseBaseForm;

@@ -4,8 +4,8 @@
 import { Modal } from '@mantine/core';
 import { useState } from 'react';
 
-import LoginForm from "../forms/LoginForm";
-import SignupForm from '../forms/SignupForm';
+import LoginForm from "../auth/LoginForm";
+import SignupForm from '../auth/SignupForm';
 
 type Props = {
   opened: boolean;

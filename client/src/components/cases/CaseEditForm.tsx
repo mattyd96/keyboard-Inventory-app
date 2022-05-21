@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 
 import { FETCH_CASES_QUERY, UPDATE_CASE_MUTATION } from "../../util/caseGraphql";
 import { Plate } from "../../util/caseTypes";
-import InventoryCaseForm from "../forms/InventoryCaseForm";
+import CaseBaseForm from "./CaseBaseForm";
 
 type CaseProp = {
   _id: string;
@@ -58,7 +58,7 @@ function CaseEditForm(item: CaseProp) {
   }
 
   return (
-    <InventoryCaseForm
+    <CaseBaseForm
       form={form}
       setFormVisible={item.setFormVisibility}
       handleSubmit={updateCase}

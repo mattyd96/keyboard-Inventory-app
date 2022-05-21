@@ -20,6 +20,7 @@ export const FETCH_CASES_QUERY = gql`
           used
         }
         weight
+        weightUnits
         built
       }
     }

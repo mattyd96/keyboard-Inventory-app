@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form';
 import { useMutation } from '@apollo/client';
 
 import { FETCH_CASES_QUERY, ADD_CASE_MUTATION } from "../../util/caseGraphql";
-import InventoryCaseForm from '../forms/InventoryCaseForm';
+import CaseBaseForm from './CaseBaseForm';
 
 type Props = {
   closeForm: Dispatch<SetStateAction<boolean>>;
@@ -47,7 +47,7 @@ function CaseAddForm( { closeForm }: Props) {
   }
 
   return (
-    <InventoryCaseForm
+    <CaseBaseForm
       form={form}
       setFormVisible={closeForm}
       handleSubmit={submitCase}
