@@ -1,10 +1,10 @@
 export type Spring = {
   _id: string
-  name: String
-  type: String
-  weight: String
-  length: String
-  lube: String
+  name: string
+  type: string
+  weight: string
+  length: string
+  lube: string
   amount: number
 }
 

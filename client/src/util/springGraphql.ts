@@ -6,6 +6,7 @@ export const FETCH_SPRINGS_QUERY = gql`
     getInventory {
       id
       springs {
+        _id
         name
         weight
         length
@@ -36,6 +37,7 @@ export const ADD_SPRING_MUTATION = gql`
     ) {
       id
       springs {
+        _id
         name
         weight
         length
@@ -50,6 +52,38 @@ export const ADD_SPRING_MUTATION = gql`
 export const DELETE_SPRING_MUTATION = gql`
   mutation deleteSpring($id: ID) {
     deleteSpring(id: $id) {
+      id
+      springs {
+        _id
+        name
+        weight
+        length
+        lube
+        amount
+      }
+    }
+  }
+`;
+
+export const UPDATE_SPRING_MUTATION = gql`
+  mutation updateSpring(
+    $id: ID!
+    $name: String
+    $weight: String
+    $length: String
+    $lube: String
+    $amount: Int
+  ) {
+    updateSpring(
+      id: $id
+      springinput: {
+        name: $name
+        weight: $weight
+        length: $length
+        lube: $lube
+        amount: $amount
+      } 
+    ) {
       id
       springs {
         _id

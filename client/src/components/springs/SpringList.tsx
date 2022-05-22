@@ -4,6 +4,7 @@ import { Accordion, Loader, Group, Text } from "@mantine/core";
 
 import { Data } from "../../util/springTypes";
 import { FETCH_SPRINGS_QUERY, DELETE_SPRING_MUTATION } from "../../util/springGraphql";
+import SpringItem from "./SpringItem";
 
 
 function SpringList() {
@@ -31,7 +32,7 @@ function SpringList() {
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.springs.map((item, index) => (
           <Accordion.Item label={item.name} key={item._id}>
-            <Group><Text>Hello</Text></Group>
+            <SpringItem {...item} delete={deleteSpring}/>
           </Accordion.Item>
         ))}
       </Accordion>

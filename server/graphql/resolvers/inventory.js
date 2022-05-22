@@ -57,6 +57,26 @@ module.exports = {
         await inv.save();
         return inv;
       } else throw new UserInputError('Something went wrong updating');
-    }
+    },
+
+    deleteSpring: async (_, { id }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+
+      if(inv) {
+        inv.springs = inv.springs.filter((item) => item._id != id);
+        await inv.save();
+        return inv;
+      } else throw new UserInputError('Something went wrong deleting');
+    },
+
+    updateSpring: async (_, { id, springinput }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+      const item = inv.springs.id(id);
+      item.set(springinput);
+      await inv.save();
+      return inv;
+    },
   }
 }

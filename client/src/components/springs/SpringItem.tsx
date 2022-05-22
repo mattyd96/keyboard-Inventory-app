@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Text, Button, Group, Modal, Badge, Stack } from "@mantine/core";
 
+import SpringEditForm from "./SpringEditForm";
 
 type SpringProp = {
   _id: string;
@@ -39,7 +40,7 @@ function SpringItem(item: SpringProp) {
 
   const editDisplay = (
     <Modal opened={edit} onClose={() => setEdit(false)} title="Add a Case">
-      {/* <SpringEditForm {...item} setFormVisibility={setEdit} /> */}
+      <SpringEditForm {...item} setFormVisibility={setEdit} />
     </Modal>
   );
 

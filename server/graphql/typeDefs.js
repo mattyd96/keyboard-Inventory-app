@@ -141,6 +141,8 @@ const typeDefs = gql`
     deleteCase(id: ID): Inventory
     updateCase(id: ID, caseinput: CaseInput): Inventory
     addSpring(springinput: SpringInput): Inventory
+    deleteSpring(id: ID): Inventory
+    updateSpring(id: ID, springinput: SpringInput): Inventory
   }
 `
 
