@@ -49,10 +49,9 @@ const switchSchema = new Schema({
 
 const stabSchema = new Schema({
   name: String,
-  manufacturer: String,
-  wires: {twoU: Number, six25U: Number, sevenU: Number},
+  wires: {twoU: Number, sixU: Number, six25U: Number, sevenU: Number},
   housings: Number,
-  stem: Number,
+  stems: Number,
 });
 
 const artisanSchema = new Schema({

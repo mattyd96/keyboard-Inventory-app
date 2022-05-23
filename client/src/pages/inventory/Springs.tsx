@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Group, Title, Button, Collapse, Modal } from "@mantine/core";
+import { Group, Title, Button, Modal } from "@mantine/core";
 
 import Layout from "../../components/layout/Layout";
-import CaseAddForm from "../../components/cases/CaseAddForm";
-import CaseList from "../../components/cases/CaseList";
 import SpringList from "../../components/springs/SpringList";
 import SpringAddForm from "../../components/springs/SpringAddForm";
 

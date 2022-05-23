@@ -61,6 +61,7 @@ const typeDefs = gql`
 
   type Wire {
     twoU: Int
+    sixU: Int
     six25U: Int
     sevenU: Int
   }
@@ -68,10 +69,9 @@ const typeDefs = gql`
   type Stab {
     id: ID!
     name: String
-    manufacturer: String
     wires: Wire
     housings: Int
-    stem: Int
+    stems: Int
   }
 
   type Artisan {
@@ -128,6 +128,16 @@ const typeDefs = gql`
     amount: Int
   }
 
+  input StabInput {
+    name: String
+    twoU: Int
+    sixU: Int
+    six25U: Int
+    sevenU: Int
+    housings: Int
+    stems: Int
+  }
+
   input SignupInput {
     username: String!
     password: String!
@@ -148,6 +158,9 @@ const typeDefs = gql`
     addSpring(springinput: SpringInput): Inventory
     deleteSpring(id: ID): Inventory
     updateSpring(id: ID, springinput: SpringInput): Inventory
+    addStab(stabinput: StabInput): Inventory
+    deleteStab(id: ID): Inventory
+    updateStab(id: ID, stabinput: StabInput): Inventory
   }
 `
 
