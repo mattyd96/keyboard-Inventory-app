@@ -107,7 +107,7 @@ module.exports = {
       const inv = await Inventory.findOne({username});
 
       if(inv) {
-        inv.stabs = inv.springs.filter((item) => item._id != id);
+        inv.stabs = inv.stabs.filter((item) => item._id != id);
         await inv.save();
         return inv;
       } else throw new UserInputError('Something went wrong deleting');
@@ -131,6 +131,37 @@ module.exports = {
       }
 
       item.set(updatedStab);
+      await inv.save();
+      return inv;
+    },
+
+    addArtisan: async (_, { artisaninput }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+      
+      if(inv) {
+        inv.artisans.push(artisaninput);
+        await inv.save();
+        return inv;
+      } else throw new UserInputError('Something went wrong updating');
+    },
+
+    deleteArtisan: async (_, { id }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+
+      if(inv) {
+        inv.artisans = inv.artisans.filter((item) => item._id != id);
+        await inv.save();
+        return inv;
+      } else throw new UserInputError('Something went wrong deleting');
+    },
+
+    updateArtisan: async (_, { id, artisaninput }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+      const item = inv.artisans.id(id);
+      item.set(artisaninput);
       await inv.save();
       return inv;
     },

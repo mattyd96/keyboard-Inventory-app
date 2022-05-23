@@ -26,7 +26,7 @@ function StabAddForm( { closeForm }: Props) {
   const [addStab] = useMutation(ADD_STAB_MUTATION, {
     update(proxy, { data: { addStab }}) {
       proxy.writeQuery({ query: FETCH_STABS_QUERY, data : {
-        getInventory: {id: addStab.id, ctabs: [...addStab.stabs]}
+        getInventory: {id: addStab.id, stabs: [...addStab.stabs]}
       }});
     },
     onError(err) {

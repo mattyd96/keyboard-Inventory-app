@@ -138,6 +138,15 @@ const typeDefs = gql`
     stems: Int
   }
 
+  input ArtisanInput {
+    name: String
+    maker: String
+    sculpt: String
+    colorway: String
+    totalMade: Int
+    owned: Int
+  }
+
   input SignupInput {
     username: String!
     password: String!
@@ -161,6 +170,9 @@ const typeDefs = gql`
     addStab(stabinput: StabInput): Inventory
     deleteStab(id: ID): Inventory
     updateStab(id: ID, stabinput: StabInput): Inventory
+    addArtisan(artisaninput: ArtisanInput): Inventory
+    deleteArtisan(id: ID): Inventory
+    updateArtisan(id: ID, artisaninput: ArtisanInput): Inventory
   }
 `
 
