@@ -3,13 +3,13 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
 
   type Plate {
-    _id: ID
+    id: ID
     type: String
     used: Boolean
   }
 
   type Case {
-    _id: ID
+    id: ID
     name: String
     creator: String
     color: String
@@ -24,11 +24,13 @@ const typeDefs = gql`
   }
 
   type Kit {
+    id: ID!
     name: String
     amount: Int
   }
 
   type Keycap {
+    id: ID!
     name: String
     manufacturer: String
     material: String
@@ -36,7 +38,7 @@ const typeDefs = gql`
   }
 
   type Spring {
-    _id: ID!
+    id: ID!
     name: String
     type: String
     weight: String
@@ -46,6 +48,7 @@ const typeDefs = gql`
   }
 
   type Switch {
+    id: ID!
     name: String,
     stock: Boolean
     films: String
@@ -63,6 +66,7 @@ const typeDefs = gql`
   }
 
   type Stab {
+    id: ID!
     name: String
     manufacturer: String
     wires: Wire
@@ -71,6 +75,7 @@ const typeDefs = gql`
   }
 
   type Artisan {
+    id: ID!
     name: String
     maker: String
     sculpt: String

@@ -31,7 +31,7 @@ function SpringList() {
       {loading && <Loader />}
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.springs.map((item, index) => (
-          <Accordion.Item label={item.name} key={item._id}>
+          <Accordion.Item label={item.name} key={item.id}>
             <SpringItem {...item} delete={deleteSpring}/>
           </Accordion.Item>
         ))}

@@ -6,7 +6,7 @@ import { FETCH_SPRINGS_QUERY, UPDATE_SPRING_MUTATION } from "../../util/springGr
 import SpringBaseForm from "./SpringBaseForm";
 
 type SpringProp = {
-  _id: string;
+  id: string;
   name: string;
   weight: string;
   length: string;
@@ -37,7 +37,7 @@ function SpringEditForm(item: SpringProp) {
   });
 
   const updateSpring = () => {
-    updateSpringMutation({variables: {id: item._id, ...form.values}});
+    updateSpringMutation({variables: {id: item.id, ...form.values}});
     form.reset();
     item.setFormVisibility(false);
   }

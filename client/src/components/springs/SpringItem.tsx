@@ -4,7 +4,7 @@ import { Text, Button, Group, Modal, Badge, Stack } from "@mantine/core";
 import SpringEditForm from "./SpringEditForm";
 
 type SpringProp = {
-  _id: string;
+  id: string;
   name: string;
   type: string
   weight: string
@@ -33,7 +33,7 @@ function SpringItem(item: SpringProp) {
       </Group>
       <Group position="right">
         <Button size="xs" color="gray" onClick={showEdit}>Edit</Button>
-        <Button size="xs" color="red" onClick={item.delete} value={item._id}>Delete</Button>
+        <Button size="xs" color="red" onClick={item.delete} value={item.id}>Delete</Button>
       </Group>
     </Stack>
   );

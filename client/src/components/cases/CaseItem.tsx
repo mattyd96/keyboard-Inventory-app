@@ -5,7 +5,7 @@ import CaseEditForm from "./CaseEditForm";
 import { Plate } from "../../util/caseTypes";
 
 type CaseProp = {
-  _id: string;
+  id: string;
   name: string;
   creator: string;
   color: string;
@@ -65,7 +65,7 @@ function CaseItem(item: CaseProp) {
       </Group>
       <Group position="right">
         <Button size="xs" color="gray" onClick={showEdit}>Edit</Button>
-        <Button size="xs" color="red" onClick={item.delete} value={item._id}>Delete</Button>
+        <Button size="xs" color="red" onClick={item.delete} value={item.id}>Delete</Button>
       </Group>
     </Stack>
   );

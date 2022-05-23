@@ -4,7 +4,7 @@ export type Plate = {
 }
 
 export type Case = {
-  _id: string;
+  id: string;
   name: string;
   creator: string;
   color: string;

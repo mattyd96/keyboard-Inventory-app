@@ -7,7 +7,7 @@ import { Plate } from "../../util/caseTypes";
 import CaseBaseForm from "./CaseBaseForm";
 
 type CaseProp = {
-  _id: string;
+  id: string;
   name: string;
   creator: string;
   color: string;
@@ -52,7 +52,7 @@ function CaseEditForm(item: CaseProp) {
   });
 
   const updateCase = () => {
-    updateCaseMutation({variables: {id: item._id, ...form.values}});
+    updateCaseMutation({variables: {id: item.id, ...form.values}});
     form.reset();
     item.setFormVisibility(false);
   }

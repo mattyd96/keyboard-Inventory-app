@@ -6,7 +6,7 @@ export const FETCH_CASES_QUERY = gql`
     getInventory {
       id
       cases {
-        _id
+        id
         name
         creator
         color
@@ -15,7 +15,7 @@ export const FETCH_CASES_QUERY = gql`
         hasWeight
         weightMaterial
         plates {
-          _id
+          id
           type
           used
         }
@@ -58,7 +58,7 @@ export const ADD_CASE_MUTATION = gql`
     ) {
       id
       cases {
-        _id
+        id
         name
         creator 
         color 
@@ -67,7 +67,7 @@ export const ADD_CASE_MUTATION = gql`
         hasWeight 
         weightMaterial
         plates {
-          _id
+          id
           type
           used
         }
@@ -84,7 +84,7 @@ export const DELETE_CASE_MUTATION = gql`
     deleteCase(id: $id) {
       id
       cases {
-        _id
+        id
         name
         creator
         color
@@ -92,6 +92,7 @@ export const DELETE_CASE_MUTATION = gql`
         caseMaterial
         weightMaterial
         weight
+        weightUnits
         built
       }
     }
@@ -131,7 +132,7 @@ export const UPDATE_CASE_MUTATION = gql`
     ) {
       id
       cases {
-        _id
+        id
         name
         creator
         color
@@ -140,11 +141,12 @@ export const UPDATE_CASE_MUTATION = gql`
         hasWeight
         weightMaterial
         plates {
-        _id
-        type
-        used
-      }
+          id
+          type
+          used
+        }
         weight
+        weightUnits
         built
       }
     }

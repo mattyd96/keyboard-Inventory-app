@@ -31,8 +31,8 @@ function CaseList() {
     <Fragment>
       {loading && <Loader />}
       <Accordion multiple mt={'2rem'}>
-        {data?.getInventory.cases.map((item, index) => (
-          <Accordion.Item label={<CaseLabel {...item} />} key={index}>
+        {data?.getInventory.cases.map((item) => (
+          <Accordion.Item label={<CaseLabel {...item} />} key={item.id}>
             <CaseItem {...item} delete={deleteCase}/>
           </Accordion.Item>
         ))}
