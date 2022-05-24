@@ -11,6 +11,7 @@ import { AuthContext } from '../context/auth';
 import Home from "./Home";
 import Artisans from './inventory/Artisans';
 import Cases from './inventory/Cases';
+import Keycaps from './inventory/Keycaps';
 import Springs from './inventory/Springs';
 import Stabs from './inventory/Stabs';
 import Login from "./Login";
@@ -30,6 +31,7 @@ function Pages() {
           <Route path="springs" element={!user ? <Navigate replace to='/' /> : <Springs />}/>
           <Route path="stabs" element={!user ? <Navigate replace to='/' /> : <Stabs />}/>
           <Route path="artisans" element={!user ? <Navigate replace to='/' /> : <Artisans />}/>
+          <Route path="keycaps" element={!user ? <Navigate replace to='/' /> : <Keycaps />}/>
         </Route>
       </Routes>
     </BrowserRouter>

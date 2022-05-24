@@ -1,4 +1,4 @@
-type Kit = {
+export type Kit = {
   id: string
   name: string
   amount: number

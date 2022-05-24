@@ -20,89 +20,87 @@ export const FETCH_KEYCAPS_QUERY = gql`
   }
 `;
 
-// add stabs
-export const ADD_ARTISAN_MUTATION = gql`
-  mutation addArtisan(
+// add keycaps
+export const ADD_KEYCAP_MUTATION = gql`
+  mutation addKeycap(
     $name: String
-    $maker: String
-    $sculpt: String
-    $colorway: String
-    $totalMade: Int
-    $owned: Int
+    $manufacturer: String
+    $material: String
+    $kits: [String]
   ) {
-    addArtisan(
-      artisaninput: {
+    addKeycap(
+      keycapinput: {
         name: $name
-        maker: $maker
-        sculpt: $sculpt
-        colorway: $colorway
-        totalMade: $totalMade
-        owned: $owned
+        manufacturer: $manufacturer
+        material: $material
+        kits: $kits
       }
     ) {
       id
-      artisans {
+      keycaps {
         id
         name
-        maker
-        sculpt
-        colorway
-        totalMade
-        owned
+        manufacturer
+        material
+        kits {
+          id
+          name
+          amount
+        }
       }
     }
   }
 `;
 
-// delete artisan by ID
-export const DELETE_ARTISAN_MUTATION = gql`
-  mutation deleteArtisan($id: ID) {
-    deleteArtisan(id: $id) {
+// delete keycap by ID
+export const DELETE_KEYCAP_MUTATION = gql`
+  mutation deleteKeycap($id: ID) {
+    deleteKeycap(id: $id) {
       id
-      artisans {
+      keycaps {
         id
         name
-        maker
-        sculpt
-        colorway
-        totalMade
-        owned
+        manufacturer
+        material
+        kits {
+          id
+          name
+          amount
+        }
       }
     }
   }
 `;
 
-// update a stab by ID
-export const UPDATE_ARTISAN_MUTATION = gql`
-  mutation updateArtisan(
+// update a keycap by ID
+export const UPDATE_KEYCAP_MUTATION = gql`
+  mutation updateKeycap(
     $id: ID!
     $name: String
-    $maker: String
-    $sculpt: String
-    $colorway: String
-    $totalMade: Int
-    $owned: Int
+    $manufacturer: String
+    $material: String
+    $kits: [String]
   ) {
-    updateArtisan(
+    updateKeycap(
       id: $id
-      artisaninput: {
+      keycapinput: {
         name: $name
-        maker: $maker
-        sculpt: $sculpt
-        colorway: $colorway
-        totalMade: $totalMade
-        owned: $owned
-      } 
+        manufacturer: $manufacturer
+        material: $material
+        kits: $kits
+      }
     ) {
       id
-      artisans {
+      keycaps {
         id
         name
-        maker
-        sculpt
-        colorway
-        totalMade
-        owned
+        manufacturer
+        material
+        kits {
+          id
+          name
+          amount
+        }
       }
     }
   }

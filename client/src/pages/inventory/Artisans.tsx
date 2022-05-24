@@ -13,7 +13,7 @@ function Artisans() {
     <Layout>
       <Group position="apart">
         <Title order={2}>Artisans</Title>
-        {!formOpen && <Button onClick={() => {setFormOpen(true)}}>Add Stab</Button>}
+        {!formOpen && <Button onClick={() => {setFormOpen(true)}}>Add Artisan</Button>}
       </Group>
       <Modal opened={formOpen} onClose={() => setFormOpen(false)} title="Add an Artisan">
         <ArtisanAddForm closeForm={setFormOpen} />
