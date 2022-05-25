@@ -165,5 +165,45 @@ module.exports = {
       await inv.save();
       return inv;
     },
+
+    addKeycap: async (_, { keycapinput }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+
+      keycapinput.kits = keycapinput.kits.map(kit => {
+        return { name: kit.name, amount: kit.amount }
+      });
+      
+      if(inv) {
+        inv.keycaps.push(keycapinput);
+        await inv.save();
+        return inv;
+      } else throw new UserInputError('Something went wrong updating');
+    },
+
+    deleteKeycap: async (_, { id }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+
+      if(inv) {
+        inv.keycaps = inv.keycaps.filter((item) => item._id != id);
+        await inv.save();
+        return inv;
+      } else throw new UserInputError('Something went wrong deleting');
+    },
+    //TODO
+    updateKeycap: async (_, { id, keycapinput }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+      const item = inv.keycaps.id(id);
+
+      // keycapinput.kits = keycapinput.kits.map(kit => {
+      //   return { id: kit.id, name: kit.name, amount: kit.amount }
+      // });
+
+      item.set(keycapinput);
+      await inv.save();
+      return inv;
+    },
   }
 }

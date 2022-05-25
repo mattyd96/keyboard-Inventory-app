@@ -26,7 +26,7 @@ export const ADD_KEYCAP_MUTATION = gql`
     $name: String
     $manufacturer: String
     $material: String
-    $kits: [String]
+    $kits: [KitInput]
   ) {
     addKeycap(
       keycapinput: {
@@ -79,7 +79,7 @@ export const UPDATE_KEYCAP_MUTATION = gql`
     $name: String
     $manufacturer: String
     $material: String
-    $kits: [String]
+    $kits: [KitInput]
   ) {
     updateKeycap(
       id: $id

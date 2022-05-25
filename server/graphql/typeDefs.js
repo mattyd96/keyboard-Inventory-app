@@ -147,6 +147,19 @@ const typeDefs = gql`
     owned: Int
   }
 
+  input KitInput {
+    id: ID
+    name: String
+    amount: Int
+  }
+
+  input KeycapInput {
+    name: String
+    manufacturer: String
+    material: String
+    kits: [KitInput]
+  }
+
   input SignupInput {
     username: String!
     password: String!
@@ -161,18 +174,26 @@ const typeDefs = gql`
   type Mutation{
     signup(signupinput: SignupInput): User
     login(username: String!, password: String!): User!
+
     addCase(caseinput: CaseInput): Inventory
     deleteCase(id: ID): Inventory
     updateCase(id: ID, caseinput: CaseInput): Inventory
+
     addSpring(springinput: SpringInput): Inventory
     deleteSpring(id: ID): Inventory
     updateSpring(id: ID, springinput: SpringInput): Inventory
+
     addStab(stabinput: StabInput): Inventory
     deleteStab(id: ID): Inventory
     updateStab(id: ID, stabinput: StabInput): Inventory
+
     addArtisan(artisaninput: ArtisanInput): Inventory
     deleteArtisan(id: ID): Inventory
     updateArtisan(id: ID, artisaninput: ArtisanInput): Inventory
+
+    addKeycap(keycapinput: KeycapInput): Inventory
+    deleteKeycap(id: ID): Inventory
+    updateKeycap(id: ID, keycapinput: KeycapInput): Inventory
   }
 `
 
