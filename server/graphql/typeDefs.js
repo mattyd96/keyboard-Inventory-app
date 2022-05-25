@@ -53,10 +53,11 @@ const typeDefs = gql`
     stock: Boolean
     films: String
     lube: String
-    springs: [Spring]
+    springs: Spring
     top: String
     bottom: String
-    amount: Int
+    totalAmount: Int
+    availableAmount: Int
   }
 
   type Wire {
