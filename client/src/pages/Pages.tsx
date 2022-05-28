@@ -14,8 +14,10 @@ import Cases from './inventory/Cases';
 import Keycaps from './inventory/Keycaps';
 import Springs from './inventory/Springs';
 import Stabs from './inventory/Stabs';
+import Switches from './inventory/Switches';
 import Login from "./Login";
 import Signup from "./Signup";
+import UserBuilds from "./builds/UserBuilds";
 
 function Pages() {
   const { user } = useContext(AuthContext);
@@ -32,6 +34,10 @@ function Pages() {
           <Route path="stabs" element={!user ? <Navigate replace to='/' /> : <Stabs />}/>
           <Route path="artisans" element={!user ? <Navigate replace to='/' /> : <Artisans />}/>
           <Route path="keycaps" element={!user ? <Navigate replace to='/' /> : <Keycaps />}/>
+          <Route path="switches" element={!user ? <Navigate replace to='/' /> : <Switches />}/>
+        </Route>
+        <Route path="/builds">
+          <Route path="user" element={!user ? <Navigate replace to='/' /> : <UserBuilds />}/>
         </Route>
       </Routes>
     </BrowserRouter>

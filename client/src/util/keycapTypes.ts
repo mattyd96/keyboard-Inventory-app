@@ -4,7 +4,7 @@ export type Kit = {
   amount: number
 }
 
-type Keycap = {
+export type Keycap = {
   id: string
   name: string
   manufacturer: string

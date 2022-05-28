@@ -49,8 +49,8 @@ const typeDefs = gql`
 
   type Switch {
     id: ID!
-    name: String,
-    stock: Boolean
+    name: String
+    stock: String
     films: String
     lube: String
     springs: Spring
@@ -89,8 +89,7 @@ const typeDefs = gql`
     id: ID!
     username: String
     cases: [Case]
-    stockSwitches: [Switch]
-    modSwitches: [Switch]
+    switches: [Switch]
     springs: [Spring]
     stabs: [Stab]
     keycaps: [Keycap]
@@ -121,6 +120,7 @@ const typeDefs = gql`
   }
 
   input SpringInput {
+    id: ID
     name: String
     type: String
     weight: String
@@ -161,6 +161,18 @@ const typeDefs = gql`
     kits: [KitInput]
   }
 
+  input SwitchInput {
+    name: String
+    stock: String
+    films: String
+    lube: String
+    springs: SpringInput
+    top: String
+    bottom: String
+    totalAmount: Int
+    availableAmount: Int
+  }
+
   input SignupInput {
     username: String!
     password: String!
@@ -195,6 +207,10 @@ const typeDefs = gql`
     addKeycap(keycapinput: KeycapInput): Inventory
     deleteKeycap(id: ID): Inventory
     updateKeycap(id: ID, keycapinput: KeycapInput): Inventory
+
+    addSwitch(switchinput: SwitchInput): Inventory
+    deleteSwitch(id: ID): Inventory
+    updateSwitch(id: ID, switchinput: SwitchInput): Inventory
   }
 `
 

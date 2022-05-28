@@ -1,4 +1,5 @@
 export type Spring = {
+  __typename: string
   id: string
   name: string
   type: string

@@ -32,8 +32,9 @@ export const FETCH_SWITCHES_QUERY = gql`
 export const ADD_SWITCH_MUTATION = gql`
   mutation addSwitch(
     $name: String
-    $stock: Boolean
+    $stock: String
     $films: String
+    $lube: String
     $springs: SpringInput
     $top: String
     $bottom: String
@@ -45,6 +46,7 @@ export const ADD_SWITCH_MUTATION = gql`
         name: $name
         stock: $stock
         films: $films
+        lube: $lube
         springs: $springs
         top: $top
         bottom: $bottom
@@ -107,9 +109,11 @@ export const DELETE_SWITCH_MUTATION = gql`
 // update a switch by ID
 export const UPDATE_SWITCH_MUTATION = gql`
   mutation updateSwitch(
+    $id: ID
     $name: String
-    $stock: Boolean
+    $stock: String
     $films: String
+    $lube: String
     $springs: SpringInput
     $top: String
     $bottom: String
@@ -122,6 +126,7 @@ export const UPDATE_SWITCH_MUTATION = gql`
         name: $name
         stock: $stock
         films: $films
+        lube: $lube
         springs: $springs
         top: $top
         bottom: $bottom

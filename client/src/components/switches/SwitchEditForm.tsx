@@ -9,7 +9,7 @@ import SwitchBaseForm from "./SwitchBaseForm";
 type SwitchProp = {
   id: string
   name: string
-  stock: boolean
+  stock: string
   films: string
   lube: string
   springs: Spring
@@ -23,9 +23,20 @@ type SwitchProp = {
 
 function SwitchEditForm(item: SwitchProp) {
 
+  // strip __typename from Springs so it does not cause errors => can apollo fix this please
+  const { __typename, ...springs} = item.springs;
+
   const form = useForm({
     initialValues: {
       name: item.name,
+      stock: item.stock,
+      films: item.films,
+      lube: item.lube,
+      springs: springs,
+      top: item.top,
+      bottom: item.bottom,
+      totalAmount: item.totalAmount,
+      availableAmount: item.availableAmount
     }
   });
 

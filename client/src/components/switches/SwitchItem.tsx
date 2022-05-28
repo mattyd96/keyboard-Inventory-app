@@ -7,7 +7,7 @@ import { Spring } from "../../util/springTypes";
 type SwitchProp = {
   id: string
   name: string
-  stock: boolean
+  stock: string
   films: string
   lube: string
   springs: Spring
@@ -30,6 +30,56 @@ function SwitchItem(item: SwitchProp) {
       <Group position="apart">
         <Badge>Name</Badge>
         <Text>{item.name}</Text>
+      </Group>
+      {item.films &&
+        <Group position="apart">
+          <Badge>Films</Badge>
+          <Text>{item.films}</Text>
+        </Group>
+      }
+      {item.lube &&
+        <Group position="apart">
+          <Badge>Switch Lube</Badge>
+          <Text>{item.lube}</Text>
+        </Group>
+      }
+      {item.top &&
+        <Group position="apart">
+          <Badge>Switch Top</Badge>
+          <Text>{item.top}</Text>
+        </Group>
+      }
+      {item.bottom && 
+        <Group position="apart">
+          <Badge>Switch Bottom</Badge>
+          <Text>{item.bottom}</Text>
+        </Group>
+      }
+      {item.springs.name &&
+        <Group position="apart">
+          <Badge>Spring Name</Badge>
+          <Text>{item.springs.name}</Text>
+        </Group>
+      }
+      {item.springs.weight &&
+        <Group position="apart">
+          <Badge>Spring Weight</Badge>
+          <Text>{item.springs.weight}</Text>
+        </Group>
+      }
+      {item.springs.lube &&
+        <Group position="apart">
+          <Badge>Spring Lube</Badge>
+          <Text>{item.springs.lube}</Text>
+        </Group>
+      }
+      <Group position="apart">
+        <Badge>Total Amount</Badge>
+        <Text>{item.totalAmount}</Text>
+      </Group>
+      <Group position="apart">
+        <Badge>Available Amount</Badge>
+        <Text>{item.availableAmount}</Text>
       </Group>
       <Group position="right">
         <Button size="xs" color="gray" onClick={showEdit}>Edit</Button>

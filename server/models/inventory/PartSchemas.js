@@ -37,13 +37,14 @@ const springSchema = new Schema({
 
 const switchSchema = new Schema({
   name: String,
-  stock: Boolean,
+  stock: String,
   films: String,
   lube: String,
   springs: springSchema,
   top: String,
   bottom: String,
-  amount: Number
+  totalAmount: Number,
+  availableAmount: Number
 });
 
 

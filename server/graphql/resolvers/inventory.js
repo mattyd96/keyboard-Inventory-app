@@ -191,17 +191,45 @@ module.exports = {
         return inv;
       } else throw new UserInputError('Something went wrong deleting');
     },
-    //TODO
+
     updateKeycap: async (_, { id, keycapinput }, context) => {
       const { username } = checkAuth(context);
       const inv = await Inventory.findOne({username});
       const item = inv.keycaps.id(id);
 
-      // keycapinput.kits = keycapinput.kits.map(kit => {
-      //   return { id: kit.id, name: kit.name, amount: kit.amount }
-      // });
-
       item.set(keycapinput);
+      await inv.save();
+      return inv;
+    },
+
+    addSwitch: async (_, { switchinput }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+      
+      if(inv) {
+        inv.switches.push(switchinput);
+        await inv.save();
+        return inv;
+      } else throw new UserInputError('Something went wrong updating');
+    },
+
+    deleteSwitch: async (_, { id }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+
+      if(inv) {
+        inv.switches = inv.switches.filter((item) => item._id != id);
+        await inv.save();
+        return inv;
+      } else throw new UserInputError('Something went wrong deleting');
+    },
+
+    updateSwitch: async (_, { id, switchinput }, context) => {
+      const { username } = checkAuth(context);
+      const inv = await Inventory.findOne({username});
+      const item = inv.switches.id(id);
+
+      item.set(switchinput);
       await inv.save();
       return inv;
     },

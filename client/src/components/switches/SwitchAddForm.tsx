@@ -14,7 +14,18 @@ function SwitchAddForm( { closeForm }: Props) {
   const form = useForm({
     initialValues: {
       name: '',
-      stock: true,
+      stock: 'true',
+      films: '',
+      lube: '',
+      springs: {
+        name: '',
+        weight: '',
+        lube: ''
+      },
+      top: '',
+      bottom: '',
+      totalAmount: 0,
+      availableAmount: 0
     }
   });
 

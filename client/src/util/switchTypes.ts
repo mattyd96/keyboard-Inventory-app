@@ -3,7 +3,7 @@ import { Spring } from "./springTypes";
 export type Switch = {
   id: string
   name: string
-  stock: boolean
+  stock: string
   films: string
   lube: string
   springs: Spring

@@ -4,8 +4,7 @@ const { caseSchema, keycapSchema, switchSchema, springSchema, stabSchema, artisa
 const inventorySchema = new Schema({
   username: { type: String, required: true},
   cases: [caseSchema],
-  stockSwitches: [switchSchema],
-  modSwitches: [switchSchema],
+  switches: [switchSchema],
   springs: [springSchema],
   stabs: [stabSchema],
   keycaps: [keycapSchema],
