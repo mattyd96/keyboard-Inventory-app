@@ -30,9 +30,9 @@ module.exports = {
       const built = new Build(newBuild);
       await built.save();
       const builtPopulated = await Build.findById(built._id)
-              .populate('Inventory.switches')
-              .populate('Inventory.keycaps')
-              .populate('Inventory.stabs');
+              .populate('switches')
+              .populate('keycaps')
+              .populate('stabs');
       console.log(builtPopulated);
       return builtPopulated;
     },

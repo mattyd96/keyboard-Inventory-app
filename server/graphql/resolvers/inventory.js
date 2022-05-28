@@ -1,9 +1,11 @@
 const { UserInputError, AuthenticationError } = require('apollo-server');
 
 const User = require('../../models/User');
+const { caseModel, keycapModel, switchModel, springModel, stabModel, artisanModel } = require('../../models/inventory/PartModels');
 const Inventory = require('../../models/inventory/Inventory');
 const checkAuth = require('../../util/checkAuth');
 
+// helper to populate inventory model
 const getInventory = async (username) => {
   const inv = await Inventory.findOne({username})
     .populate('cases')
@@ -18,6 +20,7 @@ const getInventory = async (username) => {
 
 module.exports = {
   Query: {
+    // get inventory with all section populated
     getInventory: async (_, args, context) => {
       const { username } = checkAuth(context);
       const inv = await getInventory(username);
@@ -26,15 +29,26 @@ module.exports = {
   },
 
   Mutation: {
+    // add a case to a users Inventory
     addCase: async (_, { caseinput }, context) => {
       const { username } = checkAuth(context);
       const inv = await Inventory.findOne({username});
+
+      // modify case input for db from input
       caseinput.plates = caseinput.plates.map(plate => {return {type: plate, used: false}});
       
       if(inv) {
-        inv.cases.push(caseinput);
+        // create new case and save
+        const cas = new caseModel(caseinput);
+        cas.save();
+
+        // add to user inventory
+        inv.cases.push(cas._id);
         await inv.save();
-        return inv;
+
+        // return populated inventory
+        const populatedInv = await getInventory(username);
+        return populatedInv;
       } else throw new UserInputError('Something went wrong updating');
 
     },
@@ -44,20 +58,32 @@ module.exports = {
       const inv = await Inventory.findOne({username});
 
       if(inv) {
-        inv.cases = inv.cases.filter((item) => item._id != id);
+        // delete case 
+        await caseModel.deleteOne({_id: id});
+
+        // remove from inventory
+        inv.cases = inv.cases.filter((item) => item != id);
         await inv.save();
-        return inv;
+
+        // return populated inventory
+        const populatedInv = await getInventory(username);
+        return populatedInv;
+
       } else throw new UserInputError('Something went wrong deleting');
     },
 
     updateCase: async (_, { id, caseinput }, context) => {
       const { username } = checkAuth(context);
-      const inv = await Inventory.findOne({username});
-      const item = inv.cases.id(id);
+
+      // modify plate input to suite db data structure
       caseinput.plates = caseinput.plates.map(plate => {return {type: plate, used: false}});
-      item.set(caseinput);
-      await inv.save();
-      return inv;
+
+      // update case
+      await caseModel.updateOne({_id: id}, caseinput);
+
+      // return populated Inventory
+      const populatedInv = await getInventory(username);
+      return populatedInv;
     },
 
     addSpring: async (_, { springinput }, context) => {

@@ -16,19 +16,19 @@ const buildSchema = new Schema({
   // }],
   case: {
     type: Schema.Types.ObjectId,
-    ref: 'Inventory.cases'
+    ref: 'Case'
   },
   switches: [{
     type: Schema.Types.ObjectId,
-    ref: 'Inventory.switches'
+    ref: 'Switch'
   }],
   stabs: [{
     type: Schema.Types.ObjectId,
-    ref: 'Inventory.stabs'
+    ref: 'Stab'
   }],
   keycaps: [{
     type: Schema.Types.ObjectId,
-    ref: 'Inventory.keycaps'
+    ref: 'Keycap'
   }],
   images: [String]
 });
