@@ -8,7 +8,7 @@ module.exports = {
   Query: {
     getInventory: async (_, args, context) => {
       const { username } = checkAuth(context);
-      const inv = await Inventory.findOne({username})
+      const inv = await Inventory.findOne({username});
       return inv;
     },
   },

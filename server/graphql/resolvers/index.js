@@ -1,4 +1,4 @@
-//const postsResolvers = require('./posts');
+const buildResolvers = require('./builds');
 const usersResolvers = require('./users');
 const inventoryResolvers = require('./inventory');
 const { parseConstValue } = require('graphql');
@@ -10,11 +10,12 @@ module.exports = {
   //},
 
   Query: {
-    ...inventoryResolvers.Query
+    ...inventoryResolvers.Query,
+    ...buildResolvers.Query
   },
   Mutation: {
     ...usersResolvers.Mutation,
     ...inventoryResolvers.Mutation,
-    //...commentsResolvers.Mutation
+    ...buildResolvers.Mutation
   }
 }

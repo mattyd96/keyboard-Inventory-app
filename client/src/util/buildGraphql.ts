@@ -179,92 +179,89 @@ export const ADD_BUILD_MUTATION = gql`
   mutation addBuild(
     $name: String
     $description: String
-    $switchAmount: [switchAmountInput]
-    $stabAmount: [stabAmountInput]
     $case: ID
-    $switches: [ID]
-    $keycaps: [ID]
-    $images: [String]
+    $switches: [SwitchBuildInput]
+    $keycaps: [KeycapBuildInput]
+    $stabs: [StabBuildInput]
+    $images: [ImageBuildInput]
     ) {
-    addBuild(id: $id) {
-      builds {
+    addBuild(
+      buildInput: {
+        name: $name
+        description: $description
+        case: $case
+        switches: $switches
+        keycaps: $keycaps
+        stabs: $stabs
+        images: $images
+      }
+    ) {
+      id
+      name
+      description
+      case {
         id
         name
-        description
-        switchAmount {
+        creator
+        color
+        layout
+        caseMaterial
+        hasWeight
+        weightMaterial
+        plates {
           id
+          type
+          used
+        }
+        weight
+        weightUnits
+        built
+      }
+      switches {
+        id
+        name
+        stock
+        films
+        lube
+        springs {
+          id
+          name
+          weight
+          length
+          lube
           amount
         }
-        stabAmount {
-          id
-          housings
-          stems
-          sevenU
+        top
+        bottom
+        totalAmount
+        availableAmount
+      }
+      stabs {
+        id
+        name
+        wires {
+          twoU
           sixU
           six25U
-          twoU
+          sevenU
         }
-        case {
+        housings
+        stems
+      }
+      keycaps {
+        id
+        name
+        manufacturer
+        material
+        kits {
           id
           name
-          creator
-          color
-          layout
-          caseMaterial
-          hasWeight
-          weightMaterial
-          plates {
-            id
-            type
-            used
-          }
-          weight
-          weightUnits
-          built
+          amount
         }
-        switches {
-          id
-          name
-          stock
-          films
-          lube
-          springs {
-            id
-            name
-            weight
-            length
-            lube
-            amount
-          }
-          top
-          bottom
-          totalAmount
-          availableAmount
-        }
-        stabs {
-          id
-          name
-          wires {
-            twoU
-            sixU
-            six25U
-            sevenU
-          }
-          housings
-          stems
-        }
-        keycaps {
-          id
-          name
-          manufacturer
-          material
-          kits {
-            id
-            name
-            amount
-          }
-        }
-        images
+      }
+      images {
+        id
+        link
       }
     }
   }

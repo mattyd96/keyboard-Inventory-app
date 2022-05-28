@@ -19,8 +19,8 @@ export type Build = {
   description: string
   case: Case
   switches: Switch[]
-  stabs: Stab
-  Keycaps: Keycap
+  stabs: Stab[]
+  Keycaps: Keycap[]
   images: string[]
 }
 

@@ -105,6 +105,22 @@ const typeDefs = gql`
     inventory: Inventory!
   }
 
+  type Image {
+    id: ID
+    link: String
+  }
+
+  type Build {
+    id: ID
+    name: String
+    description: String
+    case: Case
+    switches: [Switch]
+    stabs: [Stab]
+    keycaps: [Keycap]
+    images: [Image]
+  }
+
   input CaseInput {
     name: String
     creator: String
@@ -173,6 +189,41 @@ const typeDefs = gql`
     availableAmount: Int
   }
 
+  input SwitchBuildInput {
+    id: ID
+    name: String
+    amount: Int 
+  }
+
+  input KeycapBuildInput {
+    id: ID
+    set: String
+  }
+
+  input StabBuildInput {
+    id: ID
+    name: String
+    twoU: Int
+    sixU: Int
+    six25U: Int 
+    sevenU: Int
+  }
+
+  input ImageBuildInput {
+    id: ID 
+    link: String
+  }
+
+  input BuildInput {
+    name: String
+    description: String 
+    case: ID
+    switches: [SwitchBuildInput]
+    keycaps: [KeycapBuildInput]
+    stabs: [StabBuildInput]
+    images: [ImageBuildInput]
+  }
+
   input SignupInput {
     username: String!
     password: String!
@@ -211,6 +262,8 @@ const typeDefs = gql`
     addSwitch(switchinput: SwitchInput): Inventory
     deleteSwitch(id: ID): Inventory
     updateSwitch(id: ID, switchinput: SwitchInput): Inventory
+
+    addBuild(buildInput: BuildInput): Build
   }
 `
 

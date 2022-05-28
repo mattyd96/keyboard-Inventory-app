@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useForm, formList } from '@mantine/form';
+import { randomId } from '@mantine/hooks';
 import { useMutation } from '@apollo/client';
 
 import { FETCH_USER_BUILDS_QUERY, ADD_BUILD_MUTATION } from "../../util/buildGraphql";
@@ -14,9 +15,12 @@ function KeycapAddForm( { closeForm }: Props) {
   const form = useForm({
     initialValues: {
       name: '',
-      manufacturer: '',
-      material: '',
-      kits: '',
+      description: '',
+      case: '',
+      switches: formList([{name: '', amount: 0, id: randomId()}]),
+      keycaps: formList([{set: '', id: randomId()}]),
+      stabs: formList([{name: '', twoU: 0, sixU: 0, six25U: 0, sevenU: 0, id: randomId()}]),
+      images: formList([{ link: '', id: randomId() }]),
     }
   });
 

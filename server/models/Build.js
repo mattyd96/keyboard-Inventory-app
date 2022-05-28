@@ -4,16 +4,18 @@ const { model, Schema } = require('mongoose');
 
 const buildSchema = new Schema({
   username: { type: String, required: true},
-  switchAmount: [{id: String, amount: Number}],
-  stabAmount: [{
-    id: String,
-    housings: Number,
-    stems: Number,
-    sevenU: Number,
-    sixU: Number,
-    six25U: Number,
-    twoU: Number
-  }],
+  name: String,
+  description: String,
+  //switchAmount: [{id: String, amount: Number}],
+  // stabAmount: [{
+  //   id: String,
+  //   housings: Number,
+  //   stems: Number,
+  //   sevenU: Number,
+  //   sixU: Number,
+  //   six25U: Number,
+  //   twoU: Number
+  // }],
   case: {
     type: Schema.Types.ObjectId,
     ref: 'Inventory.cases'
