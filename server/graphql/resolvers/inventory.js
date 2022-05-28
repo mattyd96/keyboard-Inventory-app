@@ -149,11 +149,19 @@ module.exports = {
         housings: stabinput.housings,
         stems: stabinput.stems
       }
-      
+
       if(inv) {
-        inv.stabs.push(newStab);
+        // create new stab and save
+        const stab = new stabModel(newStab);
+        stab.save();
+
+        // add to user inventory
+        inv.stabs.push(stab._id);
         await inv.save();
-        return inv;
+
+        // return populated inventory
+        const populatedInv = await getInventory(username);
+        return populatedInv;
       } else throw new UserInputError('Something went wrong updating');
     },
 
@@ -162,16 +170,21 @@ module.exports = {
       const inv = await Inventory.findOne({username});
 
       if(inv) {
-        inv.stabs = inv.stabs.filter((item) => item._id != id);
+        // delete stab
+        await stabModel.deleteOne({_id: id});
+
+        // remove from inventory
+        inv.stabs = inv.stabs.filter((item) => item != id);
         await inv.save();
-        return inv;
+
+        // return populated inventory
+        const populatedInv = await getInventory(username);
+        return populatedInv;
       } else throw new UserInputError('Something went wrong deleting');
     },
 
     updateStab: async (_, { id, stabinput }, context) => {
       const { username } = checkAuth(context);
-      const inv = await Inventory.findOne({username});
-      const item = inv.stabs.id(id);
 
       const updatedStab = {
         name: stabinput.name,
@@ -185,9 +198,12 @@ module.exports = {
         stems: stabinput.stems
       }
 
-      item.set(updatedStab);
-      await inv.save();
-      return inv;
+      // update stab
+      await stabModel.updateOne({_id: id}, updatedStab);
+
+      // return populated Inventory
+      const populatedInv = await getInventory(username);
+      return populatedInv;
     },
 
     addArtisan: async (_, { artisaninput }, context) => {
@@ -195,9 +211,17 @@ module.exports = {
       const inv = await Inventory.findOne({username});
       
       if(inv) {
-        inv.artisans.push(artisaninput);
+        // create new artisan and save
+        const artisan = new artisanModel(artisaninput);
+        artisan.save();
+
+        // add to user inventory
+        inv.artisans.push(artisan._id);
         await inv.save();
-        return inv;
+
+        // return populated inventory
+        const populatedInv = await getInventory(username);
+        return populatedInv;
       } else throw new UserInputError('Something went wrong updating');
     },
 
@@ -206,19 +230,28 @@ module.exports = {
       const inv = await Inventory.findOne({username});
 
       if(inv) {
-        inv.artisans = inv.artisans.filter((item) => item._id != id);
+        // delete artisan
+        await artisanModel.deleteOne({_id: id});
+
+        // remove from inventory
+        inv.artisans = inv.artisans.filter((item) => item != id);
         await inv.save();
-        return inv;
+
+        // return populated inventory
+        const populatedInv = await getInventory(username);
+        return populatedInv;
       } else throw new UserInputError('Something went wrong deleting');
     },
 
     updateArtisan: async (_, { id, artisaninput }, context) => {
       const { username } = checkAuth(context);
-      const inv = await Inventory.findOne({username});
-      const item = inv.artisans.id(id);
-      item.set(artisaninput);
-      await inv.save();
-      return inv;
+
+      // update artisan
+      await artisanModel.updateOne({_id: id}, artisaninput);
+
+      // return populated Inventory
+      const populatedInv = await getInventory(username);
+      return populatedInv;
     },
 
     addKeycap: async (_, { keycapinput }, context) => {
