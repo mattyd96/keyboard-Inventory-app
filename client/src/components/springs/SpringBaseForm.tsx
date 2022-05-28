@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Box, TextInput, Button, Group, Checkbox } from '@mantine/core';
+import { Box, TextInput, NumberInput, Button, Group, Checkbox } from '@mantine/core';
 
 
 type Props = {
@@ -32,6 +32,11 @@ function SpringBaseForm( { setFormVisible, handleSubmit, form }: Props) {
         label="Length"
         placeholder="17.5 cm"
         {...form.getInputProps("length")}
+      />
+      <NumberInput
+        label="Amount"
+        placeholder="17.5 cm"
+        {...form.getInputProps("amount")}
       />
       {/* <Checkbox
         mt="md"

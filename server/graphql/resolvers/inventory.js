@@ -91,9 +91,17 @@ module.exports = {
       const inv = await Inventory.findOne({username});
       
       if(inv) {
-        inv.springs.push(springinput);
+        // create new spring and save
+        const spring = await new springModel(springinput);
+        spring.save();
+
+        // add to user inventory
+        inv.springs.push(spring._id);
         await inv.save();
-        return inv;
+
+        // return populated inventory
+        const populatedInv = await getInventory(username);
+        return populatedInv;
       } else throw new UserInputError('Something went wrong updating');
     },
 
@@ -102,19 +110,28 @@ module.exports = {
       const inv = await Inventory.findOne({username});
 
       if(inv) {
-        inv.springs = inv.springs.filter((item) => item._id != id);
+        // delete spring
+        await springModel.deleteOne({_id: id});
+
+        // remove from inventory
+        inv.springs = inv.springs.filter((item) => item != id);
         await inv.save();
-        return inv;
+
+        // return populated inventory
+        const populatedInv = await getInventory(username);
+        return populatedInv;
       } else throw new UserInputError('Something went wrong deleting');
     },
 
     updateSpring: async (_, { id, springinput }, context) => {
       const { username } = checkAuth(context);
-      const inv = await Inventory.findOne({username});
-      const item = inv.springs.id(id);
-      item.set(springinput);
-      await inv.save();
-      return inv;
+
+      // update spring
+      await springModel.updateOne({_id: id}, springinput);
+
+      // return populated Inventory
+      const populatedInv = await getInventory(username);
+      return populatedInv;
     },
 
     addStab: async (_, { stabinput }, context) => {

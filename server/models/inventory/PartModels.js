@@ -67,7 +67,7 @@ const artisanSchema = new Schema({
 const caseModel = model('Case', caseSchema);
 const keycapModel = model('Keycap', keycapSchema);
 const switchModel = model('Switch', switchSchema);
-const springModel = model('Spring', switchSchema);
+const springModel = model('Spring', springSchema);
 const stabModel = model('Stab', stabSchema);
 const artisanModel = model('Artisan', artisanSchema);
 

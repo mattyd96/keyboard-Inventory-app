@@ -10,7 +10,7 @@ type SpringProp = {
   weight: string
   length: string
   lube: string
-  amount: Number
+  amount: number
   delete: React.MouseEventHandler;
 }
 
@@ -30,6 +30,10 @@ function SpringItem(item: SpringProp) {
       <Group position="apart">
         <Badge>Weight</Badge>
         <Text>{item.weight}</Text>
+      </Group>
+      <Group position="apart">
+        <Badge>Amount</Badge>
+        <Text>{item.amount}</Text>
       </Group>
       <Group position="right">
         <Button size="xs" color="gray" onClick={showEdit}>Edit</Button>
