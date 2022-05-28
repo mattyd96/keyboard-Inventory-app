@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const plateSchema = new Schema({
   type: String,
@@ -64,5 +64,12 @@ const artisanSchema = new Schema({
   owned: Number,
 });
 
+const caseModel = model('Case', caseSchema);
+const keycapModel = model('Keycap', keycapSchema);
+const switchModel = model('Switch', switchSchema);
+const springModel = model('Spring', switchSchema);
+const stabModel = model('Stab', stabSchema);
+const artisanModel = model('Artisan', artisanSchema);
 
-module.exports = { caseSchema, keycapSchema, switchSchema, springSchema, stabSchema, artisanSchema };
+
+module.exports = { caseModel, keycapModel, switchModel, springModel, stabModel, artisanModel };

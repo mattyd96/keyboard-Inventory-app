@@ -4,11 +4,23 @@ const User = require('../../models/User');
 const Inventory = require('../../models/inventory/Inventory');
 const checkAuth = require('../../util/checkAuth');
 
+const getInventory = async (username) => {
+  const inv = await Inventory.findOne({username})
+    .populate('cases')
+    .populate('switches')
+    .populate('springs')
+    .populate('stabs')
+    .populate('keycaps')
+    .populate('artisans');
+
+  return inv;
+};
+
 module.exports = {
   Query: {
     getInventory: async (_, args, context) => {
       const { username } = checkAuth(context);
-      const inv = await Inventory.findOne({username});
+      const inv = await getInventory(username);
       return inv;
     },
   },

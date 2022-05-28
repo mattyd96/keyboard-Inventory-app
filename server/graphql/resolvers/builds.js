@@ -10,8 +10,6 @@ module.exports = {
   Mutation: {
     addBuild: async (_, { buildInput }, context) => {
       const { username } = checkAuth(context);
-      const inv = await Inventory.findOne({username});
-      const builds = await Build.find({username});
 
       const name = buildInput.name;
       const description = buildInput.description;
@@ -31,12 +29,12 @@ module.exports = {
       const newBuild = { username, name, description, switches, keycaps, stabs, images};
       const built = new Build(newBuild);
       await built.save();
-      const builtPopulated = Build.findById(built._id)
-              .populate('switches')
-              .populate('keycaps')
-              .populate('stabs');
-
-      return newBuild;
+      const builtPopulated = await Build.findById(built._id)
+              .populate('Inventory.switches')
+              .populate('Inventory.keycaps')
+              .populate('Inventory.stabs');
+      console.log(builtPopulated);
+      return builtPopulated;
     },
   }
 }

@@ -1,7 +1,5 @@
 const { model, Schema } = require('mongoose');
 
-//const { caseSchema, keycapSchema, switchSchema, stabSchema } = require('./inventory/PartSchemas');
-
 const buildSchema = new Schema({
   username: { type: String, required: true},
   name: String,
