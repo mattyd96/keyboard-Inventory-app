@@ -16,7 +16,7 @@ type KeycapProp = {
   setFormVisibility: Dispatch<SetStateAction<boolean>>
 }
 
-function CaseEditForm(item: KeycapProp) {
+function KeycapEditForm(item: KeycapProp) {
 
   // strip __typename from kits so it does not cause errors => can apollo fix this please
   const kits = item.kits.map(kit => {
@@ -55,4 +55,4 @@ function CaseEditForm(item: KeycapProp) {
   );
 }
 
-export default CaseEditForm;
+export default KeycapEditForm;

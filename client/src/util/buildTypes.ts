@@ -20,18 +20,14 @@ export type Build = {
   case: Case
   switches: Switch[]
   stabs: Stab[]
-  Keycaps: Keycap[]
+  keycaps: Keycap[]
   images: string[]
 }
 
-export type UserBuildData = {
-  getUserBuilds: {
-    builds: Build[]
-  }
+export interface UserBuildData {
+  getUserBuilds: Build[]
 }
 
 export type BuildData = {
-  getBuilds: {
-    builds: Build[]
-  }
+  getBuilds: Build[]
 }

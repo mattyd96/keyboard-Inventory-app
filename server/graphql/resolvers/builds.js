@@ -5,6 +5,15 @@ const Build = require('../../models/Build');
 const Inventory = require('../../models/inventory/Inventory');
 const checkAuth = require('../../util/checkAuth');
 
+const getBuild = async id => {
+  const build = await Build.findById(id)
+    .populate('switches')
+    .populate('keycaps')
+    .populate('stabs');
+
+    return build;
+};
+
 module.exports = {
   Query: {},
   Mutation: {
@@ -29,12 +38,9 @@ module.exports = {
       const newBuild = { username, name, description, switches, keycaps, stabs, images};
       const built = new Build(newBuild);
       await built.save();
-      const builtPopulated = await Build.findById(built._id)
-              .populate('switches')
-              .populate('keycaps')
-              .populate('stabs');
-      console.log(builtPopulated);
-      return builtPopulated;
+      const populatedBuild = getBuild(built._id);
+      console.log(populatedBuild);
+      return populatedBuild;
     },
   }
 }
