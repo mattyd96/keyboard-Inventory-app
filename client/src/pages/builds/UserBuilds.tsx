@@ -3,7 +3,7 @@ import { Group, Title, Button, Modal } from "@mantine/core";
 
 import Layout from "../../components/layout/Layout";
 import BuildAddForm from "../../components/builds/BuildAddForm";
-// import ArtisanList from "../../components/artisans/ArtisanList";
+import BuildList from "../../components/builds/BuildList";
 
 
 function Artisans() {
@@ -18,7 +18,7 @@ function Artisans() {
       <Modal opened={formOpen} onClose={() => setFormOpen(false)} title="Add a Build">
         <BuildAddForm closeForm={setFormOpen} />
       </Modal>
-      {/* <ArtisanList /> */}
+      <BuildList />
     </Layout>
   );
 }

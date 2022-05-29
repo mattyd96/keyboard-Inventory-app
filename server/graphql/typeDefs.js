@@ -118,7 +118,7 @@ const typeDefs = gql`
     switches: [Switch]
     stabs: [Stab]
     keycaps: [Keycap]
-    images: [Image]
+    images: [String]
   }
 
   input CaseInput {
@@ -233,6 +233,7 @@ const typeDefs = gql`
   type Query {
     getUser: [User]
     getInventory: Inventory
+    getUserBuilds: [Build]
   }
 
   type Mutation{
@@ -264,6 +265,8 @@ const typeDefs = gql`
     updateSwitch(id: ID, switchinput: SwitchInput): Inventory
 
     addBuild(buildInput: BuildInput): Build
+    deleteBuild(id: ID): ID
+    updateBuild(id: ID, buildInput: BuildInput): Build
   }
 `
 

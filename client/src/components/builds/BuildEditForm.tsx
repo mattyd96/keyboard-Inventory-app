@@ -28,9 +28,12 @@ type BuildProp = {
 function BuildEditForm(item: BuildProp) {
   const { user } = useContext(AuthContext);
 
+  console.log(item);
+
   const switches = item.switches.map(swit => {
     return {name: swit.name, amount: 0, id: swit.id};
   });
+  console.log(switches);
 
   const keycaps = item.keycaps.map(keycap => {
     return {set: keycap.name, id: keycap.id};

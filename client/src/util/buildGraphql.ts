@@ -87,24 +87,11 @@ export const FETCH_BUILDS_QUERY = gql`
 
 // get Builds by ID
 export const FETCH_USER_BUILDS_QUERY = gql`
-  mutation getUserBuilds($id: ID) {
-    getUserBuilds(id: $id) {
+  query getUserBuilds {
+    getUserBuilds {
       id
       name
       description
-      switchAmount {
-        id
-        amount
-      }
-      stabAmount {
-        id
-        housings
-        stems
-        sevenU
-        sixU
-        six25U
-        twoU
-      }
       case {
         id
         name
@@ -255,10 +242,7 @@ export const ADD_BUILD_MUTATION = gql`
           amount
         }
       }
-      images {
-        id
-        link
-      }
+      images
     }
   }
 `;
@@ -266,6 +250,7 @@ export const ADD_BUILD_MUTATION = gql`
 // update Build
 export const UPDATE_BUILD_MUTATION = gql`
   mutation updateBuild(
+    $id: ID!
     $name: String
     $description: String
     $case: ID
@@ -275,6 +260,7 @@ export const UPDATE_BUILD_MUTATION = gql`
     $images: [ImageBuildInput]
     ) {
     updateBuild(
+      id: $id
       buildInput: {
         name: $name
         description: $description
@@ -348,17 +334,13 @@ export const UPDATE_BUILD_MUTATION = gql`
           amount
         }
       }
-      images {
-        id
-        link
-      }
+      images
     }
   }
 `;
 
 export const DELETE_BUILD_MUTATION = gql`
   mutation deleteBuild($id: ID) {
-    deleteBuild(id: $id) {
-      id
+    deleteBuild(id: $id)
   }
 `;

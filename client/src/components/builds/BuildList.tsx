@@ -19,7 +19,7 @@ function BuildList() {
       const data : UserBuildData = proxy.readQuery({query: FETCH_USER_BUILDS_QUERY, variables: {username: user!.username}})!;
 
       proxy.writeQuery({ query: FETCH_USER_BUILDS_QUERY, data : {
-        getUserBuilds: data!.getUserBuilds.filter(item => item.id != deleteBuild.id)
+        getUserBuilds: data ? data.getUserBuilds.filter(item => item.id != deleteBuild) : []
       }});
     },
   });
@@ -36,12 +36,12 @@ function BuildList() {
   return (
     <Fragment>
       {loading && <Loader />}
-      {!loading && 
-      <Group>
-        {data?.getUserBuilds.map((item, index) =>
-          <BuildItem {...item} delete={deleteBuild} key={item.id}/>
-        )}
-      </Group>
+      {!loading && data != null &&
+        <Group>
+          {data && data?.getUserBuilds.map((item, index) =>
+            <BuildItem {...item} delete={deleteBuild} key={item.id}/>
+          )}
+        </Group>
       }
     </Fragment>
   );

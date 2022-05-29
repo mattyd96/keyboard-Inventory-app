@@ -31,6 +31,11 @@ type StabFieldType = {
   id: string
 }
 
+type ImageFieldType = {
+  id: string
+  link: string
+}
+
 type SwitchData = {
   label: string
   value: string
@@ -56,6 +61,10 @@ type Props = {
 function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
   const { loading, data } = useQuery(FETCH_INVENTORY_FOR_BUILDS_QUERY);
 
+  if(data) {
+    console.log(data);
+  }
+
   let CASE_DATA: Case[] = [];
   let SWITCH_DATA: SwitchData[] = [];
   let KEYCAP_DATA: KeycapData[] = [];
@@ -64,7 +73,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
   let keycapFields = [];
   let stabFields = [];
 
-  if(!loading) {
+  if(data) {
     CASE_DATA = data.getInventory.cases.map((item: Case) => {return {label: item.name, value: item.id}});
     SWITCH_DATA = data.getInventory.switches.map((item: SwitchType) => {return {label: item.name, value: item.id, amount: item.availableAmount}});
     KEYCAP_DATA = data.getInventory.keycaps.map((item: Keycap) => {return {label: item.name, value: item.id}});
@@ -167,8 +176,8 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
     ));
   }
 
-  const imageFields = form.values.images.map((item : string, index: number) => (
-    <Group key={item} mt="xs">
+  const imageFields = form.values.images.map((item : ImageFieldType, index: number) => (
+    <Group key={item.id} mt="xs">
       <TextInput
         placeholder="Image Link"
         required
