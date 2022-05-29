@@ -21,7 +21,7 @@ function Layout({ children }: Props) {
       }}
       navbarOffsetBreakpoint="sm"
       fixed
-      navbar={<SideNavigation opened={opened} />}
+      navbar={<SideNavigation opened={opened}/>}
       header={<TopNavigation opened={opened} setOpened={setOpened} />}
     >
       {children}

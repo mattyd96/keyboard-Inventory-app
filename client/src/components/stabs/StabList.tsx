@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { Accordion, Loader } from "@mantine/core";
+import { Accordion, Loader, Group } from "@mantine/core";
 
 import { FETCH_STABS_QUERY, DELETE_STAB_MUTATION } from "../../util/stabGraphql";
 import { Data } from "../../util/stabTypes";
@@ -29,7 +29,11 @@ function StabList() {
 
   return (
     <Fragment>
-      {loading && <Loader />}
+      {loading && 
+        <Group position='center' mt='2rem'>
+          <Loader/>
+        </Group>
+      }
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.stabs.map((item) => (
           <Accordion.Item label={item.name} key={item.id}>

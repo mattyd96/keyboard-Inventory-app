@@ -18,6 +18,7 @@ import Switches from './inventory/Switches';
 import Login from "./Login";
 import Signup from "./Signup";
 import UserBuilds from "./builds/UserBuilds";
+import UserBuild from './builds/UserBuild';
 
 function Pages() {
   const { user } = useContext(AuthContext);
@@ -35,9 +36,8 @@ function Pages() {
           <Route path="artisans" element={!user ? <Navigate replace to='/' /> : <Artisans />}/>
           <Route path="keycaps" element={!user ? <Navigate replace to='/' /> : <Keycaps />}/>
           <Route path="switches" element={!user ? <Navigate replace to='/' /> : <Switches />}/>
-        </Route>
-        <Route path="/builds">
-          <Route path="user" element={!user ? <Navigate replace to='/' /> : <UserBuilds />}/>
+          <Route path="builds" element={!user ? <Navigate replace to='/' /> : <UserBuilds />}/>
+          <Route path="builds/:id" element={!user ? <Navigate replace to='/' /> : <UserBuild />}/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -35,9 +35,13 @@ function BuildList() {
 
   return (
     <Fragment>
-      {loading && <Loader />}
+      {loading && 
+        <Group position='center' mt='2rem'>
+          <Loader/>
+        </Group>
+      }
       {!loading && data != null &&
-        <Group>
+        <Group align={"stretch"}>
           {data && data?.getUserBuilds.map((item, index) =>
             <BuildItem {...item} delete={deleteBuild} key={item.id}/>
           )}

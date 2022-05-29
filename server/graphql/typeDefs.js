@@ -234,6 +234,7 @@ const typeDefs = gql`
     getUser: [User]
     getInventory: Inventory
     getUserBuilds: [Build]
+    getBuild(id: ID): Build
   }
 
   type Mutation{

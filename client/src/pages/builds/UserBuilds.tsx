@@ -6,7 +6,7 @@ import BuildAddForm from "../../components/builds/BuildAddForm";
 import BuildList from "../../components/builds/BuildList";
 
 
-function Artisans() {
+function UserBuilds() {
   const [formOpen, setFormOpen] = useState<boolean>(false);
 
   return (
@@ -23,4 +23,4 @@ function Artisans() {
   );
 }
 
-export default Artisans;
+export default UserBuilds;

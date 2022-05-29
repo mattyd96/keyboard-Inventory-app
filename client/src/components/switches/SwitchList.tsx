@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { Accordion, Loader } from "@mantine/core";
+import { Accordion, Loader, Group } from "@mantine/core";
 
 import { FETCH_SWITCHES_QUERY, DELETE_SWITCH_MUTATION } from "../../util/switchGraphql";
 import { Data } from "../../util/switchTypes";
@@ -29,7 +29,11 @@ function SwitchList() {
 
   return (
     <Fragment>
-      {loading && <Loader />}
+      {loading && 
+        <Group position='center' mt='2rem'>
+          <Loader/>
+        </Group>
+      }
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.switches.map((item) => (
           <Accordion.Item label={<SwitchLabel {...item} />} key={item.id}>

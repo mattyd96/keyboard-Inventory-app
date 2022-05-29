@@ -14,10 +14,10 @@ type Props = {
 
 function SideNavigation({ opened }: Props) {
   const { user } = useContext(AuthContext);
-  const width = opened ? 300 : 70;
+  const width = opened ? 300 : 0;
 
   return (
-    <Navbar p="xs" hiddenBreakpoint="sm" hidden={!opened} width={{  sm: width }} sx={{borderRight: 'none'}}>
+    <Navbar p="xs" hiddenBreakpoint={5000} hidden={!opened} width={{  sm: width }} sx={{borderRight: 'none'}}>
       <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
         <SideMenu opened={opened} />
       </Navbar.Section>

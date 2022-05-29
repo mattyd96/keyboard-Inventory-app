@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { Accordion, Loader } from "@mantine/core";
+import { Accordion, Loader, Group } from "@mantine/core";
 
 import { FETCH_CASES_QUERY, DELETE_CASE_MUTATION } from "../../util/caseGraphql";
 import { Data } from "../../util/caseTypes";
@@ -29,7 +29,11 @@ function CaseList() {
 
   return (
     <Fragment>
-      {loading && <Loader />}
+      {loading && 
+        <Group position='center' mt='2rem'>
+          <Loader/>
+        </Group>
+      }
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.cases.map((item) => (
           <Accordion.Item label={<CaseLabel {...item} />} key={item.id}>

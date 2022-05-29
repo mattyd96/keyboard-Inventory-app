@@ -28,7 +28,11 @@ function SpringList() {
 
   return (
     <Fragment>
-      {loading && <Loader />}
+      {loading && 
+        <Group position='center' mt='2rem'>
+          <Loader/>
+        </Group>
+      }
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.springs.map((item, index) => (
           <Accordion.Item label={item.name} key={item.id}>

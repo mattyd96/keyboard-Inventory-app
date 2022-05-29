@@ -19,14 +19,24 @@ module.exports = {
   Query: {
     getUserBuilds: async (_, { id }, context) => {
       const { username } = checkAuth(context);
-      const builds = Build.find({username})
+      const builds = await Build.find({username})
       .populate('case')
       .populate('switches')
       .populate('keycaps')
       .populate('stabs');
 
       return builds;
-    }
+    },
+
+    getBuild: async (_, { id }, context) => {
+      const builds = await Build.findById(id)
+      .populate('case')
+      .populate('switches')
+      .populate('keycaps')
+      .populate('stabs');
+
+      return builds;
+    },
   },
 
   Mutation: {

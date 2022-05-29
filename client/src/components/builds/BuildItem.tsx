@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { Text, Button, Group, Modal, Badge, Stack } from "@mantine/core";
 
 import BuildEditForm from "./BuildEditForm";
@@ -6,6 +6,7 @@ import { Case } from "../../util/caseTypes";
 import { Switch } from "../../util/switchTypes";
 import { Stab } from "../../util/stabTypes";
 import { Keycap } from "../../util/keycapTypes";
+import BuildCard from "./BuildCard";
 
 type BuildProp = {
   id: string
@@ -22,25 +23,8 @@ type BuildProp = {
 function BuildItem(item: BuildProp) {
   const [edit, setEdit] = useState(false);
 
-  const showEdit = () => {
-    setEdit(true);
-  };
-
   const display = (
-    <Stack>
-      <Group position="apart">
-        <Badge>Name</Badge>
-        <Text>{item.name}</Text>
-      </Group>
-      <Group position="apart">
-        <Badge>Weight</Badge>
-        <Text>{item.description}</Text>
-      </Group>
-      <Group position="right">
-        <Button size="xs" color="gray" onClick={showEdit}>Edit</Button>
-        <Button size="xs" color="red" onClick={item.delete} value={item.id}>Delete</Button>
-      </Group>
-    </Stack>
+    <BuildCard { ...item } setFormVisibility={setEdit}/>
   );
 
   const editDisplay = (
@@ -49,7 +33,12 @@ function BuildItem(item: BuildProp) {
     </Modal>
   );
 
-  return edit ? editDisplay : display;
+  return (
+    <Fragment>
+      {edit && editDisplay}
+      {display}
+    </Fragment>
+  );
 }
 
 export default BuildItem;

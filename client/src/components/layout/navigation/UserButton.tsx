@@ -55,14 +55,6 @@ function UserButton({ icon, username, email, opened }: Props) {
           </Group>
         </UnstyledButton>
       }
-      {!opened &&
-        <UnstyledButton>
-          <Avatar
-            src={icon ? icon : ''}
-            radius="xl"
-          />
-        </UnstyledButton>
-      }
     </Box>
   );
 

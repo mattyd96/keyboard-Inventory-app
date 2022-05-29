@@ -85,6 +85,78 @@ export const FETCH_BUILDS_QUERY = gql`
   }
 `;
 
+// get single Build
+export const FETCH_BUILD_QUERY = gql`
+  query getBuild($id: ID) {
+    getBuild(id: $id) {
+      id
+      name
+      description
+      case {
+        id
+        name
+        creator
+        color
+        layout
+        caseMaterial
+        hasWeight
+        weightMaterial
+        plates {
+          id
+          type
+          used
+        }
+        weight
+        weightUnits
+        built
+      }
+      switches {
+        id
+        name
+        stock
+        films
+        lube
+        springs {
+          id
+          name
+          weight
+          length
+          lube
+          amount
+        }
+        top
+        bottom
+        totalAmount
+        availableAmount
+      }
+      stabs {
+        id
+        name
+        wires {
+          twoU
+          sixU
+          six25U
+          sevenU
+        }
+        housings
+        stems
+      }
+      keycaps {
+        id
+        name
+        manufacturer
+        material
+        kits {
+          id
+          name
+          amount
+        }
+      }
+      images
+    }
+  }
+`;
+
 // get Builds by ID
 export const FETCH_USER_BUILDS_QUERY = gql`
   query getUserBuilds {

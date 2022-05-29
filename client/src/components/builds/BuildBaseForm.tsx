@@ -86,6 +86,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
           maxDropdownHeight={125}
           placeholder="Select Switch"
           searchable
+          required
           sx={{ flex: 2 }}
           {...form.getListInputProps('switches', index, 'name')}
           
@@ -113,6 +114,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
           maxDropdownHeight={125}
           placeholder="Select Switch"
           searchable
+          required
           {...form.getListInputProps('keycaps', index, 'set')}
         />
         <ActionIcon
@@ -134,6 +136,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
             maxDropdownHeight={125}
             placeholder="Select Stab"
             searchable
+            required
             {...form.getListInputProps('stabs', index, 'name')}
           />
           <ActionIcon
@@ -180,7 +183,6 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
     <Group key={item.id} mt="xs">
       <TextInput
         placeholder="Image Link"
-        required
         sx={{ flex: 1 }}
         {...form.getListInputProps('images', index, 'link')}
       />
@@ -218,6 +220,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
         maxDropdownHeight={125}
         placeholder="Select Case"
         searchable
+        required
         {...form.getInputProps("case")}
       />
 

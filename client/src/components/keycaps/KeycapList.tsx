@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { Accordion, Loader } from "@mantine/core";
+import { Accordion, Loader, Group } from "@mantine/core";
 
 import { FETCH_KEYCAPS_QUERY, DELETE_KEYCAP_MUTATION } from "../../util/keycapGraphql";
 import { Data } from "../../util/keycapTypes";
@@ -29,7 +29,11 @@ function KeycapList() {
 
   return (
     <Fragment>
-      {loading && <Loader />}
+      {loading && 
+        <Group position='center' mt='2rem'>
+          <Loader/>
+        </Group>
+      }
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.keycaps.map((item) => (
           <Accordion.Item label={<KeycapLabel {...item} />} key={item.id}>

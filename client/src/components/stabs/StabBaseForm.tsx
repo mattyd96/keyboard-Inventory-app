@@ -18,7 +18,7 @@ function StabBaseForm( { setFormVisible, handleSubmit, form }: Props) {
       <TextInput
         required
         label="Name"
-        placeholder="Jane CE V2"
+        placeholder="Durock V2"
         {...form.getInputProps("name")}
       />
       <NumberInput
