@@ -22,13 +22,14 @@ function SingleBuild(item: BuildProp) {
 
   return (
     <Box sx={{maxWidth: '50rem', margin: 'auto'}}>
-      <Carousel>
-        {item.images.map((image, index) => <img src={image} width='100%' key={index}/>)}
+      <Carousel wrapAround>
+        {item.images.map((image, index) => <img src={image} width='100%' key={index} alt='' />)}
       </Carousel>
       <Group position="apart" align={'center'} mt={'1rem'}>
         <Title order={2}>{item.name}</Title>
         <Button component={Link} to="/inventory/builds">Back to Builds</Button>
       </Group>
+      <Text my={'1rem'}>{item.description}</Text>
       <Stack>
         <Title order={4}>Case</Title>
         <Group position="apart">
@@ -45,6 +46,20 @@ function SingleBuild(item: BuildProp) {
             <Text>{item.case.color}</Text>
           </Group>
         </Group>
+      </Stack>
+      <Stack mt={'1rem'}>
+        <Title order={4}>Switches</Title>
+        {item.switches && item.switches.map((swit, index) => 
+            <Group position="apart">
+              <Group>
+                <Badge>Switch</Badge>
+                <Text>{swit.name}</Text>
+              </Group>
+              <Group>
+                <Badge>{swit.stock ? 'Modded' : 'Stock'}</Badge>
+              </Group>
+            </Group>
+        )}
       </Stack>
     </Box>
   );

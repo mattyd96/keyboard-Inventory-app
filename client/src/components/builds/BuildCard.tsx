@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Card, Image, Text, Badge, Button, Group, useMantineTheme, Stack } from '@mantine/core';
+import { Card, Image, Text, Button, Group, useMantineTheme } from '@mantine/core';
 
 import { Case } from "../../util/caseTypes";
 import { Switch } from "../../util/switchTypes";
@@ -22,7 +22,7 @@ type BuildProp = {
 
 function BuildCard(item: BuildProp) {
   const theme = useMantineTheme();
-  const secondaryColor = theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7];
+  //const secondaryColor = theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7];
 
   const showEdit = () => {
     item.setFormVisibility(true);
@@ -38,7 +38,7 @@ function BuildCard(item: BuildProp) {
         />
       </Card.Section>
 
-      <Text weight={500} style={{ marginBottom: 5, marginTop: theme.spacing.sm }}>{item.name}</Text>
+      <Text weight={600} style={{ marginBottom: 15, marginTop: theme.spacing.sm }}>{item.name}</Text>
 
       <Group grow >
         <Button size="xs" color="gray" onClick={showEdit}>Edit</Button>

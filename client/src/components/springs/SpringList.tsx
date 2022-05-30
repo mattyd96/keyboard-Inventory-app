@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { Accordion, Loader, Group, Text } from "@mantine/core";
+import { Accordion, Loader, Group } from "@mantine/core";
 
 import { Data } from "../../util/springTypes";
 import { FETCH_SPRINGS_QUERY, DELETE_SPRING_MUTATION } from "../../util/springGraphql";

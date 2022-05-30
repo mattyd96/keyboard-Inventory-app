@@ -1,5 +1,5 @@
-import { Navbar, ScrollArea, Text } from "@mantine/core";
-import { useContext, useState } from "react";
+import { Navbar, ScrollArea } from "@mantine/core";
+import { useContext } from "react";
 import UserButton from "../UserButton";
 
 import { AuthContext } from '../../../../context/auth';

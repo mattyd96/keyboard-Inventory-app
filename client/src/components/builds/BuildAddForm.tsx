@@ -4,7 +4,7 @@ import { randomId } from '@mantine/hooks';
 import { useMutation } from '@apollo/client';
 
 import { FETCH_USER_BUILDS_QUERY, ADD_BUILD_MUTATION } from "../../util/buildGraphql";
-import { Build, UserBuildData } from "../../util/buildTypes";
+import { UserBuildData } from "../../util/buildTypes";
 import BuildBaseForm from './BuildBaseForm';
 import { AuthContext } from '../../context/auth';
 

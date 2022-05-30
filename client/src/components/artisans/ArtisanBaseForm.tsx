@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Box, TextInput, Button, Group, NumberInput } from '@mantine/core';
 
 type Props = {

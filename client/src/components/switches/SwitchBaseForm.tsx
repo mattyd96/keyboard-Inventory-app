@@ -1,5 +1,5 @@
 import { Dispatch, Fragment, SetStateAction, useState } from 'react';
-import { Box, TextInput, Button, Group, Select, MultiSelect, NumberInput, Switch, ActionIcon, Text, SegmentedControl } from '@mantine/core';
+import { Box, TextInput, Button, Group, NumberInput, Switch, SegmentedControl } from '@mantine/core';
 
 
 type Props = {

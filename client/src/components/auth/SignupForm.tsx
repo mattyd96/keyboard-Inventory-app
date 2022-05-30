@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from 'zod';
 import { useForm, zodResolver } from '@mantine/form';
-import { TextInput, Text, Button, Box, Group, UnstyledButton } from '@mantine/core';
+import { TextInput, Text, Button, Box, Group } from '@mantine/core';
 import { useMutation, gql } from '@apollo/client';
 
 import { PasswordStrength } from './inputs/PasswordStrength';
@@ -40,6 +40,7 @@ function SignupForm() {
     onError({ graphQLErrors }) {
       console.log(graphQLErrors);
       setErrors(graphQLErrors);
+      console.log(errors);
     },
     variables: form.values,
   });

@@ -1,5 +1,5 @@
-import { Dispatch, Fragment, SetStateAction, useState } from 'react';
-import { Box, TextInput, Button, Group, Select, MultiSelect, NumberInput, Switch, ActionIcon, Text, Textarea, Stack } from '@mantine/core';
+import { Dispatch, Fragment, SetStateAction } from 'react';
+import { Box, TextInput, Button, Group, Select, NumberInput, ActionIcon, Text, Textarea, Stack } from '@mantine/core';
 import { Trash } from 'tabler-icons-react';
 import { randomId } from '@mantine/hooks';
 import { useQuery } from '@apollo/client';
@@ -59,7 +59,7 @@ type Props = {
 }
 
 function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
-  const { loading, data } = useQuery(FETCH_INVENTORY_FOR_BUILDS_QUERY);
+  const { data } = useQuery(FETCH_INVENTORY_FOR_BUILDS_QUERY);
 
   if(data) {
     console.log(data);

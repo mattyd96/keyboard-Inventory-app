@@ -1,6 +1,5 @@
 import { Accordion, Group, Text } from "@mantine/core";
 import { Checklist, Home, Plus } from "tabler-icons-react";
-import StyledAccordion from "./StyledAccordion";
 
 function MenuAccordian() {
   return (

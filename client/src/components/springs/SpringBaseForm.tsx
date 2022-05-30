@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Box, TextInput, NumberInput, Button, Group, Checkbox } from '@mantine/core';
+import { Box, TextInput, NumberInput, Button, Group } from '@mantine/core';
 
 
 type Props = {

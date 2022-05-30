@@ -1,9 +1,8 @@
-import { Button, Text } from '@mantine/core';
+import { Button, Center } from '@mantine/core';
 import { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AuthContext } from '../../../../context/auth';
-import MenuAccordion from './MenuAccordion';
 import SideMenuExpanded from './SideMenuExpanded';
 
 type Props = {
@@ -15,7 +14,11 @@ function SideMenu({ opened }: Props) {
 
   return (
     <Fragment>
-      {!user && <Button component={Link} to='/login'>Sign In</Button>}
+      {!user && 
+      <Center>
+        <Button fullWidth variant='default' mt={'1rem'} component={Link} to='/login'>Sign in to see inventory</Button>
+      </Center>
+      }
       {user && opened &&
         <SideMenuExpanded />
       }

@@ -13,7 +13,6 @@ const authLink = setContext(() => {
 });
 
 // link for graph ql
-// "http://localhost:4000/graphql"
 const link = createHttpLink({
   uri: "https://keyboard-project-server.herokuapp.com/"
 });

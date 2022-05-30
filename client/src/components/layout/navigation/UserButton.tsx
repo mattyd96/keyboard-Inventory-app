@@ -1,6 +1,6 @@
-import { Fragment, ReactNode } from 'react';
-import { UnstyledButton, Group, Avatar, Text, Box, useMantineTheme, MediaQuery } from '@mantine/core';
-import { ChevronRight, ChevronLeft } from 'tabler-icons-react';
+import { Fragment } from 'react';
+import { UnstyledButton, Group, Avatar, Text, Box, useMantineTheme } from '@mantine/core';
+import { ChevronRight } from 'tabler-icons-react';
 
 interface Props {
   icon: string;

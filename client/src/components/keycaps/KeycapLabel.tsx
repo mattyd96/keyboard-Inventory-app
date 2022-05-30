@@ -1,4 +1,4 @@
-import { Group, Text, useMantineTheme } from "@mantine/core";
+import { Group, Text } from "@mantine/core";
 
 type LabelProps = {
   manufacturer: string;
@@ -6,7 +6,6 @@ type LabelProps = {
 }
 
 function KeycapLabel({ manufacturer, name }: LabelProps) {
-  const { colors } = useMantineTheme();
   return (
     <Group position="apart">
       <Group>

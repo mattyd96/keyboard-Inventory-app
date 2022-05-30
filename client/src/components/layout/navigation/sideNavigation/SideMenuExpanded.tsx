@@ -1,6 +1,6 @@
-import { Container, Title, Group, List, Box, Button, createStyles, Stack } from "@mantine/core";
+import { Title, Group, createStyles, Stack } from "@mantine/core";
 import { Fragment } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Checklist } from "tabler-icons-react";
 
 const LINKS = ['Builds', 'Cases', 'Keycaps', 'Switches', 'Stabs', 'Springs', 'Artisans'];

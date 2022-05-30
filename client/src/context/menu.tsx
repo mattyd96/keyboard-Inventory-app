@@ -13,14 +13,6 @@ const MenuContext = createContext<Menu>({
 function MenuProvider(props : any) {
   const [open, setOpen] = useState(true);
 
-  const openMenu = () => {
-    setOpen(true);
-  }
-
-  const closeMenu = () => {
-    setOpen(false);
-  }
-
   const toggleMenu = (state: boolean) => {
     setOpen(state);
   }

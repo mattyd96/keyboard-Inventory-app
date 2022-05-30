@@ -63,7 +63,7 @@ function BuildEditForm(item: BuildProp) {
     update(proxy, { data: { updateBuild }}) {
       const data : UserBuildData = proxy.readQuery({query: FETCH_USER_BUILDS_QUERY, variables: {username: user!.username}})!;
       proxy.writeQuery({ query: FETCH_USER_BUILDS_QUERY, data : {
-        getUserBuilds: [...data.getUserBuilds.filter(item => item.id != updateBuild.id), updateBuild ]
+        getUserBuilds: [...data.getUserBuilds.filter(item => item.id !== updateBuild.id), updateBuild ]
       }});
     },
   });

@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from 'zod';
 import { useForm, zodResolver } from '@mantine/form';
-import { TextInput, PasswordInput, Text, Button, Box, Group, UnstyledButton } from '@mantine/core';
+import { TextInput, PasswordInput, Text, Button, Box, Group } from '@mantine/core';
 import { EyeCheck, EyeOff } from 'tabler-icons-react';
 import { useMutation, gql } from '@apollo/client';
 
@@ -37,6 +37,7 @@ function LoginForm() {
     onError(err) {
       console.log(err.graphQLErrors[0].extensions.errors);
       setErrors(err.graphQLErrors[0].extensions.errors);
+      console.log(errors);
     },
     variables: form.values,
   });

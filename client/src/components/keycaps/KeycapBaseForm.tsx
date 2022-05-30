@@ -1,16 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { Box, TextInput, Button, Group, Select, MultiSelect, NumberInput, Switch, ActionIcon, Text } from '@mantine/core';
+import { Box, TextInput, Button, Group, Select, NumberInput, ActionIcon, Text } from '@mantine/core';
 import { Trash } from 'tabler-icons-react';
 import { randomId } from '@mantine/hooks';
-
-const KIT_DATA = [
-  'Base',
-  'Spacebars',
-  '40s',
-  'JIS',
-  'Hangul Alphas',
-  'Hiragana Alphas'
-];
 
 const MATERIAL_DATA = [
   "ABS",

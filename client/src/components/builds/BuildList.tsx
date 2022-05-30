@@ -1,6 +1,6 @@
 import { Fragment, useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { Accordion, Loader, Group, Text } from "@mantine/core";
+import { Loader, Group } from "@mantine/core";
 
 import { UserBuildData } from "../../util/buildTypes";
 import { FETCH_USER_BUILDS_QUERY, DELETE_BUILD_MUTATION } from "../../util/buildGraphql";
@@ -19,7 +19,7 @@ function BuildList() {
       const data : UserBuildData = proxy.readQuery({query: FETCH_USER_BUILDS_QUERY, variables: {username: user!.username}})!;
 
       proxy.writeQuery({ query: FETCH_USER_BUILDS_QUERY, data : {
-        getUserBuilds: data ? data.getUserBuilds.filter(item => item.id != deleteBuild) : []
+        getUserBuilds: data ? data.getUserBuilds.filter(item => item.id !== deleteBuild) : []
       }});
     },
   });
@@ -41,8 +41,8 @@ function BuildList() {
         </Group>
       }
       {!loading && data != null &&
-        <Group align={"stretch"}>
-          {data && data?.getUserBuilds.map((item, index) =>
+        <Group align={"stretch"} mt={'1rem'}>
+          {data && data?.getUserBuilds.map((item ) =>
             <BuildItem {...item} delete={deleteBuild} key={item.id}/>
           )}
         </Group>
