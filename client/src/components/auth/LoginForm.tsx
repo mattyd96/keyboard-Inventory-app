@@ -30,12 +30,10 @@ function LoginForm() {
   // Login Mutation
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData }}) {
-      console.log(userData);
       context.login(userData);
       navigate('/');
     },
     onError(err) {
-      console.log(err.graphQLErrors[0].extensions.errors);
       setErrors(err.graphQLErrors[0].extensions.errors);
     },
     variables: form.values,

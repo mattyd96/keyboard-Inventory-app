@@ -33,12 +33,10 @@ function SignupForm() {
 
   const [addUser, { loading }] = useMutation(SIGNUP_USER, {
     update(_, { data: { signup: userData}}) {
-      console.log(userData);
       context.login(userData);
       navigate('/');
     },
     onError(err) {
-      console.log(err.graphQLErrors[0].extensions.errors);
       setErrors(err.graphQLErrors[0].extensions.errors);
     },
     variables: form.values,
