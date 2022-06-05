@@ -53,7 +53,6 @@ module.exports = {
     },
 
     signup: async (_, {signupinput: { username, email, password}}) => {
-      console.log("running");
       // Validate user data
       const { valid, errors } = validateRegisterInput(username, email, password);
 
@@ -61,13 +60,22 @@ module.exports = {
         throw new UserInputError('Errors', { errors });
       }
 
-      // TODO Make sure user doesn't already exist
-      const user = await User.findOne({ username });
-      console.log(user);
+      // Make sure username doesn't already exist
+      let user = await User.findOne({ username });
       if (user) {
         throw new UserInputError('Username is taken', {
           errors: {
             username: 'This username is taken'
+          }
+        });
+      }
+
+      // Make sure email doesn't already exist
+      user = await User.findOne({ email });
+      if (user) {
+        throw new UserInputError('There is already an account with this email', {
+          errors: {
+            email: 'There is already an account with this email'
           }
         });
       }

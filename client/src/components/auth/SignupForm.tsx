@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from 'zod';
 import { useForm, zodResolver } from '@mantine/form';
-import { TextInput, Text, Button, Box, Group } from '@mantine/core';
+import { TextInput, Text, Button, Box, Group, Loader } from '@mantine/core';
 import { useMutation, gql } from '@apollo/client';
 
 import { PasswordStrength } from './inputs/PasswordStrength';
@@ -16,7 +16,7 @@ const schema = z.object({
 
 function SignupForm() {
   const context = useContext(AuthContext);
-  const [errors, setErrors] = useState<any>([]); // TODO create a type for this later
+  const [errors, setErrors] = useState<any>({}); // TODO create a type for this later
 
   // Form hook
   const form = useForm({
@@ -31,16 +31,15 @@ function SignupForm() {
   // navigation hook
   const navigate = useNavigate();
 
-  const [addUser] = useMutation(SIGNUP_USER, {
+  const [addUser, { loading }] = useMutation(SIGNUP_USER, {
     update(_, { data: { signup: userData}}) {
       console.log(userData);
       context.login(userData);
       navigate('/');
     },
-    onError({ graphQLErrors }) {
-      console.log(graphQLErrors);
-      setErrors(graphQLErrors);
-      console.log(errors);
+    onError(err) {
+      console.log(err.graphQLErrors[0].extensions.errors);
+      setErrors(err.graphQLErrors[0].extensions.errors);
     },
     variables: form.values,
   });
@@ -48,26 +47,49 @@ function SignupForm() {
   return (
     <Box sx={{ maxWidth: 340 }} mx="auto">
       <form onSubmit={form.onSubmit(() => addUser())}>
-        <TextInput
-          required
-          label="Username"
-          placeholder="John Doe"
-          mt="sm"
-          {...form.getInputProps('username')}
-        />
-        <TextInput
-          required
-          label="Email"
-          placeholder="example@mail.com"
-          {...form.getInputProps('email')}
-        />
+        {errors?.username ? 
+          <TextInput
+            required
+            label="Username"
+            error={errors.username}
+            placeholder="John Doe"
+            mt="sm"
+            {...form.getInputProps('username')}
+          />
+          :
+          <TextInput
+            required
+            label="Username"
+            placeholder="John Doe"
+            mt="sm"
+            {...form.getInputProps('username')}
+          />
+        }
+        {errors?.email ?
+          <TextInput
+            required
+            label="Email"
+            error={errors.email}
+            placeholder="example@mail.com"
+            {...form.getInputProps('email')}
+          />
+          :
+          <TextInput
+            required
+            label="Email"
+            placeholder="example@mail.com"
+            {...form.getInputProps('email')}
+          />
+        }
         <PasswordStrength inputs={form.getInputProps('password')} />
 
         <Group position="apart" mt="xl">
           <Link to={'/login'}>
             <Text>Already have account?</Text>
           </Link>
-          <Button type="submit">Sign Up</Button>
+          <Button type="submit" sx={{width: '6rem'}}>
+            {loading ? <Loader size='xs' /> : 'Sign up'}
+          </Button>
         </Group>
       </form>
     </Box>

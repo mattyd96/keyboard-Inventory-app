@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from 'zod';
 import { useForm, zodResolver } from '@mantine/form';
-import { TextInput, PasswordInput, Text, Button, Box, Group } from '@mantine/core';
+import { TextInput, PasswordInput, Text, Button, Box, Group, Loader } from '@mantine/core';
 import { EyeCheck, EyeOff } from 'tabler-icons-react';
 import { useMutation, gql } from '@apollo/client';
 
@@ -15,7 +15,7 @@ const schema = z.object({
 
 function LoginForm() {
   const context = useContext(AuthContext);
-  const [errors, setErrors] = useState<any>([]); // TODO create a type for this later
+  const [errors, setErrors] = useState<any>({}); // TODO create a type for this later
   const navigate = useNavigate();
 
   // Form hook
@@ -28,7 +28,7 @@ function LoginForm() {
   });
 
   // Login Mutation
-  const [loginUser] = useMutation(LOGIN_USER, {
+  const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData }}) {
       console.log(userData);
       context.login(userData);
@@ -37,13 +37,12 @@ function LoginForm() {
     onError(err) {
       console.log(err.graphQLErrors[0].extensions.errors);
       setErrors(err.graphQLErrors[0].extensions.errors);
-      console.log(errors);
     },
     variables: form.values,
   });
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
+    <Box sx={{ maxWidth: 340, position: 'relative' }} mx="auto" p='1rem'>
       <form onSubmit={form.onSubmit(() => loginUser())}>
         <TextInput
           required
@@ -60,12 +59,17 @@ function LoginForm() {
           }
           {...form.getInputProps('password')}
         />
+        {errors &&
+          <Text mt='.5rem' color={'red'}>{errors.general}</Text> 
+        }
 
         <Group position="apart" mt="xl">
           <Link to={'/signup'}>
             <Text>Don't have account yet?</Text>
           </Link>
-          <Button type="submit">Login</Button>
+          <Button type="submit" sx={{width: '5rem'}}>
+            {loading ? <Loader size='xs' /> : 'Login'}
+          </Button>
         </Group>
       </form>
     </Box>
