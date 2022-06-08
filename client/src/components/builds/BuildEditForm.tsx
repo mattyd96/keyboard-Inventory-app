@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { useForm, formList } from "@mantine/form";
 import { useMutation } from "@apollo/client";
+import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 
 import { FETCH_USER_BUILDS_QUERY, UPDATE_BUILD_MUTATION } from "../../util/buildGraphql";
 import { UserBuildData } from "../../util/buildTypes";
@@ -10,7 +11,15 @@ import { Stab } from "../../util/stabTypes";
 import { Keycap } from "../../util/keycapTypes";
 import KeycapBaseForm from "./BuildBaseForm";
 import { randomId } from "@mantine/hooks";
+import { FileWithPath } from 'file-selector';
+import { v4 as uuidv4 } from 'uuid';
+import { storage } from '../../firebase';
+
 import { AuthContext } from "../../context/auth";
+
+interface CustomFile extends FileWithPath {
+  preview : string
+}
 
 type BuildProp = {
   id: string
@@ -27,8 +36,8 @@ type BuildProp = {
 
 function BuildEditForm(item: BuildProp) {
   const { user } = useContext(AuthContext);
-
-  console.log(item);
+  const [fileList, setFileList] = useState<CustomFile[]>([]); //file list for holding image Files to upload to firebase
+  let links: string[] = []; //array to hold links of uploaded files for db
 
   const switches = item.switches.map(swit => {
     return {name: swit.name, amount: 0, id: swit.id};
@@ -43,10 +52,6 @@ function BuildEditForm(item: BuildProp) {
     return {name: stab.name, twoU: 0, sixU: 0, six25U: 0, sevenU: 0, id: stab.id}
   });
 
-  const images = item.images.map(image => {
-    return {link: image, id: randomId()};
-  });
-
   const form = useForm({
     initialValues: {
       name: item.name,
@@ -55,7 +60,8 @@ function BuildEditForm(item: BuildProp) {
       switches: formList([...switches]),
       keycaps: formList([...keycaps]),
       stabs: formList([...stabs]),
-      images: formList([...images])
+      images: formList([...item.images]),
+      removeImages: formList([])
     }
   });
 
@@ -68,8 +74,34 @@ function BuildEditForm(item: BuildProp) {
     },
   });
 
-  const updateBuild = () => {
-    updateBuildMutation({variables: {id: item.id, ...form.values}});
+  // upload images to firebase and populate links array
+  const uploadImages = async () => {
+    await Promise.all(
+      fileList.map(async img => {
+        const imgRef = ref(storage, `images/${user!.username}/${uuidv4()}${img.path}`);
+        await uploadBytes(imgRef, img);
+        const downloadURL = await getDownloadURL(imgRef);
+        links.push(downloadURL); 
+      })
+    )
+    console.log(links);
+  };
+
+  const deleteImages = async () => {
+    await Promise.all(
+      form.values.removeImages.map(async img => {
+        const imgRef = ref(storage, img);
+        await deleteObject(imgRef);
+      })
+    )
+  };
+
+  const updateBuild = async () => {
+    await uploadImages(); // upload images if there are more
+    await deleteImages(); // remove images marked for deletion by user
+    const { removeImages, ...input } = form.values;
+    const images = [...form.values.images, ...links];
+    updateBuildMutation({variables: {id: item.id, ...input, images}});
     form.reset();
     item.setFormVisibility(false);
   }
@@ -79,6 +111,8 @@ function BuildEditForm(item: BuildProp) {
       form={form}
       setFormVisible={item.setFormVisibility}
       handleSubmit={updateBuild}
+      fileList={fileList}
+      setFileList={setFileList}
     />
   );
 }

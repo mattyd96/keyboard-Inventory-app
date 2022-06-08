@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Loader, Group } from "@mantine/core";
 
 import { UserBuildData } from "../../util/buildTypes";
-import { FETCH_USER_BUILDS_QUERY, DELETE_BUILD_MUTATION } from "../../util/buildGraphql";
+import { FETCH_USER_BUILDS_QUERY, DELETE_BUILD_MUTATION, FETCH_BUILD_QUERY } from "../../util/buildGraphql";
 import BuildItem from "./BuildItem";
 import { AuthContext } from "../../context/auth";
 
@@ -28,7 +28,7 @@ function BuildList() {
     console.log(data);
   }
 
-  const deleteBuild = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const deleteBuild = async (event: React.MouseEvent<HTMLButtonElement>) => {
     const id = event.currentTarget.value;
     deleteBuildMutation({variables: {id}});
   }

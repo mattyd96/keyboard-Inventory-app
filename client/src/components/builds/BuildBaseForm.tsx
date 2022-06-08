@@ -1,14 +1,17 @@
 import { Dispatch, Fragment, SetStateAction } from 'react';
-import { Box, TextInput, Button, Group, Select, NumberInput, ActionIcon, Text, Textarea, Stack } from '@mantine/core';
+import { Box, TextInput, Button, Group, Select, NumberInput, ActionIcon, Text, Textarea, Stack, Indicator, Image } from '@mantine/core';
 import { Trash } from 'tabler-icons-react';
 import { randomId } from '@mantine/hooks';
 import { useQuery } from '@apollo/client';
+import { FileWithPath } from 'file-selector';
+import { X } from 'tabler-icons-react';
 
 import { FETCH_INVENTORY_FOR_BUILDS_QUERY } from "../../util/inventoryGraphql";
 import { Case } from "../../util/caseTypes";
 import { Switch as SwitchType } from "../../util/switchTypes";
 import { Keycap } from "../../util/keycapTypes";
 import { Stab } from "../../util/stabTypes";
+import ImageDrop from './ImageDrop';
 
 
 type SwitchFieldType = {
@@ -31,10 +34,10 @@ type StabFieldType = {
   id: string
 }
 
-type ImageFieldType = {
-  id: string
-  link: string
-}
+// type ImageFieldType = {
+//   id: string
+//   link: string
+// }
 
 type SwitchData = {
   label: string
@@ -52,18 +55,22 @@ type StabData = {
   value: string
 }
 
+interface CustomFile extends FileWithPath {
+  preview : string
+}
+
 type Props = {
   setFormVisible: Dispatch<SetStateAction<boolean>>;
   handleSubmit: Function
   form: any // TODO create a type for the form object
+  fileList: any[]
+  setFileList: Dispatch<SetStateAction<CustomFile[]>>
 }
 
-function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
-  const { data } = useQuery(FETCH_INVENTORY_FOR_BUILDS_QUERY);
 
-  if(data) {
-    console.log(data);
-  }
+
+function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileList }: Props) {
+  const { data } = useQuery(FETCH_INVENTORY_FOR_BUILDS_QUERY);
 
   let CASE_DATA: Case[] = [];
   let SWITCH_DATA: SwitchData[] = [];
@@ -179,22 +186,31 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
     ));
   }
 
-  const imageFields = form.values.images.map((item : ImageFieldType, index: number) => (
-    <Group key={item.id} mt="xs">
-      <TextInput
-        placeholder="Image Link"
-        sx={{ flex: 1 }}
-        {...form.getListInputProps('images', index, 'link')}
-      />
-      <ActionIcon
-        color="red"
-        variant="hover"
-        onClick={() => form.removeListItem('images', index)}
-      >
-        <Trash size={16} />
-      </ActionIcon>
-    </Group>
-  ));
+  // const imageFields = form.values.images.map((item : ImageFieldType, index: number) => (
+  //   <Group key={item.id} mt="xs">
+  //     <TextInput
+  //       placeholder="Image Link"
+  //       sx={{ flex: 1 }}
+  //       {...form.getListInputProps('images', index, 'link')}
+  //     />
+  //     <ActionIcon
+  //       color="red"
+  //       variant="hover"
+  //       onClick={() => form.removeListItem('images', index)}
+  //     >
+  //       <Trash size={16} />
+  //     </ActionIcon>
+  //   </Group>
+  // ));
+
+  const removeUploadedImage = (file: string) => {
+    const index = form.values.images.findIndex((img: string) => img === file);
+    form.removeListItem('images', index);
+    form.addListItem('removeImages', file);
+  };
+
+  if(form.values.removeImages) {console.log('removeImages', form.values.removeImages);}
+  console.log('images', form.values.images);
 
   return (
     <Box
@@ -296,7 +312,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
           </Button>
         </Group>
       </Box>
-      <Box>
+      {/* <Box>
         {imageFields.length > 0 ? (
           <Fragment>
             <Text size="sm">Images</Text>
@@ -319,7 +335,31 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
             Add Image
           </Button>
         </Group>
-      </Box>
+      </Box> */}
+      <Text size="sm">Images</Text>
+      {form.values.removeImages && 
+        <Fragment>
+          <Text size="sm">Uploaded Images</Text>
+          <Group>
+            {form.values.images && form.values.images.map((file: string) => 
+              <Indicator
+                inline
+                label={<X size={10}/>}
+                size={16}
+                zIndex={100}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeUploadedImage(file);
+                }}
+                key={file}
+              >
+                <Image src={file} alt={file} sx={{maxWidth: '6rem'}} />
+              </Indicator>
+            )}
+          </Group>
+        </Fragment>
+      }
+      <ImageDrop form={form} fileList={fileList} setFileList={setFileList} />
 
       <Group position="right" mt="md">
         <Button

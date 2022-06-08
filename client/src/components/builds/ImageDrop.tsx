@@ -1,6 +1,11 @@
-import { Group, Text, useMantineTheme, MantineTheme } from '@mantine/core';
-import { Upload, Photo, X, Icon as TablerIcon } from 'tabler-icons-react';
+import { Fragment, Dispatch, SetStateAction } from 'react';
+import { Group, Text, useMantineTheme, MantineTheme, Image, Indicator } from '@mantine/core';
 import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { Upload, Photo, X, Icon as TablerIcon } from 'tabler-icons-react';
+
+interface CustomFile extends File {
+  preview : string
+}
 
 function getIconColor(status: DropzoneStatus, theme: MantineTheme) {
   return status.accepted
@@ -42,17 +47,64 @@ export const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) =>
   </Group>
 );
 
-function ImageDrop() {
+type Props = {
+  form: any // TODO create a type for the form object
+  fileList?: any[]
+  setFileList?: Dispatch<SetStateAction<any[]>>
+}
+
+function ImageDrop({ form, fileList, setFileList } : Props) {
   const theme = useMantineTheme();
+
+  console.log(form.values);
+  console.log(fileList);
+
+  const handleImageDrop = (imgs : File[]) => {
+    console.log(imgs);
+    const newImageList = imgs.map(img => 
+      Object.assign(img, {
+        preview: URL.createObjectURL(img)
+      })
+    )
+    //newImageList.forEach(img => form.addListItem('imagesAdd', img));
+    setFileList!([...fileList!, ...newImageList]);
+  };
+
+  const removeFile = (id : string) => {
+    const newFileList = fileList!.filter(file => file.name !== id);
+    if(setFileList) setFileList(newFileList);
+    
+    const removedFile = form.values.imagesAdd.findIndex((img: CustomFile) => img.name === id);
+    //form.removeListItem('imagesAdd', removedFile);
+  };
+
   return (
-    <Dropzone
-      onDrop={(files) => console.log('accepted files', files)}
-      onReject={(files) => console.log('rejected files', files)}
-      maxSize={3 * 1024 ** 2}
-      accept={IMAGE_MIME_TYPE}
-    >
-      {(status) => dropzoneChildren(status, theme)}
-    </Dropzone>
+    <Fragment>
+      <Dropzone
+        onDrop={handleImageDrop}
+        onReject={(files) => console.log('rejected files', files)}
+        accept={IMAGE_MIME_TYPE}
+      >
+        {(status) => dropzoneChildren(status, theme)}
+      </Dropzone>
+      <Group>
+        {fileList && fileList.map((file: CustomFile) => 
+          <Indicator
+            inline
+            label={<X size={10}/>}
+            size={16}
+            zIndex={100}
+            onClick={(e) => {
+              e.stopPropagation();
+              removeFile(file.name);
+            }}
+            key={file.name}
+          >
+            <Image src={file.preview} alt={file.name} sx={{maxWidth: '6rem'}} />
+          </Indicator>
+        )}
+      </Group>
+    </Fragment>
   );
 }
 

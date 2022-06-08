@@ -238,7 +238,7 @@ export const ADD_BUILD_MUTATION = gql`
     $switches: [SwitchBuildInput]
     $keycaps: [KeycapBuildInput]
     $stabs: [StabBuildInput]
-    $images: [ImageBuildInput]
+    $images: [String]
     ) {
     addBuild(
       buildInput: {
@@ -329,7 +329,7 @@ export const UPDATE_BUILD_MUTATION = gql`
     $switches: [SwitchBuildInput]
     $keycaps: [KeycapBuildInput]
     $stabs: [StabBuildInput]
-    $images: [ImageBuildInput]
+    $images: [String]
     ) {
     updateBuild(
       id: $id

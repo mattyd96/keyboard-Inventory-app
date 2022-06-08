@@ -28,7 +28,7 @@ function BuildItem(item: BuildProp) {
   );
 
   const editDisplay = (
-    <Modal opened={edit} onClose={() => setEdit(false)} title="Add a Case">
+    <Modal opened={edit} onClose={() => setEdit(false)} title="Edit Build">
       <BuildEditForm {...item} setFormVisibility={setEdit} />
     </Modal>
   );

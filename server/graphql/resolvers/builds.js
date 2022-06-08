@@ -1,4 +1,6 @@
 const { UserInputError, AuthenticationError } = require('apollo-server');
+const { ref, deleteObject } =  require('firebase/storage');
+const { storage } = require('../../util/firebase');
 
 const User = require('../../models/User');
 const Build = require('../../models/Build');
@@ -13,6 +15,15 @@ const getBuild = async id => {
     .populate('stabs');
 
     return build;
+};
+
+const deleteImages = async (images) => {
+  await Promise.all(
+    images.map(async img => {
+      const imgRef = ref(storage, img);
+      await deleteObject(imgRef);
+    })
+  )
 };
 
 module.exports = {
@@ -42,14 +53,13 @@ module.exports = {
   Mutation: {
     addBuild: async (_, { buildInput }, context) => {
       const { username } = checkAuth(context);
-
+      console.log(buildInput.images);
       const name = buildInput.name;
       const description = buildInput.description;
       const cas = buildInput.case;
       const switches = buildInput.switches.map(swit => swit.name);
       const keycaps = buildInput.keycaps.map(keycap => keycap.set);
       const stabs = buildInput.stabs.map(stab => stab.name);
-      const images = buildInput.images.map(image => image.link);
       // const stabAmount = buildInput.stabs.map(stab => {
       //   const { id, twoU, sixU, six25U, sevenU } = stab;
       //   const amounts = (twoU + sixU + six25U + sevenU) * 2;
@@ -59,7 +69,7 @@ module.exports = {
       //   return {id: swit.name, amount: swit.amount}
       // });
 
-      const newBuild = { username, name, description, case: cas, switches, keycaps, stabs, images};
+      const newBuild = { username, name, description, case: cas, switches, keycaps, stabs, images: buildInput.images};
       const built = new Build(newBuild);
       await built.save();
       const populatedBuild = await getBuild(built._id);
@@ -76,7 +86,6 @@ module.exports = {
       const switches = buildInput.switches.map(swit => swit.name);
       const keycaps = buildInput.keycaps.map(keycap => keycap.set);
       const stabs = buildInput.stabs.map(stab => stab.name);
-      const images = buildInput.images.map(image => image.link);
       // const stabAmount = buildInput.stabs.map(stab => {
       //   const { id, twoU, sixU, six25U, sevenU } = stab;
       //   const amounts = (twoU + sixU + six25U + sevenU) * 2;
@@ -86,7 +95,7 @@ module.exports = {
       //   return {id: swit.name, amount: swit.amount}
       // });
 
-      const newBuild = { username, name, description, case: cas, switches, keycaps, stabs, images};
+      const newBuild = { username, name, description, case: cas, switches, keycaps, stabs, images: buildInput.images};
       await Build.findByIdAndUpdate(id, newBuild);
       const populatedBuild = await getBuild(id);
       console.log(populatedBuild);
@@ -95,6 +104,8 @@ module.exports = {
 
     deleteBuild: async (_, { id }, context) => {
       const { username } = checkAuth(context);
+      const build = await Build.findById(id);
+      await deleteImages(build.images);
       await Build.deleteOne({_id: id});
       return id;
     },

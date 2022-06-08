@@ -221,7 +221,7 @@ const typeDefs = gql`
     switches: [SwitchBuildInput]
     keycaps: [KeycapBuildInput]
     stabs: [StabBuildInput]
-    images: [ImageBuildInput]
+    images: [String]
   }
 
   input SignupInput {
