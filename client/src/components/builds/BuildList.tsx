@@ -1,6 +1,6 @@
 import { Fragment, useContext } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { Loader, Group } from "@mantine/core";
+import { Loader, Grid, Group } from "@mantine/core";
 
 import { UserBuildData } from "../../util/buildTypes";
 import { FETCH_USER_BUILDS_QUERY, DELETE_BUILD_MUTATION } from "../../util/buildGraphql";
@@ -37,11 +37,13 @@ function BuildList() {
         </Group>
       }
       {!loading && data != null &&
-        <Group align={"stretch"} mt={'1rem'}>
+        <Grid mt={'2rem'} columns={24}>
           {data && data?.getUserBuilds.map((item ) =>
-            <BuildItem {...item} delete={deleteBuild} key={item.id}/>
+            <Grid.Col xs={12} md={8} lg={6} xl={4}>
+              <BuildItem {...item} delete={deleteBuild} key={item.id}/>
+            </Grid.Col>
           )}
-        </Group>
+        </Grid>
       }
     </Fragment>
   );

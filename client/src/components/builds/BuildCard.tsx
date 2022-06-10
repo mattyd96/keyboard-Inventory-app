@@ -24,7 +24,7 @@ function BuildCard(item: BuildProp) {
         <Image
           withPlaceholder
           src={item.images.length > 0 ? item.images[0] : ''}
-          height={160}
+          height={180}
           alt={item.images.length > 0 ? item.images[0] : 'placeholder image'}
         />
       </Card.Section>
