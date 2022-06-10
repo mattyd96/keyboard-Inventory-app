@@ -9,7 +9,7 @@ interface Props {
   opened: Boolean;
 }
 
-function UserButton({ icon, username, email, opened }: Props) {
+function UserButton({ username, email, opened }: Props) {
   const theme = useMantineTheme();
 
   return (
@@ -38,7 +38,6 @@ function UserButton({ icon, username, email, opened }: Props) {
         >
           <Group>
             <Avatar
-              src={icon ? icon : ''}
               radius="xl"
             />
             <Fragment>
