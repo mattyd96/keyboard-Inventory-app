@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { Box, TextInput, Button, Group, Select, NumberInput, ActionIcon, Text } from '@mantine/core';
 import { Trash } from 'tabler-icons-react';
 import { randomId } from '@mantine/hooks';
+import AddButton from '../buttons/AddButton';
 
 const MATERIAL_DATA = [
   "ABS",
@@ -88,19 +89,20 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form }: Props) {
         {fields}
 
         <Group position="center" mt="md">
-          <Button
+          <AddButton
             onClick={() =>
               form.addListItem('kits', { name: '', amount: null, id: randomId() })
             }
           >
-            Add Kit
-          </Button>
+            Add Another Kit
+          </AddButton>
         </Group>
       </Box>
 
       <Group position="right" mt="md">
         <Button
           type="button"
+          color="red"
           onClick={() => {
             setFormVisible(false);
           }}

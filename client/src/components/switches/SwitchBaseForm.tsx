@@ -114,6 +114,7 @@ function SwitchBaseForm( { setFormVisible, handleSubmit, form }: Props) {
       <Group position="right" mt="md">
         <Button
           type="button"
+          color="red"
           onClick={() => {
             setFormVisible(false);
           }}
