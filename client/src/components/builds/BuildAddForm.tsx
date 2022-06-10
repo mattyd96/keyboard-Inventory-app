@@ -27,7 +27,6 @@ function KeycapAddForm( { closeForm }: Props) {
 
   const form = useForm({
     initialValues: {
-      action: 'add',
       name: '',
       description: '',
       case: '',

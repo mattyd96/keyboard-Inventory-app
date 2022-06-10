@@ -110,13 +110,30 @@ const typeDefs = gql`
     link: String
   }
 
+  type SwitchAmount {
+    id: ID
+    amount: Int
+  }
+
+  type StabAmount {
+    stabId: ID
+    housings: Int,
+    stems: Int,
+    sevenU: Int,
+    sixU: Int,
+    six25U: Int,
+    twoU: Int
+  }
+
   type Build {
     id: ID
     name: String
     description: String
     case: Case
     switches: [Switch]
+    switchAmount: [SwitchAmount]
     stabs: [Stab]
+    stabAmount: [StabAmount]
     keycaps: [Keycap]
     images: [String]
   }

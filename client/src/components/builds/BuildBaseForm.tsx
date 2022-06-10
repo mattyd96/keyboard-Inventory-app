@@ -72,6 +72,8 @@ type Props = {
 function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileList }: Props) {
   const { data } = useQuery(FETCH_INVENTORY_FOR_BUILDS_QUERY);
 
+  console.log(form.values);
+
   let CASE_DATA: Case[] = [];
   let SWITCH_DATA: SwitchData[] = [];
   let KEYCAP_DATA: KeycapData[] = [];
@@ -93,7 +95,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
           maxDropdownHeight={125}
           placeholder="Select Switch"
           searchable
-          required
+          nothingFound="No switches found"
           sx={{ flex: 2 }}
           {...form.getListInputProps('switches', index, 'name')}
           
@@ -186,31 +188,11 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
     ));
   }
 
-  // const imageFields = form.values.images.map((item : ImageFieldType, index: number) => (
-  //   <Group key={item.id} mt="xs">
-  //     <TextInput
-  //       placeholder="Image Link"
-  //       sx={{ flex: 1 }}
-  //       {...form.getListInputProps('images', index, 'link')}
-  //     />
-  //     <ActionIcon
-  //       color="red"
-  //       variant="hover"
-  //       onClick={() => form.removeListItem('images', index)}
-  //     >
-  //       <Trash size={16} />
-  //     </ActionIcon>
-  //   </Group>
-  // ));
-
   const removeUploadedImage = (file: string) => {
     const index = form.values.images.findIndex((img: string) => img === file);
     form.removeListItem('images', index);
     form.addListItem('removeImages', file);
   };
-
-  if(form.values.removeImages) {console.log('removeImages', form.values.removeImages);}
-  console.log('images', form.values.images);
 
   return (
     <Box
@@ -312,30 +294,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
           </Button>
         </Group>
       </Box>
-      {/* <Box>
-        {imageFields.length > 0 ? (
-          <Fragment>
-            <Text size="sm">Images</Text>
-            <Text size="xs">Link your images here, make sure they are hosted online (imgur etc.)</Text>
-          </Fragment>
-        ) : (
-          <Text color="dimmed" align="center">
-            No images added yet
-          </Text>
-        )}
-
-        {imageFields}
-
-        <Group position="center" mt="md">
-          <Button
-            onClick={() =>
-              form.addListItem('images', { link: '', id: randomId() })
-            }
-          >
-            Add Image
-          </Button>
-        </Group>
-      </Box> */}
+      
       <Text size="sm">Images</Text>
       {form.values.removeImages && 
         <Fragment>

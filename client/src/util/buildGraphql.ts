@@ -12,7 +12,7 @@ export const FETCH_BUILDS_QUERY = gql`
         amount
       }
       stabAmount {
-        id
+        stabId
         housings
         stems
         sevenU
@@ -92,6 +92,19 @@ export const FETCH_BUILD_QUERY = gql`
       id
       name
       description
+      switchAmount {
+        id
+        amount
+      }
+      stabAmount {
+        stabId
+        housings
+        stems
+        sevenU
+        sixU
+        six25U
+        twoU
+      }
       case {
         id
         name
@@ -164,6 +177,19 @@ export const FETCH_USER_BUILDS_QUERY = gql`
       id
       name
       description
+      switchAmount {
+        id
+        amount
+      }
+      stabAmount {
+        stabId
+        housings
+        stems
+        sevenU
+        sixU
+        six25U
+        twoU
+      }
       case {
         id
         name
@@ -254,6 +280,19 @@ export const ADD_BUILD_MUTATION = gql`
       id
       name
       description
+      switchAmount {
+        id
+        amount
+      }
+      stabAmount {
+        stabId
+        housings
+        stems
+        sevenU
+        sixU
+        six25U
+        twoU
+      }
       case {
         id
         name
@@ -346,6 +385,19 @@ export const UPDATE_BUILD_MUTATION = gql`
       id
       name
       description
+      switchAmount {
+        id
+        amount
+      }
+      stabAmount {
+        stabId
+        housings
+        stems
+        sevenU
+        sixU
+        six25U
+        twoU
+      }
       case {
         id
         name

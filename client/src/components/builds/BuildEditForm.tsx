@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/client";
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 
 import { FETCH_USER_BUILDS_QUERY, UPDATE_BUILD_MUTATION } from "../../util/buildGraphql";
-import { UserBuildData } from "../../util/buildTypes";
+import { UserBuildData, SwitchAmount, StabAmount } from "../../util/buildTypes";
 import { Case } from "../../util/caseTypes";
 import { Switch } from "../../util/switchTypes";
 import { Stab } from "../../util/stabTypes";
@@ -27,7 +27,9 @@ type BuildProp = {
   description: string
   case: Case
   switches: Switch[]
+  switchAmount: SwitchAmount[]
   stabs: Stab[]
+  stabAmount: StabAmount[]
   keycaps: Keycap[]
   images: string[]
   delete: React.MouseEventHandler;
@@ -40,17 +42,22 @@ function BuildEditForm(item: BuildProp) {
   let links: string[] = []; //array to hold links of uploaded files for db
 
   const switches = item.switches.map(swit => {
-    return {name: swit.name, amount: 0, id: swit.id};
+    const amount = item.switchAmount.filter(swit2 => swit2.id === swit.id)[0].amount;
+    return {name: swit.id, amount, id: swit.id};
   });
   console.log(switches);
 
   const keycaps = item.keycaps.map(keycap => {
-    return {set: keycap.name, id: keycap.id};
+    return {set: keycap.id, id: keycap.id};
   });
 
   const stabs = item.stabs.map(stab => {
-    return {name: stab.name, twoU: 0, sixU: 0, six25U: 0, sevenU: 0, id: stab.id}
+    const selectedStab = item.stabAmount.filter(stab2 => stab2.stabId === stab.id)[0];
+    const { twoU, sixU, six25U, sevenU } = selectedStab;
+    return {name: stab.id, twoU, sixU, six25U, sevenU, id: stab.id}
   });
+
+  console.log(stabs);
 
   const form = useForm({
     initialValues: {

@@ -6,6 +6,7 @@ import { Case } from "../../util/caseTypes";
 import { Switch } from "../../util/switchTypes";
 import { Stab } from "../../util/stabTypes";
 import { Keycap } from "../../util/keycapTypes";
+import { StabAmount, SwitchAmount } from "../../util/buildTypes";
 import BuildCard from "./BuildCard";
 
 type BuildProp = {
@@ -14,7 +15,9 @@ type BuildProp = {
   description: string
   case: Case
   switches: Switch[]
+  switchAmount: SwitchAmount[]
   stabs: Stab[]
+  stabAmount: StabAmount[]
   keycaps: Keycap[]
   images: string[]
   delete: React.MouseEventHandler;
