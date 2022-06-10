@@ -1,16 +1,11 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState, MouseEventHandler } from "react";
 import { useForm, formList } from "@mantine/form";
 import { useMutation } from "@apollo/client";
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 
 import { FETCH_USER_BUILDS_QUERY, UPDATE_BUILD_MUTATION } from "../../util/buildGraphql";
-import { UserBuildData, SwitchAmount, StabAmount } from "../../util/buildTypes";
-import { Case } from "../../util/caseTypes";
-import { Switch } from "../../util/switchTypes";
-import { Stab } from "../../util/stabTypes";
-import { Keycap } from "../../util/keycapTypes";
+import { UserBuildData, Build } from "../../util/buildTypes";
 import KeycapBaseForm from "./BuildBaseForm";
-import { randomId } from "@mantine/hooks";
 import { FileWithPath } from 'file-selector';
 import { v4 as uuidv4 } from 'uuid';
 import { storage } from '../../firebase';
@@ -21,18 +16,8 @@ interface CustomFile extends FileWithPath {
   preview : string
 }
 
-type BuildProp = {
-  id: string
-  name: string
-  description: string
-  case: Case
-  switches: Switch[]
-  switchAmount: SwitchAmount[]
-  stabs: Stab[]
-  stabAmount: StabAmount[]
-  keycaps: Keycap[]
-  images: string[]
-  delete: React.MouseEventHandler;
+interface BuildProp extends Build {
+  delete: MouseEventHandler;
   setFormVisibility: Dispatch<SetStateAction<boolean>>
 }
 

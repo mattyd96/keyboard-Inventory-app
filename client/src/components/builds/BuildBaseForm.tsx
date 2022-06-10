@@ -1,6 +1,6 @@
 import { Dispatch, Fragment, SetStateAction } from 'react';
 import { Box, TextInput, Button, Group, Select, NumberInput, ActionIcon, Text, Textarea, Stack, Indicator, Image } from '@mantine/core';
-import { Trash } from 'tabler-icons-react';
+import { Plus, Trash } from 'tabler-icons-react';
 import { randomId } from '@mantine/hooks';
 import { useQuery } from '@apollo/client';
 import { FileWithPath } from 'file-selector';
@@ -34,11 +34,6 @@ type StabFieldType = {
   id: string
 }
 
-// type ImageFieldType = {
-//   id: string
-//   link: string
-// }
-
 type SwitchData = {
   label: string
   value: string
@@ -67,12 +62,8 @@ type Props = {
   setFileList: Dispatch<SetStateAction<CustomFile[]>>
 }
 
-
-
 function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileList }: Props) {
   const { data } = useQuery(FETCH_INVENTORY_FOR_BUILDS_QUERY);
-
-  console.log(form.values);
 
   let CASE_DATA: Case[] = [];
   let SWITCH_DATA: SwitchData[] = [];
@@ -138,7 +129,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
 
     stabFields = form.values.stabs.map((item: StabFieldType, index: number) => (
       <Stack key={item.id} mt="xs">
-        <Group>
+        <Group mt={'1rem'}>
           <Select
             sx={{ flex: 1 }}
             data={STAB_DATA}
@@ -238,11 +229,14 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
 
         <Group position="center" mt="md">
           <Button
+            variant='subtle'
+            leftIcon={<Plus size={14} />}
+            color="gray"
             onClick={() =>
               form.addListItem('switches', { name: '', amount: 0, id: randomId() })
             }
           >
-            Add Switch
+            Add another Switch
           </Button>
         </Group>
       </Box>
@@ -262,11 +256,14 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
 
         <Group position="center" mt="md">
           <Button
+            variant='subtle'
+            leftIcon={<Plus size={14} />}
+            color="gray"
             onClick={() =>
               form.addListItem('keycaps', { set: '', kit: '', id: randomId() })
             }
           >
-            Add Keycaps
+            Add More Keycaps
           </Button>
         </Group>
       </Box>
@@ -286,11 +283,14 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
 
         <Group position="center" mt="md">
           <Button
+            variant='subtle'
+            leftIcon={<Plus size={14} />}
+            color="gray"
             onClick={() =>
               form.addListItem('stabs', {name: '', twoU: 0, sixU: 0, six25U: 0, sevenU: 0, id: randomId()})
             }
           >
-            Add Stabs
+            Add More Stabs
           </Button>
         </Group>
       </Box>
@@ -298,7 +298,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
       <Text size="sm">Images</Text>
       {form.values.removeImages && 
         <Fragment>
-          <Text size="sm">Uploaded Images</Text>
+          <Text size="xs">Uploaded Images</Text>
           <Group>
             {form.values.images && form.values.images.map((file: string) => 
               <Indicator
@@ -316,6 +316,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
               </Indicator>
             )}
           </Group>
+          <Text size="xs">Add more images</Text>
         </Fragment>
       }
       <ImageDrop form={form} fileList={fileList} setFileList={setFileList} />
@@ -323,6 +324,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
       <Group position="right" mt="md">
         <Button
           type="button"
+          color="red"
           onClick={() => {
             setFormVisible(false);
           }}

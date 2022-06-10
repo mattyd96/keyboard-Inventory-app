@@ -1,21 +1,10 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Card, Image, Text, Button, Group, useMantineTheme } from '@mantine/core';
 
-import { Case } from "../../util/caseTypes";
-import { Switch } from "../../util/switchTypes";
-import { Stab } from "../../util/stabTypes";
-import { Keycap } from "../../util/keycapTypes";
 import { Link } from 'react-router-dom';
+import { Build } from "../../util/buildTypes";
 
-type BuildProp = {
-  id: string
-  name: string
-  description: string
-  case: Case
-  switches: Switch[]
-  stabs: Stab[]
-  keycaps: Keycap[]
-  images: string[]
+interface BuildProp extends Build {
   delete: React.MouseEventHandler;
   setFormVisibility: Dispatch<SetStateAction<boolean>>
 }

@@ -56,9 +56,6 @@ type Props = {
 function ImageDrop({ form, fileList, setFileList } : Props) {
   const theme = useMantineTheme();
 
-  console.log(form.values);
-  console.log(fileList);
-
   const handleImageDrop = (imgs : File[]) => {
     console.log(imgs);
     const newImageList = imgs.map(img => 
@@ -66,16 +63,12 @@ function ImageDrop({ form, fileList, setFileList } : Props) {
         preview: URL.createObjectURL(img)
       })
     )
-    //newImageList.forEach(img => form.addListItem('imagesAdd', img));
     setFileList!([...fileList!, ...newImageList]);
   };
 
   const removeFile = (id : string) => {
     const newFileList = fileList!.filter(file => file.name !== id);
     if(setFileList) setFileList(newFileList);
-    
-    const removedFile = form.values.imagesAdd.findIndex((img: CustomFile) => img.name === id);
-    //form.removeListItem('imagesAdd', removedFile);
   };
 
   return (
