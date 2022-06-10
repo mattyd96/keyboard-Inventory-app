@@ -17,6 +17,12 @@ A Fullstack inventory for keeping track of parts and builds for Custom Mechanica
 * Apollo Server and Client
 * Nodejs
 * GraphQL
+* Firebase Storage
+
+## Recent Changes
+
+* Image hosting now on site using firebase
+* Drag and drop feature for mobile and desktop
 
 ## Future Development
 
