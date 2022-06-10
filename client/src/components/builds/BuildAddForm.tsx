@@ -23,6 +23,7 @@ type Props = {
 function KeycapAddForm( { closeForm }: Props) {
   const { user } = useContext(AuthContext); //user info
   const [fileList, setFileList] = useState<CustomFile[]>([]); //file list for holding image Files to upload to firebase
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   let links: string[] = []; //array to hold links of uploaded files for db
 
   const form = useForm({
@@ -64,6 +65,7 @@ function KeycapAddForm( { closeForm }: Props) {
 
   // submit build data to db
   const submitBuild = async () => {
+    setIsLoading(true);
     await uploadImages(); // upload images
     addBuild({ variables: {...form.values, images: links} }); // add build
     form.reset(); // reset form
@@ -77,6 +79,7 @@ function KeycapAddForm( { closeForm }: Props) {
       handleSubmit={submitBuild}
       fileList={fileList}
       setFileList={setFileList}
+      isLoading={isLoading}
     />
   );
 }

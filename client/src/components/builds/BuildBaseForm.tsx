@@ -1,6 +1,6 @@
 import { Dispatch, Fragment, SetStateAction } from 'react';
 import { Box, TextInput, Button, Group, Select, NumberInput, ActionIcon, Text, Textarea, Stack, Indicator, Image } from '@mantine/core';
-import { Plus, Trash } from 'tabler-icons-react';
+import { Trash } from 'tabler-icons-react';
 import { randomId } from '@mantine/hooks';
 import { useQuery } from '@apollo/client';
 import { FileWithPath } from 'file-selector';
@@ -12,6 +12,7 @@ import { Switch as SwitchType } from "../../util/switchTypes";
 import { Keycap } from "../../util/keycapTypes";
 import { Stab } from "../../util/stabTypes";
 import ImageDrop from './ImageDrop';
+import AddButton from '../buttons/AddButton';
 
 
 type SwitchFieldType = {
@@ -60,9 +61,10 @@ type Props = {
   form: any // TODO create a type for the form object
   fileList: any[]
   setFileList: Dispatch<SetStateAction<CustomFile[]>>
+  isLoading?: boolean
 }
 
-function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileList }: Props) {
+function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileList, isLoading }: Props) {
   const { data } = useQuery(FETCH_INVENTORY_FOR_BUILDS_QUERY);
 
   let CASE_DATA: Case[] = [];
@@ -80,7 +82,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
     STAB_DATA = data.getInventory.stabs.map((item: Stab) => {return {label: item.name, value: item.id}});
 
     switchFields = form.values.switches.map((item : SwitchFieldType, index: number) => (
-      <Group key={item.id} mt="xs">
+      <Group key={randomId()} mt="xs">
         <Select
           data={SWITCH_DATA}
           maxDropdownHeight={125}
@@ -107,7 +109,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
     ));
 
     keycapFields = form.values.keycaps.map((item: KeycapFieldType, index: number) => (
-      <Group key={item.id} mt="xs">
+      <Group key={randomId()} mt="xs">
         <Select
           sx={{ flex: 1 }}
           data={KEYCAP_DATA}
@@ -128,7 +130,7 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
     ));
 
     stabFields = form.values.stabs.map((item: StabFieldType, index: number) => (
-      <Stack key={item.id} mt="xs">
+      <Stack key={randomId()} mt="xs">
         <Group mt={'1rem'}>
           <Select
             sx={{ flex: 1 }}
@@ -228,16 +230,13 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
         {switchFields}
 
         <Group position="center" mt="md">
-          <Button
-            variant='subtle'
-            leftIcon={<Plus size={14} />}
-            color="gray"
+          <AddButton
             onClick={() =>
               form.addListItem('switches', { name: '', amount: 0, id: randomId() })
             }
           >
-            Add another Switch
-          </Button>
+            Add Another Switch
+          </AddButton>
         </Group>
       </Box>
       <Box>
@@ -255,16 +254,13 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
         {keycapFields}
 
         <Group position="center" mt="md">
-          <Button
-            variant='subtle'
-            leftIcon={<Plus size={14} />}
-            color="gray"
+          <AddButton
             onClick={() =>
               form.addListItem('keycaps', { set: '', kit: '', id: randomId() })
             }
           >
             Add More Keycaps
-          </Button>
+          </AddButton>
         </Group>
       </Box>
       <Box>
@@ -282,16 +278,13 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
         {stabFields}
 
         <Group position="center" mt="md">
-          <Button
-            variant='subtle'
-            leftIcon={<Plus size={14} />}
-            color="gray"
+          <AddButton 
             onClick={() =>
               form.addListItem('stabs', {name: '', twoU: 0, sixU: 0, six25U: 0, sevenU: 0, id: randomId()})
             }
           >
             Add More Stabs
-          </Button>
+          </AddButton>
         </Group>
       </Box>
       
@@ -331,7 +324,10 @@ function CaseBaseForm( { setFormVisible, handleSubmit, form, fileList, setFileLi
         >
           Cancel
         </Button>
-        <Button type="submit">Submit</Button>
+        {isLoading ? 
+          <Button type="submit" loading>Submit</Button> :
+          <Button type="submit">Submit</Button>
+        }
       </Group>
     </Box>
   );

@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Card, Image, Text, Button, Group, useMantineTheme } from '@mantine/core';
+import { Card, Image, Text, Group, useMantineTheme, Menu } from '@mantine/core';
 
 import { Link } from 'react-router-dom';
 import { Build } from "../../util/buildTypes";
+import { Tool, Trash } from 'tabler-icons-react';
 
 interface BuildProp extends Build {
   delete: React.MouseEventHandler;
@@ -18,20 +19,25 @@ function BuildCard(item: BuildProp) {
   };
 
   return (
-    <Card shadow="sm" p="lg">
+    <Card shadow="sm" p="sm">
       <Card.Section component={Link} to={`/inventory/builds/${item.id}`}>
         <Image
+          withPlaceholder
           src={item.images.length > 0 ? item.images[0] : ''}
           height={160}
-          alt="Keyboard Picture"
+          alt={item.images.length > 0 ? item.images[0] : 'placeholder image'}
         />
       </Card.Section>
-
-      <Text weight={600} style={{ marginBottom: 15, marginTop: theme.spacing.sm }}>{item.name}</Text>
-
-      <Group grow >
-        <Button size="xs" color="gray" onClick={showEdit}>Edit</Button>
-        <Button size="xs" color="red" onClick={item.delete} value={item.id}>Delete</Button>
+      <Group position='apart' align={'center'} mt={theme.spacing.sm}>
+        <Text weight={600}>{item.name}</Text>
+        <Menu>
+          <Menu.Item icon={<Tool size={20}/>} onClick={showEdit}>
+            Edit
+          </Menu.Item>
+          <Menu.Item icon={<Trash size={20}/>} onClick={item.delete} value={item.id}>
+            Delete
+          </Menu.Item>
+        </Menu>
       </Group>
     </Card>
   );

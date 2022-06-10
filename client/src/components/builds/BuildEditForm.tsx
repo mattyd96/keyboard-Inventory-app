@@ -24,13 +24,13 @@ interface BuildProp extends Build {
 function BuildEditForm(item: BuildProp) {
   const { user } = useContext(AuthContext);
   const [fileList, setFileList] = useState<CustomFile[]>([]); //file list for holding image Files to upload to firebase
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   let links: string[] = []; //array to hold links of uploaded files for db
 
   const switches = item.switches.map(swit => {
     const amount = item.switchAmount.filter(swit2 => swit2.id === swit.id)[0].amount;
     return {name: swit.id, amount, id: swit.id};
   });
-  console.log(switches);
 
   const keycaps = item.keycaps.map(keycap => {
     return {set: keycap.id, id: keycap.id};
@@ -41,8 +41,6 @@ function BuildEditForm(item: BuildProp) {
     const { twoU, sixU, six25U, sevenU } = selectedStab;
     return {name: stab.id, twoU, sixU, six25U, sevenU, id: stab.id}
   });
-
-  console.log(stabs);
 
   const form = useForm({
     initialValues: {
@@ -89,6 +87,7 @@ function BuildEditForm(item: BuildProp) {
   };
 
   const updateBuild = async () => {
+    setIsLoading(true);
     await uploadImages(); // upload images if there are more
     await deleteImages(); // remove images marked for deletion by user
     const { removeImages, ...input } = form.values;
@@ -105,6 +104,7 @@ function BuildEditForm(item: BuildProp) {
       handleSubmit={updateBuild}
       fileList={fileList}
       setFileList={setFileList}
+      isLoading={isLoading}
     />
   );
 }

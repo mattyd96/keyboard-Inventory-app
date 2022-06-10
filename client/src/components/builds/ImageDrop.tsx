@@ -57,7 +57,6 @@ function ImageDrop({ form, fileList, setFileList } : Props) {
   const theme = useMantineTheme();
 
   const handleImageDrop = (imgs : File[]) => {
-    console.log(imgs);
     const newImageList = imgs.map(img => 
       Object.assign(img, {
         preview: URL.createObjectURL(img)
@@ -80,7 +79,7 @@ function ImageDrop({ form, fileList, setFileList } : Props) {
       >
         {(status) => dropzoneChildren(status, theme)}
       </Dropzone>
-      <Group>
+      <Group mt='1rem'>
         {fileList && fileList.map((file: CustomFile) => 
           <Indicator
             inline
