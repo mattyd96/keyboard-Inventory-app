@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { Checklist } from "tabler-icons-react";
 
-const LINKS = ['Builds', 'Cases', 'Keycaps', 'Switches', 'Stabs', 'Springs', 'Artisans'];
+const LINKS = ['Home', 'Builds', 'Cases', 'Keycaps', 'Switches', 'Stabs', 'Springs', 'Artisans'];
 
 const useStyles = createStyles((theme) => ({
 

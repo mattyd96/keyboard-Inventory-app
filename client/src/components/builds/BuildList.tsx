@@ -37,7 +37,7 @@ function BuildList() {
         </Group>
       }
       {!loading && data != null &&
-        <Grid mt={'2rem'} columns={24}>
+        <Grid columns={24}>
           {data && data?.getUserBuilds.map((item ) =>
             <Grid.Col xs={12} md={8} lg={6} xl={4}>
               <BuildItem {...item} delete={deleteBuild} key={item.id}/>

@@ -19,6 +19,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import UserBuilds from "./builds/UserBuilds";
 import UserBuild from './builds/UserBuild';
+import InventoryHome from './inventory/InventoryHome';
 
 function Pages() {
   const { user } = useContext(AuthContext);
@@ -30,6 +31,7 @@ function Pages() {
         <Route path="/login" element={user ? <Navigate replace to='/' /> : <Login />} />
         <Route path="/signup" element={user ? <Navigate replace to='/' /> : <Signup />} />
         <Route path="/inventory">
+          <Route path="home" element={!user ? <Navigate replace to='/' /> : <InventoryHome />} />
           <Route path="cases" element={!user ? <Navigate replace to='/' /> : <Cases />}/>
           <Route path="springs" element={!user ? <Navigate replace to='/' /> : <Springs />}/>
           <Route path="stabs" element={!user ? <Navigate replace to='/' /> : <Stabs />}/>

@@ -31,7 +31,7 @@ function LoginForm() {
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData }}) {
       context.login(userData);
-      navigate('/');
+      navigate('/inventory/home');
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.errors);

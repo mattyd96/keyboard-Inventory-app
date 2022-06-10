@@ -11,7 +11,7 @@ function UserBuilds() {
 
   return (
     <Layout>
-      <Group position="apart">
+      <Group mb={'2rem'} position="apart">
         <Title order={2}>Builds</Title>
         {!formOpen && <Button onClick={() => {setFormOpen(true)}}>Add Build</Button>}
       </Group>

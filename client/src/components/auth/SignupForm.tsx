@@ -34,7 +34,7 @@ function SignupForm() {
   const [addUser, { loading }] = useMutation(SIGNUP_USER, {
     update(_, { data: { signup: userData}}) {
       context.login(userData);
-      navigate('/');
+      navigate('/inventory/home');
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.errors);
