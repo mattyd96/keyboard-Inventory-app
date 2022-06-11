@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { Loader } from "@mantine/core";
+import { Loader, Group } from "@mantine/core";
 
 import Layout from "../../components/layout/Layout";
 import SingleBuild from "../../components/singleBuild/SingleBuild";
@@ -13,7 +13,11 @@ function UserBuild() {
 
   return (
     <Layout>
-      {loading && <Loader sx={{margin: 'auto'}}/>}
+      {loading && 
+        <Group position='center' mt='2rem'>
+          <Loader/>
+        </Group>
+      }
       {!loading && <SingleBuild {...data.getBuild} />}
     </Layout>
   );
