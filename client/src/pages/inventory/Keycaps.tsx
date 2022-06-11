@@ -13,12 +13,12 @@ function Keycaps() {
     <Layout>
       <Group position="apart">
         <Title order={2}>Keycaps</Title>
-        {!formOpen && <Button onClick={() => {setFormOpen(true)}}>Add Keycaps</Button>}
+        {!formOpen && <Button color='yellow' onClick={() => {setFormOpen(true)}}>Add Keycaps</Button>}
       </Group>
       <Modal opened={formOpen} onClose={() => setFormOpen(false)} title="Add Keycaps">
         <KeycapAddForm closeForm={setFormOpen} />
       </Modal>
-      <KeycapList />
+      <KeycapList badgeColor='yellow' />
     </Layout>
   );
 }

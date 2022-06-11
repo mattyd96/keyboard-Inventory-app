@@ -13,12 +13,12 @@ function Switches() {
     <Layout>
       <Group position="apart">
         <Title order={2}>Switches</Title>
-        {!formOpen && <Button onClick={() => {setFormOpen(true)}}>Add Switches</Button>}
+        {!formOpen && <Button color='indigo' onClick={() => {setFormOpen(true)}}>Add Switches</Button>}
       </Group>
       <Modal opened={formOpen} onClose={() => setFormOpen(false)} title="Add Switches">
         <SwitchAddForm closeForm={setFormOpen} />
       </Modal>
-      <SwitchList />
+      <SwitchList badgeColor='indigo' />
     </Layout>
   );
 }

@@ -11,6 +11,7 @@ type StabProp = {
   housings: number
   stems: number
   delete: React.MouseEventHandler;
+  badgeColor: string
 }
 
 function CaseItem(item: StabProp) {
@@ -23,31 +24,31 @@ function CaseItem(item: StabProp) {
   const display = (
     <Stack>
       <Group position="apart">
-        <Badge>Name</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Name</Badge>
         <Text>{item.name}</Text>
       </Group>
       <Group position="apart">
-        <Badge>2U</Badge>
+        <Badge color={item.badgeColor} variant='filled'>2U</Badge>
         <Text>{item.wires.twoU}</Text>
       </Group>
       <Group position="apart">
-        <Badge>6U</Badge>
+        <Badge color={item.badgeColor} variant='filled'>6U</Badge>
         <Text>{item.wires.sixU}</Text>
       </Group>
       <Group position="apart">
-        <Badge>6.25U</Badge>
+        <Badge color={item.badgeColor} variant='filled'>6.25U</Badge>
         <Text>{item.wires.six25U}</Text>
       </Group>
       <Group position="apart">
-        <Badge>7U</Badge>
+        <Badge color={item.badgeColor} variant='filled'>7U</Badge>
         <Text>{item.wires.sevenU}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Housings</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Housings</Badge>
         <Text>{item.housings}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Stems</Badge>
+        <Badge  color={item.badgeColor} variant='filled'>Stems</Badge>
         <Text>{item.stems}</Text>
       </Group>
       <Group position="right">

@@ -16,6 +16,7 @@ type SwitchProp = {
   totalAmount: number
   availableAmount: number
   delete: React.MouseEventHandler;
+  badgeColor: string
 }
 
 function SwitchItem(item: SwitchProp) {
@@ -28,57 +29,57 @@ function SwitchItem(item: SwitchProp) {
   const display = (
     <Stack>
       <Group position="apart">
-        <Badge>Name</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Name</Badge>
         <Text>{item.name}</Text>
       </Group>
       {item.films &&
         <Group position="apart">
-          <Badge>Films</Badge>
+          <Badge color={item.badgeColor} variant='filled'>Films</Badge>
           <Text>{item.films}</Text>
         </Group>
       }
       {item.lube &&
         <Group position="apart">
-          <Badge>Switch Lube</Badge>
+          <Badge color={item.badgeColor} variant='filled'>Switch Lube</Badge>
           <Text>{item.lube}</Text>
         </Group>
       }
       {item.top &&
         <Group position="apart">
-          <Badge>Switch Top</Badge>
+          <Badge color={item.badgeColor} variant='filled'>Switch Top</Badge>
           <Text>{item.top}</Text>
         </Group>
       }
       {item.bottom && 
         <Group position="apart">
-          <Badge>Switch Bottom</Badge>
+          <Badge color={item.badgeColor} variant='filled'>Switch Bottom</Badge>
           <Text>{item.bottom}</Text>
         </Group>
       }
       {item.springs.name &&
         <Group position="apart">
-          <Badge>Spring Name</Badge>
+          <Badge color={item.badgeColor} variant='filled'>Spring Name</Badge>
           <Text>{item.springs.name}</Text>
         </Group>
       }
       {item.springs.weight &&
         <Group position="apart">
-          <Badge>Spring Weight</Badge>
+          <Badge color={item.badgeColor} variant='filled'>Spring Weight</Badge>
           <Text>{item.springs.weight}</Text>
         </Group>
       }
       {item.springs.lube &&
         <Group position="apart">
-          <Badge>Spring Lube</Badge>
+          <Badge color={item.badgeColor} variant='filled'>Spring Lube</Badge>
           <Text>{item.springs.lube}</Text>
         </Group>
       }
       <Group position="apart">
-        <Badge>Total Amount</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Total Amount</Badge>
         <Text>{item.totalAmount}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Available Amount</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Available Amount</Badge>
         <Text>{item.availableAmount}</Text>
       </Group>
       <Group position="right">

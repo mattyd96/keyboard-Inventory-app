@@ -18,6 +18,7 @@ type CaseProp = {
   weightUnits: string;
   built: boolean;
   delete: React.MouseEventHandler;
+  badgeColor: string
 }
 
 function CaseItem(item: CaseProp) {
@@ -27,40 +28,41 @@ function CaseItem(item: CaseProp) {
     setEdit(true);
   };
 
+
   const display = (
     <Stack>
       <Group position="apart">
-        <Badge>Name</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Name</Badge>
         <Text>{item.name}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Creator</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Creator</Badge>
         <Text>{item.creator}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Color</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Color</Badge>
         <Text>{item.color}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Layout</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Layout</Badge>
         <Text>{item.layout}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Case Material</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Case Material</Badge>
         <Text>{item.caseMaterial}</Text>
       </Group>
       {item.hasWeight &&
         <Group position="apart">
-          <Badge>Weight Material</Badge>
+          <Badge color={item.badgeColor} variant='filled'>Weight Material</Badge>
           <Text>{item.weightMaterial}</Text>
         </Group>
       }
       <Group position="apart">
-        <Badge>Plates</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Plates</Badge>
         <Text>{item.plates.map(plate => `${plate.type} `)}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Weight</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Weight</Badge>
         <Text>{`${item.weight} ${item.weightUnits}`}</Text>
       </Group>
       <Group position="right">

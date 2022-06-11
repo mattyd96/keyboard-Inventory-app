@@ -11,6 +11,7 @@ type KeycapProp = {
   material: string
   kits: Kit[]
   delete: React.MouseEventHandler;
+  badgeColor: string
 }
 
 function CaseItem(item: KeycapProp) {
@@ -23,24 +24,24 @@ function CaseItem(item: KeycapProp) {
   const display = (
     <Stack>
       <Group position="apart">
-        <Badge>Name</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Name</Badge>
         <Text>{item.name}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Manufacturer</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Manufacturer</Badge>
         <Text>{item.manufacturer}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Material</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Material</Badge>
         <Text>{item.material}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Kits</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Kits</Badge>
         <Group>
           {item.kits.map(kit => 
             <Group key={kit.id}>
               <Text>{kit.name}</Text>
-              <Badge>{kit.amount}</Badge>
+              <Badge color={item.badgeColor} variant='filled'>{kit.amount}</Badge>
             </Group>
           )}
         </Group>

@@ -7,8 +7,11 @@ import { Data } from "../../util/artisanTypes";
 import ArtisanItem from "./ArtisanItem";
 //import StabLabel from "./StabLabel";
 
+interface Props {
+  badgeColor: string
+}
 
-function ArtisanList() {
+function ArtisanList({ badgeColor }: Props) {
   const { loading, data } = useQuery<Data>(FETCH_ARTISANS_QUERY);
   const [deleteArtisanMutation] = useMutation(DELETE_ARTISAN_MUTATION, {
     update(proxy, { data: { deleteArtisan }}) {
@@ -33,7 +36,7 @@ function ArtisanList() {
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.artisans.map((item) => (
           <Accordion.Item label={item.name} key={item.id}>
-            <ArtisanItem {...item} delete={deleteArtisan}/>
+            <ArtisanItem {...item} delete={deleteArtisan} badgeColor={badgeColor}/>
           </Accordion.Item>
         ))}
       </Accordion>

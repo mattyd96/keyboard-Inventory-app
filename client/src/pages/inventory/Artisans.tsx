@@ -13,12 +13,12 @@ function Artisans() {
     <Layout>
       <Group position="apart">
         <Title order={2}>Artisans</Title>
-        {!formOpen && <Button onClick={() => {setFormOpen(true)}}>Add Artisan</Button>}
+        {!formOpen && <Button color='pink' onClick={() => {setFormOpen(true)}}>Add Artisan</Button>}
       </Group>
       <Modal opened={formOpen} onClose={() => setFormOpen(false)} title="Add an Artisan">
         <ArtisanAddForm closeForm={setFormOpen} />
       </Modal>
-      <ArtisanList />
+      <ArtisanList badgeColor='pink'/>
     </Layout>
   );
 }

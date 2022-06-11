@@ -12,6 +12,7 @@ type SpringProp = {
   lube: string
   amount: number
   delete: React.MouseEventHandler;
+  badgeColor: string
 }
 
 function SpringItem(item: SpringProp) {
@@ -24,15 +25,15 @@ function SpringItem(item: SpringProp) {
   const display = (
     <Stack>
       <Group position="apart">
-        <Badge>Name</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Name</Badge>
         <Text>{item.name}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Weight</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Weight</Badge>
         <Text>{item.weight}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Amount</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Amount</Badge>
         <Text>{item.amount}</Text>
       </Group>
       <Group position="right">

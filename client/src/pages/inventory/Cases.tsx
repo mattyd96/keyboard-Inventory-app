@@ -13,12 +13,12 @@ function Cases() {
     <Layout>
       <Group position="apart">
         <Title order={2}>Cases</Title>
-        {!formOpen && <Button onClick={() => {setFormOpen(true)}}>Add Case</Button>}
+        {!formOpen && <Button color='violet' onClick={() => {setFormOpen(true)}}>Add Case</Button>}
       </Group>
       <Modal opened={formOpen} onClose={() => setFormOpen(false)} title="Add a Case">
         <CaseAddForm closeForm={setFormOpen} />
       </Modal>
-      <CaseList />
+      <CaseList badgeColor='violet' />
     </Layout>
   );
 }

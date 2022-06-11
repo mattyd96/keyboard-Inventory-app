@@ -7,8 +7,11 @@ import { Data } from "../../util/switchTypes";
 import SwitchItem from "./SwitchItem";
 import SwitchLabel from "./SwitchLabel";
 
+interface Props {
+  badgeColor: string
+}
 
-function SwitchList() {
+function SwitchList({ badgeColor }: Props) {
   const { loading, data } = useQuery<Data>(FETCH_SWITCHES_QUERY);
   const [deleteSwitchMutation] = useMutation(DELETE_SWITCH_MUTATION, {
     update(proxy, { data: { deleteSwitch }}) {
@@ -37,7 +40,7 @@ function SwitchList() {
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.switches.map((item) => (
           <Accordion.Item label={<SwitchLabel {...item} />} key={item.id}>
-            <SwitchItem {...item} delete={deleteSwitch}/>
+            <SwitchItem {...item} delete={deleteSwitch} badgeColor={badgeColor}/>
           </Accordion.Item>
         ))}
       </Accordion>

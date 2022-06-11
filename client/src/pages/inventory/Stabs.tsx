@@ -13,12 +13,12 @@ function Stabs() {
     <Layout>
       <Group position="apart">
         <Title order={2}>Stabs</Title>
-        {!formOpen && <Button onClick={() => {setFormOpen(true)}}>Add Stab</Button>}
+        {!formOpen && <Button color='cyan' onClick={() => {setFormOpen(true)}}>Add Stab</Button>}
       </Group>
       <Modal opened={formOpen} onClose={() => setFormOpen(false)} title="Add a Stab">
         <StabAddForm closeForm={setFormOpen} />
       </Modal>
-      <StabList />
+      <StabList badgeColor='cyan' />
     </Layout>
   );
 }

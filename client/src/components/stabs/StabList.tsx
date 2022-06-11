@@ -7,8 +7,11 @@ import { Data } from "../../util/stabTypes";
 import StabItem from "./StabItem";
 //import StabLabel from "./StabLabel";
 
+interface Props {
+  badgeColor: string
+}
 
-function StabList() {
+function StabList({ badgeColor}: Props) {
   const { loading, data } = useQuery<Data>(FETCH_STABS_QUERY);
   const [deleteStabMutation] = useMutation(DELETE_STAB_MUTATION, {
     update(proxy, { data: { deleteStab }}) {
@@ -37,7 +40,7 @@ function StabList() {
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.stabs.map((item) => (
           <Accordion.Item label={item.name} key={item.id}>
-            <StabItem {...item} delete={deleteStab}/>
+            <StabItem {...item} delete={deleteStab} badgeColor={badgeColor}/>
           </Accordion.Item>
         ))}
       </Accordion>

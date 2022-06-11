@@ -7,8 +7,11 @@ import { Data } from "../../util/caseTypes";
 import CaseItem from "./CaseItem";
 import CaseLabel from "./CaseLabel";
 
+interface Props {
+  badgeColor: string
+}
 
-function CaseList() {
+function CaseList({ badgeColor }: Props) {
   const { loading, data } = useQuery<Data>(FETCH_CASES_QUERY);
   const [deleteCaseMutation] = useMutation(DELETE_CASE_MUTATION, {
     update(proxy, { data: { deleteCase }}) {
@@ -17,10 +20,6 @@ function CaseList() {
       }});
     },
   });
-
-  if(data) {
-    console.log(data);
-  }
 
   const deleteCase = (event: React.MouseEvent<HTMLButtonElement>) => {
     const id = event.currentTarget.value;
@@ -37,7 +36,7 @@ function CaseList() {
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.cases.map((item) => (
           <Accordion.Item label={<CaseLabel {...item} />} key={item.id}>
-            <CaseItem {...item} delete={deleteCase}/>
+            <CaseItem {...item} delete={deleteCase} badgeColor={badgeColor}/>
           </Accordion.Item>
         ))}
       </Accordion>

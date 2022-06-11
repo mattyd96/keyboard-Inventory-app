@@ -7,8 +7,11 @@ import { Data } from "../../util/keycapTypes";
 import KeycapItem from "./KeycapItem";
 import KeycapLabel from "./KeycapLabel";
 
+interface Props {
+  badgeColor: string
+}
 
-function KeycapList() {
+function KeycapList({ badgeColor }: Props) {
   const { loading, data } = useQuery<Data>(FETCH_KEYCAPS_QUERY);
   const [deleteKeycapMutation] = useMutation(DELETE_KEYCAP_MUTATION, {
     update(proxy, { data: { deleteKeycap }}) {
@@ -37,7 +40,7 @@ function KeycapList() {
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.keycaps.map((item) => (
           <Accordion.Item label={<KeycapLabel {...item} />} key={item.id}>
-            <KeycapItem {...item} delete={deleteKeycap}/>
+            <KeycapItem {...item} delete={deleteKeycap} badgeColor={badgeColor}/>
           </Accordion.Item>
         ))}
       </Accordion>

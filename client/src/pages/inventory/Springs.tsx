@@ -13,12 +13,12 @@ function Springs() {
     <Layout>
       <Group position="apart">
         <Title order={2}>Springs</Title>
-        {!formOpen && <Button onClick={() => {setFormOpen(true)}}>Add Spring</Button>}
+        {!formOpen && <Button color='orange' onClick={() => {setFormOpen(true)}}>Add Spring</Button>}
       </Group>
       <Modal opened={formOpen} onClose={() => setFormOpen(false)} title="Add a Spring">
         <SpringAddForm closeForm={setFormOpen} />
       </Modal>
-      <SpringList />
+      <SpringList badgeColor='orange' />
     </Layout>
   );
 }

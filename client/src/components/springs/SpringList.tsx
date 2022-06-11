@@ -6,9 +6,13 @@ import { Data } from "../../util/springTypes";
 import { FETCH_SPRINGS_QUERY, DELETE_SPRING_MUTATION } from "../../util/springGraphql";
 import SpringItem from "./SpringItem";
 
+interface Props {
+  badgeColor: string
+}
 
-function SpringList() {
+function SpringList({ badgeColor }: Props) {
   const { loading, data } = useQuery<Data>(FETCH_SPRINGS_QUERY);
+
   const [deleteSpringMutation] = useMutation(DELETE_SPRING_MUTATION, {
     update(proxy, { data: { deleteSpring }}) {
       proxy.writeQuery({ query: FETCH_SPRINGS_QUERY, data : {
@@ -16,10 +20,6 @@ function SpringList() {
       }});
     },
   });
-
-  if(data) {
-    console.log(data);
-  }
 
   const deleteSpring = (event: React.MouseEvent<HTMLButtonElement>) => {
     const id = event.currentTarget.value;
@@ -36,7 +36,7 @@ function SpringList() {
       <Accordion multiple mt={'2rem'}>
         {data?.getInventory.springs.map((item, index) => (
           <Accordion.Item label={item.name} key={item.id}>
-            <SpringItem {...item} delete={deleteSpring}/>
+            <SpringItem {...item} delete={deleteSpring} badgeColor={badgeColor}/>
           </Accordion.Item>
         ))}
       </Accordion>

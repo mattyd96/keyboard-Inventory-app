@@ -12,6 +12,7 @@ type ArtisanProp = {
   totalMade: number
   owned: number
   delete: React.MouseEventHandler;
+  badgeColor: string
 }
 
 function ArtisanItem(item: ArtisanProp) {
@@ -24,23 +25,23 @@ function ArtisanItem(item: ArtisanProp) {
   const display = (
     <Stack>
       <Group position="apart">
-        <Badge>Name</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Name</Badge>
         <Text>{item.name}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Maker</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Maker</Badge>
         <Text>{item.maker}</Text>
       </Group>
       <Group position="apart">
-        <Badge>sculpt</Badge>
+        <Badge color={item.badgeColor} variant='filled'>sculpt</Badge>
         <Text>{item.sculpt}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Colorway</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Colorway</Badge>
         <Text>{item.colorway}</Text>
       </Group>
       <Group position="apart">
-        <Badge>Owned</Badge>
+        <Badge color={item.badgeColor} variant='filled'>Owned</Badge>
         <Text>{`${item.owned} / ${item.totalMade}`}</Text>
       </Group>
       <Group position="right">
